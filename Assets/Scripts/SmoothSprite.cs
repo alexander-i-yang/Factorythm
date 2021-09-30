@@ -40,5 +40,6 @@ public class SmoothSprite : MonoBehaviour
             yield return null;
         }
 
+        transform.position = _afterPositon;
     }
 }

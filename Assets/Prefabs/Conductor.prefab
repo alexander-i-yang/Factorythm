@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songBpm: 24
   secPerBeat: 0.4
-  musicSource: {fileID: 0}
+  musicClip: {fileID: 8300000, guid: bec2950395af5ed44be6cceb1f812b6d, type: 3}
