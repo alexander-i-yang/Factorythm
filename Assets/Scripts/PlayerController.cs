@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour {
     }
     
     void OnDrawGizmos() {
-        Handles.Label(transform.position, ""+_conductor.IsInputOnBeat());
+        if (_conductor) { 
+            Handles.Label(transform.position, ""+_conductor.IsInputOnBeat());
+        }
     }
 
 }
