@@ -34,6 +34,18 @@ public class PlayerController : MonoBehaviour {
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
             }
+        } else if (inputH != 0 || inputV != 0) {
+            print(_conductor.timeSinceBeat);
+            print(_conductor.timeTilNextBeat);
+        }
+
+        if (_conductor) {
+            if (_conductor.IsInputOnBeat()) {
+                _mySR.GetComponent<SpriteRenderer>().color = Color.red;
+            }
+            else {
+                _mySR.GetComponent<SpriteRenderer>().color = Color.blue;
+            }
         }
     }
 
@@ -54,5 +66,4 @@ public class PlayerController : MonoBehaviour {
             Handles.Label(transform.position, ""+_conductor.IsInputOnBeat());
         }
     }
-
 }

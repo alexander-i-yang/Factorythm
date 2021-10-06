@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Conductor : MonoBehaviour {
     private static Conductor _instance;
-    public float songBpm = 24;
     public float secPerBeat = 24.0f/60;
     [NonSerialized] public float SongPosition = 0;
     [NonSerialized] public float SongPositionInBeats = 0;
@@ -14,7 +15,11 @@ public class Conductor : MonoBehaviour {
     [NonSerialized] public float DSPSongTime = 0;
     [NonSerialized] public AudioSource MusicSource;
     [FormerlySerializedAs("Music Clip")] public AudioClip musicClip;
-    public bool justTicked = false;
+    
+    [NonSerialized] private Machine[] _allMachines;
+    
+    [NonSerialized] public float timeSinceBeat;
+    [NonSerialized] public float timeTilNextBeat;
     
     void Awake() {
         if (_instance == null) {
@@ -33,6 +38,7 @@ public class Conductor : MonoBehaviour {
     void Start() {
         MusicSource.Play();
         DSPSongTime = (float)AudioSettings.dspTime;
+        _allMachines = FindObjectsOfType<Machine>();
     }
 
     // Update is called once per frame
@@ -46,18 +52,33 @@ public class Conductor : MonoBehaviour {
         SongPositionInBeats = SongPosition / secPerBeat;
         if (SongPositionInBeats - LastSongPosWholeBeats > 1) {
             LastSongPosWholeBeats = (int) Math.Floor(SongPositionInBeats);
-            justTicked = true;
-            // print(SongPositionInBeats);
-        }
-        else {
-            justTicked = false;
+            Tick();
         }
     }
 
     public bool IsInputOnBeat() {
-        float timeSinceBeat = (SongPositionInBeats - LastSongPosWholeBeats)*secPerBeat;
-        float timeTilNextBeat = secPerBeat - timeSinceBeat;
-        print(timeSinceBeat + " " + timeTilNextBeat);
-        return timeSinceBeat < 0.1 || timeTilNextBeat < 0.2;
+        timeSinceBeat = (SongPositionInBeats - LastSongPosWholeBeats)*secPerBeat;
+        timeTilNextBeat = secPerBeat - timeSinceBeat;
+        return timeTilNextBeat < 0.1 || timeSinceBeat < 0.2;
+    }
+
+    private void OnDrawGizmos() {
+        Handles.Label(new Vector3(3, 3, -0.5f), (timeSinceBeat < 0.15)+"");
+        Handles.Label(new Vector3(3.5f, 3, -0.5f), (timeSinceBeat)+"");
+        Gizmos.DrawWireCube(new Vector3(3, 3, -0.5f), new Vector3(timeSinceBeat/secPerBeat, 1, -0.5f));
+        
+        Handles.Label(new Vector3(3, 4, -0.5f), (timeTilNextBeat <0.3)+"");
+        Handles.Label(new Vector3(3.5f, 4, -0.5f), (timeTilNextBeat)+"");
+        Gizmos.DrawWireCube(new Vector3(3, 4, -0.5f), new Vector3(timeTilNextBeat/secPerBeat, 1, -0.5f));
+    }
+
+    public void Tick() {
+        foreach (Machine machine in _allMachines) {
+            if (machine.OutputMachines.Count == 0) {
+                print("Root tick is " + machine.name);
+                machine.Tick();
+            }
+        }
+        Debug.Break();
     }
 }

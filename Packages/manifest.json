@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.github.siccity.xnode": "https://github.com/siccity/xNode.git",
+
     "com.unity.2d.animation": "5.0.7",
     "com.unity.2d.pixel-perfect": "4.0.1",
     "com.unity.2d.psdimporter": "4.1.0",
