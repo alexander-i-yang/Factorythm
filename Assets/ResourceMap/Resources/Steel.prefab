@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   price: 10
+  ResourceName: Steel
 --- !u!212 &7302663657818154792
 SpriteRenderer:
   m_ObjectHideFlags: 0

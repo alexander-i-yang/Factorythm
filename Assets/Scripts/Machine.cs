@@ -12,7 +12,7 @@ public class Machine : MonoBehaviour {
     private int _maxOutputPorts;
     private int _minOutputPorts;
     public int Perimeter;
-    public int Storage = 1;
+    public int MaxStorage = 1;
 
     public List<Machine> InputMachines;
     public List<Machine> OutputMachines;
@@ -20,7 +20,7 @@ public class Machine : MonoBehaviour {
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
-    void Start() {
+    protected void Start() {
         if (recipe.InResources.Length == 0) {
             _maxInputPorts = 0;
             _minInputPorts = 0;
@@ -37,108 +37,101 @@ public class Machine : MonoBehaviour {
         storage = new List<Resource>();
     }
 
-    private bool _checkEnoughInput() {
+    String _getNameFromClone(String cloneName) {
+        int cutoffIndex = cloneName.LastIndexOf("Clone");
+        if (cutoffIndex == -1) return cloneName;
+        return cloneName.Substring(0, cutoffIndex);
+    }
+
+    private List<Resource> _checkEnoughInput() {
         var actualInputs = new List<Resource>();
         for (int i = 0; i < InputMachines.Count; ++i) {
             var inputMachine = InputMachines[i];
             actualInputs.AddRange(inputMachine.OutputBuffer);
         }
-        
-        /*foreach (Resource r in actualInputs) {
-            print(r.name);
-        }*/
-        
+
         var inputOccurences = occurenceDict(actualInputs);
-        /*String ret = "";
-        foreach (KeyValuePair<Resource, int> x in inputOccurences) {
-            ret += x.Key + " " + x.Value;
-        }
-        print("Input occurences: "  + ret);*/
         
-        bool enoughInput = true;
-        foreach (ResourceNum rn in recipe.InResources) {
-            if (!inputOccurences.ContainsKey(rn.resource) || rn.num > inputOccurences[rn.resource]) {
-                enoughInput = false;
-            }
+        print("Inputs:");
+        foreach (var rn in inputOccurences) {
+            print(rn.Key + " " + rn.Value);
         }
 
-        return enoughInput;
+        bool enoughInput = true;
+        foreach (ResourceNum rn in recipe.InResources) {
+            bool resourceInInput = false;
+            foreach (var inputOccurence in inputOccurences) {
+                if (inputOccurence.Value >= rn.num && inputOccurence.Key.ResourceName == rn.resource.ResourceName) {
+                    resourceInInput = true;
+                    break;
+                }
+            }
+            if (!resourceInInput) {
+                enoughInput = false;
+                break;
+            }
+        }
+        
+        return enoughInput ? actualInputs : null;
+    }
+
+    private void _produce(List<Resource> inputs) {
+        OutputBuffer.Clear();
+        print(inputs.Count());
+        foreach (Resource r in inputs) {
+            print(r);
+        }
+
+        if (inputs.Count() == 0) {
+            var newResources = recipe.outToList();
+            print(newResources.Count);
+            foreach (Resource r in newResources) {
+                var position = transform.position;
+                print(r);
+                print(r.gameObject);
+                var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+                var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
+                print(newObj);
+                OutputBuffer.Add(newObj.GetComponent<Resource>());
+            }
+            print(OutputBuffer.Count);
+        } else {
+            foreach (Resource r in inputs) {
+                var position = transform.position;
+                var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
+                r.gameObject.GetComponent<SmoothSprite>().Move(instantiatePos);
+                // r.transform.position = instantiatePos;
+                OutputBuffer.Append(r);
+            }
+        }
     }
 
     private void _executeTick() {
-        print("Executing Tick!");
         foreach (Machine m in InputMachines) {
             m.GiveToOutput();
         }
-        OutputBuffer = recipe.outToList();
-        print("Output buffer:" + OutputBuffer.Count());
     }
 
     public void Tick() {
         print(name);
-        bool enoughInput = _checkEnoughInput();
-        if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
+        List<Resource> enoughInput = _checkEnoughInput();
+        
+        if (enoughInput != null && _ticksSinceProduced >= recipe.ticks) {
+            print("Produce!");
             _executeTick();
+            _produce(enoughInput);
+            foreach (var r in OutputBuffer) {
+                print(r);
+            }
             _ticksSinceProduced = 0;
         } else {
+            print(enoughInput);
             _ticksSinceProduced++;
         }
 
         foreach (Machine m in InputMachines) {
             m.Tick();
         }
-
-        /*var actualInputs = new List<Resource>();
-        bool enoughInput = InputMachines.Count == 0;
-        int inputMachinesUsed = 0;
-        OutputBuffer = storage;
-        storage.Clear();
-        for (int i = 0; i<InputMachines.Count; ++i) {
-            Machine m = InputMachines[i];
-            inputMachinesUsed = i;
-            m.Tick();
-            if (_ticksSinceProduced >= recipe.ticks) {
-                actualInputs.Concat(m.OutputBuffer);
-
-                var inputOccurences = occurenceDict(actualInputs);
-                enoughInput = true;
-                foreach (ResourceNum rn in recipe.InResources) {
-                    print(rn.num);
-                    String ret = "";
-                    foreach (KeyValuePair<Resource, int> x in inputOccurences) {
-                        ret += x.Key + " " + x.Value;
-                    }
-                    print(ret);
-                    if (inputOccurences.ContainsKey(rn.resource) && rn.num > inputOccurences[rn.resource]) {
-                        enoughInput = false;
-                        //Todo: breaking the code in the loop will skip ticks for any machines.
-                        break;
-                    }
-                }
-            
-                if (enoughInput) {
-                    print("break!");
-                    break;
-                }
-            }
-        }
-        if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
-            storage = recipe.outToList();
-            print(storage.Count);
-            
-            Debug.Break();
-            for (int j = 0; j < inputMachinesUsed; ++j) {
-                InputMachines[j].GiveToOutput();
-            }
-            
-            _ticksSinceProduced = 0;
-            print(name + " Produce!");
-            print(storage.Count);
-            return;
-        }
-
-        _ticksSinceProduced++;
-        print(name + " " + OutputBuffer.Count);*/
     }
 
     public void GiveToOutput() {
