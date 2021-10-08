@@ -76,49 +76,33 @@ public class Machine : MonoBehaviour {
     }
 
     private void _produce(List<Resource> inputs) {
-        OutputBuffer.Clear();
-        print(inputs.Count());
-        foreach (Resource r in inputs) {
-            print(r);
-        }
-
-        if (inputs.Count() == 0) {
+        var position = transform.position;
+        if (InputMachines.Count() == 0) {
             var newResources = recipe.outToList();
-            print(newResources.Count);
             foreach (Resource r in newResources) {
-                var position = transform.position;
-                print(r);
-                print(r.gameObject);
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
                 var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
-                print(newObj);
                 OutputBuffer.Add(newObj.GetComponent<Resource>());
             }
-            print(OutputBuffer.Count);
         } else {
-            foreach (Resource r in inputs) {
-                var position = transform.position;
-                var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
-                r.gameObject.GetComponent<SmoothSprite>().Move(instantiatePos);
-                // r.transform.position = instantiatePos;
+            foreach (Machine im in InputMachines) {
+                OutputBuffer.AddRange(im.OutputBuffer);
+                im.OutputBuffer.Clear();
+            }
+
+            foreach (Resource r in OutputBuffer) {
+                var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+                r.MySmoothSprite.Move(instantiatePos, false);
                 OutputBuffer.Append(r);
             }
         }
     }
 
-    private void _executeTick() {
-        foreach (Machine m in InputMachines) {
-            m.GiveToOutput();
-        }
-    }
-
     public void Tick() {
-        print(name);
         List<Resource> enoughInput = _checkEnoughInput();
         
         if (enoughInput != null && _ticksSinceProduced >= recipe.ticks) {
             print("Produce!");
-            _executeTick();
             _produce(enoughInput);
             foreach (var r in OutputBuffer) {
                 print(r);
@@ -132,10 +116,6 @@ public class Machine : MonoBehaviour {
         foreach (Machine m in InputMachines) {
             m.Tick();
         }
-    }
-
-    public void GiveToOutput() {
-        OutputBuffer.Clear();
     }
 
     //https://stackoverflow.com/questions/15862191/counting-the-number-of-times-a-value-appears-in-an-array

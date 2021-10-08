@@ -23,14 +23,14 @@ public class SmoothSprite : MonoBehaviour
         
     }
 
-    public void Move(Vector3 newPos) {
+    public void Move(Vector3 newPos, bool destroyOnComplete = false) {
         _timeAtMoved = Time.time;
         _beforePosition = transform.position;
         _afterPositon = new Vector3(newPos.x, newPos.y, transform.position.z);
-        StartCoroutine(_moveCoroutine());
+        StartCoroutine(_moveCoroutine(destroyOnComplete));
     }
     
-    IEnumerator _moveCoroutine() {
+    IEnumerator _moveCoroutine(bool destroyOnComplete) {
         for (float ft = 0; ft <= moveTime; ft += Time.deltaTime) {
             transform.position = MyMath.ActualLerp(
                 _beforePosition, 
@@ -38,6 +38,10 @@ public class SmoothSprite : MonoBehaviour
                 movementCurve.Evaluate((float) (ft/moveTime))
                 );
             yield return null;
+        }
+
+        if (destroyOnComplete) {
+            Destroy(this);
         }
 
         transform.position = _afterPositon;
