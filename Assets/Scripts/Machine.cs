@@ -35,54 +35,43 @@ public class Machine : MonoBehaviour {
         OutputMachines = OutputMachines == null ? new List<Machine>() : OutputMachines;
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
+        recipe.Initiate();
     }
 
-    String _getNameFromClone(String cloneName) {
-        int cutoffIndex = cloneName.LastIndexOf("Clone");
-        if (cutoffIndex == -1) return cloneName;
-        return cloneName.Substring(0, cutoffIndex);
-    }
-
-    private List<Resource> _checkEnoughInput() {
+    private bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
         for (int i = 0; i < InputMachines.Count; ++i) {
             var inputMachine = InputMachines[i];
             actualInputs.AddRange(inputMachine.OutputBuffer);
         }
 
-        var inputOccurences = occurenceDict(actualInputs);
-        
-        print("Inputs:");
-        foreach (var rn in inputOccurences) {
-            print(rn.Key + " " + rn.Value);
-        }
-
-        bool enoughInput = true;
-        foreach (ResourceNum rn in recipe.InResources) {
-            bool resourceInInput = false;
-            foreach (var inputOccurence in inputOccurences) {
-                if (inputOccurence.Value >= rn.num && inputOccurence.Key.ResourceName == rn.resource.ResourceName) {
-                    resourceInInput = true;
-                    break;
-                }
-            }
-            if (!resourceInInput) {
-                enoughInput = false;
-                break;
-            }
-        }
-        
-        return enoughInput ? actualInputs : null;
+        return recipe.CheckInputs(actualInputs);
     }
 
-    private void _produce(List<Resource> inputs) {
+    public void DestroyOutput() {
+        foreach (Resource m in OutputBuffer) {
+            Destroy(m.gameObject);
+        }
+
+        OutputBuffer.Clear();
+    }
+
+    private void _produce() {
         var position = transform.position;
-        if (InputMachines.Count() == 0) {
+        print(name);
+        print(recipe.CreatesNew);
+        if (recipe.CreatesNew) {
+            foreach (Machine im in InputMachines) {
+                im.DestroyOutput();
+            }
             var newResources = recipe.outToList();
+            print(newResources.Count);
             foreach (Resource r in newResources) {
+                print(r);
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
                 var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
                 OutputBuffer.Add(newObj.GetComponent<Resource>());
+                print(newObj);
             }
         } else {
             foreach (Machine im in InputMachines) {
@@ -99,33 +88,18 @@ public class Machine : MonoBehaviour {
     }
 
     public void Tick() {
-        List<Resource> enoughInput = _checkEnoughInput();
-        
-        if (enoughInput != null && _ticksSinceProduced >= recipe.ticks) {
-            print("Produce!");
-            _produce(enoughInput);
-            foreach (var r in OutputBuffer) {
-                print(r);
-            }
+        bool enoughInput = _checkEnoughInput();
+
+        if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
+            _produce();
             _ticksSinceProduced = 0;
         } else {
-            print(enoughInput);
             _ticksSinceProduced++;
         }
 
         foreach (Machine m in InputMachines) {
             m.Tick();
         }
-    }
-
-    //https://stackoverflow.com/questions/15862191/counting-the-number-of-times-a-value-appears-in-an-array
-    public static Dictionary<Resource, int> occurenceDict(List<Resource> resources) {
-        var ret = new Dictionary<Resource, int>();
-        var g = resources.GroupBy( i => i );
-        foreach (var grp in g) {
-            ret[grp.Key] = grp.Count();
-        }
-        return ret;
     }
 
     private void OnDrawGizmos() {
