@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1175896375258616685}
-  - component: {fileID: 1175896375258616684}
+  - component: {fileID: 4577362162019970961}
   m_Layer: 0
   m_Name: SteelRecipe
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1175896375258616684
+--- !u!114 &4577362162019970961
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,7 +40,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1175896375258616687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4bba6a219c413d438a29805e734fc66, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c9a604d842b4af4ab1882fd3d25115d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   InResources:

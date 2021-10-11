@@ -59,7 +59,8 @@ public class Conductor : MonoBehaviour {
     public bool IsInputOnBeat() {
         timeSinceBeat = (SongPositionInBeats - LastSongPosWholeBeats)*secPerBeat;
         timeTilNextBeat = secPerBeat - timeSinceBeat;
-        return timeTilNextBeat < 0.1 || timeSinceBeat < 0.2;
+        //TODO: I have no idea why this function is so bad, but for some reason it only seems to be valid when the values are not on beat. Fix.
+        return !(timeTilNextBeat < 0.1 || timeSinceBeat < 0.1);
     }
 
     private void OnDrawGizmos() {
@@ -75,10 +76,9 @@ public class Conductor : MonoBehaviour {
     public void Tick() {
         foreach (Machine machine in _allMachines) {
             if (machine.OutputMachines.Count == 0) {
-                print("Root tick is " + machine.name);
                 machine.Tick();
             }
         }
-        Debug.Break();
+        //Debug.Break();
     }
 }
