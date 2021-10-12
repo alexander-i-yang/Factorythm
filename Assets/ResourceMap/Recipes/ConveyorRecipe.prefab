@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InResources:
-  - resource: {fileID: 4724451604307785483, guid: f823c0e5707e96442895c2dd74d7db58, type: 3}
+  - resource: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
     num: 1
   OutResources:
-  - resource: {fileID: 4724451604307785483, guid: f823c0e5707e96442895c2dd74d7db58, type: 3}
+  - resource: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
     num: 1
   ticks: 0

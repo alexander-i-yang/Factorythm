@@ -1,4 +1,4 @@
-﻿public class OutputPort : Port {
+﻿public class InputPort : Port {
     new void Start() {
         base.Start();
     }

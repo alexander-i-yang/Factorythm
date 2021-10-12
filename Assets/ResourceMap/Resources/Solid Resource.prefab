@@ -12,14 +12,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -61,31 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 911365051145308736, guid: 578159bbc28fb7440821157405334170, type: 3}
       propertyPath: m_Name
-      value: Steel
+      value: Solid Resource
       objectReference: {fileID: 0}
     - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: m_Color.b
-      value: 0.20562474
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: m_Color.g
-      value: 0.7169812
-      objectReference: {fileID: 0}
-    - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2504234
-      objectReference: {fileID: 0}
-    - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: price
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
-      propertyPath: ResourceName
-      value: Steel
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 578159bbc28fb7440821157405334170, type: 3}

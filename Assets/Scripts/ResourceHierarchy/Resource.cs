@@ -14,6 +14,6 @@ public class Resource : MonoBehaviour {
     public SmoothSprite MySmoothSprite { get; private set; }
 
     void Start() {
-        MySmoothSprite = GetComponent<SmoothSprite>();
+        MySmoothSprite = GetComponentInChildren<SmoothSprite>();
     }
 }

@@ -62,7 +62,9 @@ public class Conductor : MonoBehaviour {
 
     public void Tick() {
         foreach (Machine machine in _allMachines) {
-            if (machine.OutputMachines.Count == 0) {
+            print(machine.name);
+            print(machine.GetNumOutputMachines());
+            if (machine.GetNumOutputMachines() == 0) {
                 machine.Tick();
             }
         }

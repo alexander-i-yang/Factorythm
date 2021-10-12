@@ -15,8 +15,8 @@ public class Machine : MonoBehaviour {
     public int MaxStorage = 1;
 
     public List<Machine> InputMachines;
-    public List<Machine> OutputMachines;
-    public OutputPort[] OutputPorts;
+    [NonSerialized] public Port[] OutputPorts;
+    [NonSerialized] public Port[] InputPorts;
     private int _ticksSinceProduced;
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
@@ -33,25 +33,25 @@ public class Machine : MonoBehaviour {
         }
 
         InputMachines = InputMachines == null ? new List<Machine>() : InputMachines;
-        OutputMachines = OutputMachines == null ? new List<Machine>() : OutputMachines;
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
         recipe.Initiate();
-
-        print(name);
         OutputPorts = GetComponentsInChildren<OutputPort>();
-        foreach (OutputPort o in OutputPorts) {
-            print(o.GetRelativeRotation());
+        InputPorts = GetComponentsInChildren<InputPort>();
+    }
+
+    private static void foreachMachine(Port[] PortList, Action<Machine> func) {
+        foreach (Port i in PortList) {
+            var inputMachine = i.ConnectedMachine;
+            if (inputMachine) {
+                func(inputMachine);
+            }
         }
     }
 
     private bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
-        for (int i = 0; i < InputMachines.Count; ++i) {
-            var inputMachine = InputMachines[i];
-            actualInputs.AddRange(inputMachine.OutputBuffer);
-        }
-
+        foreachMachine(InputPorts, m => actualInputs.AddRange(m.OutputBuffer));
         return recipe.CheckInputs(actualInputs);
     }
 
@@ -65,26 +65,20 @@ public class Machine : MonoBehaviour {
 
     private void _produce() {
         var position = transform.position;
-        print(name);
-        print(recipe.CreatesNew);
         if (recipe.CreatesNew) {
-            foreach (Machine im in InputMachines) {
-                im.DestroyOutput();
-            }
+            foreachMachine(InputPorts, m => m.DestroyOutput());
             var newResources = recipe.outToList();
-            print(newResources.Count);
             foreach (Resource r in newResources) {
-                print(r);
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
                 var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
                 OutputBuffer.Add(newObj.GetComponent<Resource>());
-                print(newObj);
             }
-        } else {
-            foreach (Machine im in InputMachines) {
-                OutputBuffer.AddRange(im.OutputBuffer);
-                im.OutputBuffer.Clear();
-            }
+        }
+        else {
+            foreachMachine(InputPorts, m => {
+                OutputBuffer.AddRange(m.OutputBuffer);
+                m.OutputBuffer.Clear();
+            });
 
             foreach (Resource r in OutputBuffer) {
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
@@ -100,26 +94,34 @@ public class Machine : MonoBehaviour {
         if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
             _produce();
             _ticksSinceProduced = 0;
-        } else {
+        }
+        else {
             _ticksSinceProduced++;
         }
 
-        foreach (Machine m in InputMachines) {
-            m.Tick();
-        }
+        foreachMachine(InputPorts, m => m.Tick());
     }
 
     private void OnDrawGizmos() {
         if (storage != null && OutputBuffer != null) {
             Handles.Label(
-                transform.position, 
-                ""+OutputBuffer.Count
+                transform.position,
+                "" + OutputBuffer.Count
             );
         }
 
         Handles.Label(
-            transform.position+new Vector3(0, -0.2f, 0), 
+            transform.position + new Vector3(0, -0.2f, 0),
             "" + _ticksSinceProduced
         );
+    }
+
+    public int GetNumOutputMachines() {
+        int ret = 0;
+        foreach (Port p in OutputPorts) {
+            if (p.ConnectedMachine != null) ret++;
+        }
+
+        return ret;
     }
 }
