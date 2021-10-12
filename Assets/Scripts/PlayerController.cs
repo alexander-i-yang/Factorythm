@@ -34,9 +34,6 @@ public class PlayerController : MonoBehaviour {
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
             }
-        } else if (inputH != 0 || inputV != 0) {
-            print(_conductor.timeSinceBeat);
-            print(_conductor.timeTilNextBeat);
         }
 
         if (_conductor) {

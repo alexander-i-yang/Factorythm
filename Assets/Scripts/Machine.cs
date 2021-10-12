@@ -16,6 +16,7 @@ public class Machine : MonoBehaviour {
 
     public List<Machine> InputMachines;
     public List<Machine> OutputMachines;
+    public OutputPort[] OutputPorts;
     private int _ticksSinceProduced;
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
@@ -36,6 +37,12 @@ public class Machine : MonoBehaviour {
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
         recipe.Initiate();
+
+        print(name);
+        OutputPorts = GetComponentsInChildren<OutputPort>();
+        foreach (OutputPort o in OutputPorts) {
+            print(o.GetRelativeRotation());
+        }
     }
 
     private bool _checkEnoughInput() {
