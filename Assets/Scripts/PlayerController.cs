@@ -50,9 +50,11 @@ public class PlayerController : MonoBehaviour {
                 _prevMachine = onMachine();
             } else {
                 if (moved && _prevMachine != null) {
-                    Machine newConveyor = _conductor.InstantiateConveyor(newPos);
+                    Vector3 conveyorPos = new Vector3(newPos.x, newPos.y, -1.5f);
+                    Machine newConveyor = _conductor.InstantiateConveyor(conveyorPos);
                     newConveyor.AddInputMachine(_prevMachine);
                     _prevMachine.AddOutputMachine(newConveyor);
+                    _prevMachine = newConveyor;
                 }
             }
         }

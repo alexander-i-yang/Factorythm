@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,7 +12,10 @@ public class Conductor : MonoBehaviour {
     public BeatClip currentClip;
 
     public GameObject ConveyorBelt;
-    
+    public GameObject OutputPort;
+    public GameObject InputPort;
+    public int TickNum { get; private set; }
+
     [NonSerialized] private List<Machine> _allMachines;
     
     [NonSerialized] public AudioSource MusicSource;
@@ -37,6 +41,7 @@ public class Conductor : MonoBehaviour {
     void Start() {
         MusicSource.Play();
         _allMachines = new List<Machine>(FindObjectsOfType<Machine>());
+        TickNum = 0;
     }
 
     // Update is called once per frame
@@ -62,6 +67,14 @@ public class Conductor : MonoBehaviour {
         return newConveyor;
     }
 
+    public OutputPort InstantiateOutputPort(Vector3 newPos, Transform parent) {
+        return Instantiate(OutputPort, newPos, transform.rotation, parent).GetComponent<OutputPort>();
+    }
+    
+    public InputPort InstantiateInputPort(Vector3 newPos, Transform parent) {
+        return Instantiate(InputPort, newPos, transform.rotation, parent).GetComponent<InputPort>();
+    }
+
     private void OnDrawGizmos() {
         Handles.Label(new Vector3(3, 3, -0.5f), (currentClip.TimeSinceBeat() < 0.15)+"");
         Handles.Label(new Vector3(3.5f, 3, -0.5f), (currentClip.TimeSinceBeat())+"");
@@ -73,6 +86,8 @@ public class Conductor : MonoBehaviour {
     }
 
     public void Tick() {
+        TickNum++;
+        foreach(Machine m in _allMachines) {m.PrepareTick();}
         foreach (Machine machine in _allMachines) {
             if (machine.GetNumOutputMachines() == 0) {
                 machine.Tick();

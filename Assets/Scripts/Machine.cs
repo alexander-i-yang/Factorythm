@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
+using Port = UnityEditor.Experimental.GraphView.Port;
 
 public class Machine : MonoBehaviour {
     [SerializeField] public Recipe recipe;
@@ -14,9 +15,11 @@ public class Machine : MonoBehaviour {
     public int Perimeter;
     public int MaxStorage = 1;
 
-    /*[NonSerialized]*/ public Port[] OutputPorts;
-    /*[NonSerialized]*/ public Port[] InputPorts;
+    [NonSerialized] public List<OutputPort> OutputPorts;
+    [NonSerialized] public List<InputPort> InputPorts;
     private int _ticksSinceProduced;
+    private bool _pokedThisTick;
+    private static Conductor _conductor;
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
@@ -34,12 +37,18 @@ public class Machine : MonoBehaviour {
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
         recipe.Initiate();
-        OutputPorts = GetComponentsInChildren<OutputPort>();
-        InputPorts = GetComponentsInChildren<InputPort>();
+        OutputPorts = new List<OutputPort>();
+        InputPorts = new List<InputPort>();
     }
 
-    private static void foreachMachine(Port[] PortList, Action<Machine> func) {
-        foreach (Port i in PortList) {
+    void Start() {
+        if(_conductor == null) _conductor = FindObjectOfType<Conductor>();
+        print(FindObjectOfType<Conductor>());
+        print(name + " " + _conductor);
+    }
+    
+    private static void foreachMachine(List<MachinePort> PortList, Action<Machine> func) {
+        foreach (MachinePort i in PortList) {
             var inputMachine = i.ConnectedMachine;
             if (inputMachine) {
                 func(inputMachine);
@@ -49,7 +58,7 @@ public class Machine : MonoBehaviour {
 
     private bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
-        foreachMachine(InputPorts, m => actualInputs.AddRange(m.OutputBuffer));
+        foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
         return recipe.CheckInputs(actualInputs);
     }
 
@@ -64,7 +73,7 @@ public class Machine : MonoBehaviour {
     private void _produce() {
         var position = transform.position;
         if (recipe.CreatesNew) {
-            foreachMachine(InputPorts, m => m.DestroyOutput());
+            foreachMachine(new List<MachinePort>(InputPorts), m => m.DestroyOutput());
             var newResources = recipe.outToList();
             foreach (Resource r in newResources) {
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
@@ -73,32 +82,37 @@ public class Machine : MonoBehaviour {
             }
         }
         else {
-            foreachMachine(InputPorts, m => {
+            foreachMachine(new List<MachinePort>(InputPorts), m => {
                 OutputBuffer.AddRange(m.OutputBuffer);
                 m.OutputBuffer.Clear();
             });
 
             foreach (Resource r in OutputBuffer) {
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
-                print(r);
-                print(r.MySmoothSprite);
                 r.MySmoothSprite.Move(instantiatePos, false);
                 OutputBuffer.Append(r);
             }
         }
     }
 
-    public void Tick() {
-        bool enoughInput = _checkEnoughInput();
+    public void PrepareTick() {
+        _pokedThisTick = false;
+    }
 
-        if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
-            _produce();
-            _ticksSinceProduced = 0;
+    public void Tick() {
+        if (!_pokedThisTick) {
+            _pokedThisTick = true;
+            bool enoughInput = _checkEnoughInput();
+
+            if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
+                _produce();
+                _ticksSinceProduced = 0;
+            }
+            else {
+                _ticksSinceProduced++;
+            }
+            foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
         }
-        else {
-            _ticksSinceProduced++;
-        }
-        foreachMachine(InputPorts, m => m.Tick());
     }
 
     private void OnDrawGizmos() {
@@ -113,20 +127,16 @@ public class Machine : MonoBehaviour {
             transform.position + new Vector3(0, -0.2f, 0),
             "" + _ticksSinceProduced
         );
+        Vector3 curPos = transform.position;
+        foreachMachine(new List<MachinePort>(OutputPorts), m => {
+            Vector3 direction = m.transform.position - curPos;
+            MyMath.DrawArrow(curPos, direction, Color.green);
+        });
     }
 
     public int GetNumOutputMachines() {
         int ret = 0;
-        foreach (Port p in OutputPorts) {
-            if (p.ConnectedMachine != null) ret++;
-        }
-
-        return ret;
-    }
-    
-    public int GetNumInputMachines() {
-        int ret = 0;
-        foreach (Port p in InputPorts) {
+        foreach (OutputPort p in OutputPorts) {
             if (p.ConnectedMachine != null) ret++;
         }
 
@@ -134,12 +144,21 @@ public class Machine : MonoBehaviour {
     }
 
     public void AddOutputMachine(Machine m) {
-        print(OutputPorts);
-        OutputPorts[0].ConnectedMachine = m;
+        OutputPort newPort = _conductor.InstantiateOutputPort(Vector3.zero, transform);
+        newPort.ConnectedMachine = m;
+        OutputPorts.Add(newPort);
     }
     
     public void AddInputMachine(Machine m) {
-        print(InputPorts);
-        InputPorts[0].ConnectedMachine = m;
+        print(_conductor);
+        InputPort newPort = _conductor.InstantiateInputPort(Vector3.zero, transform);
+        newPort.ConnectedMachine = m;
+        InputPorts.Add(newPort);
     }
+
+    /*public MachinePort InstantiateOutputPort(Vector3 newPos) {
+        Machine newConveyor = Instantiate(ConveyorBelt, newPos, transform.rotation).GetComponent<Machine>();
+        _allMachines.Add(newConveyor);
+        return newConveyor;
+    }*/
 }

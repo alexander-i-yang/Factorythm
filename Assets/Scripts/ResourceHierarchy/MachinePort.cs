@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public abstract class Port : MonoBehaviour {
+public abstract class MachinePort : MonoBehaviour {
     public Machine ConnectedMachine;
     private EdgeCollider2D _myCollider;
     
