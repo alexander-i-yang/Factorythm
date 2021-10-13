@@ -13,7 +13,7 @@ public class Resource : MonoBehaviour {
     public ResourceMatter matterState;
     public SmoothSprite MySmoothSprite { get; private set; }
 
-    void Start() {
+    void Awake() {
         MySmoothSprite = GetComponentInChildren<SmoothSprite>();
     }
 }

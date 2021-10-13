@@ -9,8 +9,10 @@ using UnityEngine.Serialization;
 public class Conductor : MonoBehaviour {
     private static Conductor _instance;
     public BeatClip currentClip;
+
+    public GameObject ConveyorBelt;
     
-    [NonSerialized] private Machine[] _allMachines;
+    [NonSerialized] private List<Machine> _allMachines;
     
     [NonSerialized] public AudioSource MusicSource;
     
@@ -26,12 +28,15 @@ public class Conductor : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         MusicSource = gameObject.AddComponent<AudioSource>();
         MusicSource.clip = currentClip.MusicClip;
+        if (ConveyorBelt == null) {
+            throw new Exception("Conveyor Belt gameobj reference set to null!");
+        }
     }
 
     // Start is called before the first frame update
     void Start() {
         MusicSource.Play();
-        _allMachines = FindObjectsOfType<Machine>();
+        _allMachines = new List<Machine>(FindObjectsOfType<Machine>());
     }
 
     // Update is called once per frame
@@ -47,7 +52,14 @@ public class Conductor : MonoBehaviour {
     }
 
     public bool IsInputOnBeat() {
-        return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.1);
+        return true;
+        // return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.1);
+    }
+
+    public Machine InstantiateConveyor(Vector3 newPos) {
+        Machine newConveyor = Instantiate(ConveyorBelt, newPos, transform.rotation).GetComponent<Machine>();
+        _allMachines.Add(newConveyor);
+        return newConveyor;
     }
 
     private void OnDrawGizmos() {
@@ -62,8 +74,6 @@ public class Conductor : MonoBehaviour {
 
     public void Tick() {
         foreach (Machine machine in _allMachines) {
-            print(machine.name);
-            print(machine.GetNumOutputMachines());
             if (machine.GetNumOutputMachines() == 0) {
                 machine.Tick();
             }

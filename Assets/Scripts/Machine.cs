@@ -14,14 +14,13 @@ public class Machine : MonoBehaviour {
     public int Perimeter;
     public int MaxStorage = 1;
 
-    public List<Machine> InputMachines;
-    [NonSerialized] public Port[] OutputPorts;
-    [NonSerialized] public Port[] InputPorts;
+    /*[NonSerialized]*/ public Port[] OutputPorts;
+    /*[NonSerialized]*/ public Port[] InputPorts;
     private int _ticksSinceProduced;
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
-    protected void Start() {
+    protected void Awake() {
         if (recipe.InResources.Length == 0) {
             _maxInputPorts = 0;
             _minInputPorts = 0;
@@ -32,7 +31,6 @@ public class Machine : MonoBehaviour {
             _minOutputPorts = 0;
         }
 
-        InputMachines = InputMachines == null ? new List<Machine>() : InputMachines;
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
         recipe.Initiate();
@@ -82,6 +80,8 @@ public class Machine : MonoBehaviour {
 
             foreach (Resource r in OutputBuffer) {
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+                print(r);
+                print(r.MySmoothSprite);
                 r.MySmoothSprite.Move(instantiatePos, false);
                 OutputBuffer.Append(r);
             }
@@ -98,7 +98,6 @@ public class Machine : MonoBehaviour {
         else {
             _ticksSinceProduced++;
         }
-
         foreachMachine(InputPorts, m => m.Tick());
     }
 
@@ -123,5 +122,24 @@ public class Machine : MonoBehaviour {
         }
 
         return ret;
+    }
+    
+    public int GetNumInputMachines() {
+        int ret = 0;
+        foreach (Port p in InputPorts) {
+            if (p.ConnectedMachine != null) ret++;
+        }
+
+        return ret;
+    }
+
+    public void AddOutputMachine(Machine m) {
+        print(OutputPorts);
+        OutputPorts[0].ConnectedMachine = m;
+    }
+    
+    public void AddInputMachine(Machine m) {
+        print(InputPorts);
+        InputPorts[0].ConnectedMachine = m;
     }
 }

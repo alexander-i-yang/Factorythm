@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4803320674075562906}
   - component: {fileID: 7337528252076816975}
   - component: {fileID: 3505779229207891931}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InputPort
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
