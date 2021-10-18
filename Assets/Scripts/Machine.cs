@@ -15,8 +15,8 @@ public class Machine : MonoBehaviour {
     public int Perimeter;
     public int MaxStorage = 1;
 
-    [NonSerialized] public List<OutputPort> OutputPorts;
-    [NonSerialized] public List<InputPort> InputPorts;
+    [NonSerialized] public List<OutputPort> OutputPorts = new List<OutputPort>();
+    [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
     private static Conductor _conductor;
@@ -37,14 +37,10 @@ public class Machine : MonoBehaviour {
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
         recipe.Initiate();
-        OutputPorts = new List<OutputPort>();
-        InputPorts = new List<InputPort>();
     }
 
     void Start() {
         if(_conductor == null) _conductor = FindObjectOfType<Conductor>();
-        print(FindObjectOfType<Conductor>());
-        print(name + " " + _conductor);
     }
     
     private static void foreachMachine(List<MachinePort> PortList, Action<Machine> func) {
@@ -63,25 +59,26 @@ public class Machine : MonoBehaviour {
     }
 
     public void DestroyOutput() {
-        foreach (Resource m in OutputBuffer) {
-            Destroy(m.gameObject);
-        }
-
         OutputBuffer.Clear();
     }
 
     private void _produce() {
         var position = transform.position;
         if (recipe.CreatesNew) {
+            foreachMachine(new List<MachinePort>(InputPorts), m => {
+                foreach (Resource r in m.OutputBuffer) {
+                    var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+                    r.MySmoothSprite.Move(instantiatePos, true);
+                }
+            });
             foreachMachine(new List<MachinePort>(InputPorts), m => m.DestroyOutput());
             var newResources = recipe.outToList();
             foreach (Resource r in newResources) {
-                var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+                var instantiatePos = new Vector3(position.x, position.y, 0);
                 var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
                 OutputBuffer.Add(newObj.GetComponent<Resource>());
             }
-        }
-        else {
+        } else {
             foreachMachine(new List<MachinePort>(InputPorts), m => {
                 OutputBuffer.AddRange(m.OutputBuffer);
                 m.OutputBuffer.Clear();
@@ -89,8 +86,9 @@ public class Machine : MonoBehaviour {
 
             foreach (Resource r in OutputBuffer) {
                 var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+                // print(instantiatePos);
                 r.MySmoothSprite.Move(instantiatePos, false);
-                OutputBuffer.Append(r);
+                // OutputBuffer.Append(r);
             }
         }
     }
@@ -115,23 +113,27 @@ public class Machine : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmos() {
-        if (storage != null && OutputBuffer != null) {
-            Handles.Label(
-                transform.position,
-                "" + OutputBuffer.Count
-            );
-        }
+    public void OnDrawGizmos() {
+        // if (storage != null && OutputBuffer != null) {
+        //     Handles.Label(
+        //         transform.position,
+        //         "" + OutputBuffer.Count
+        //     );
+        // }
 
-        Handles.Label(
-            transform.position + new Vector3(0, -0.2f, 0),
-            "" + _ticksSinceProduced
-        );
-        Vector3 curPos = transform.position;
+        // Handles.Label(
+        //     transform.position + new Vector3(0, -0.2f, 0),
+        //     "" + _ticksSinceProduced
+        // );
+        Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
         foreachMachine(new List<MachinePort>(OutputPorts), m => {
-            Vector3 direction = m.transform.position - curPos;
+            Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             MyMath.DrawArrow(curPos, direction, Color.green);
         });
+        // foreachMachine(new List<MachinePort>(InputPorts), m => {
+        //     Vector3 direction = curPos-m.transform.position - new Vector3(0.1f, 0.1f, 0);
+        //     MyMath.DrawArrow(m.transform.position, direction, Color.blue);
+        // });
     }
 
     public int GetNumOutputMachines() {
@@ -143,22 +145,17 @@ public class Machine : MonoBehaviour {
         return ret;
     }
 
-    public void AddOutputMachine(Machine m) {
-        OutputPort newPort = _conductor.InstantiateOutputPort(Vector3.zero, transform);
+    public void AddOutputMachine(Machine m, Vector3 pos) {
+        OutputPort newPort = _conductor.InstantiateOutputPort(pos, transform);
         newPort.ConnectedMachine = m;
+        OutputPorts = new List<OutputPort>();
         OutputPorts.Add(newPort);
     }
     
-    public void AddInputMachine(Machine m) {
-        print(_conductor);
-        InputPort newPort = _conductor.InstantiateInputPort(Vector3.zero, transform);
+    public void AddInputMachine(Machine m, Vector3 pos) {
+        InputPort newPort = _conductor.InstantiateInputPort(pos, transform);
         newPort.ConnectedMachine = m;
+        InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);
     }
-
-    /*public MachinePort InstantiateOutputPort(Vector3 newPos) {
-        Machine newConveyor = Instantiate(ConveyorBelt, newPos, transform.rotation).GetComponent<Machine>();
-        _allMachines.Add(newConveyor);
-        return newConveyor;
-    }*/
 }

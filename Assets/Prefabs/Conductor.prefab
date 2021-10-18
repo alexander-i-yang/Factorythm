@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39de52e115447004a98abd058937604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songBpm: 24
-  secPerBeat: 0.4
-  musicClip: {fileID: 8300000, guid: bec2950395af5ed44be6cceb1f812b6d, type: 3}
+  currentClip: {fileID: 0}
+  ConveyorBelt: {fileID: 0}
+  OutputPort: {fileID: 0}
+  InputPort: {fileID: 0}

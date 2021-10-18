@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Conductor : MonoBehaviour {
     private static Conductor _instance;
@@ -17,9 +13,13 @@ public class Conductor : MonoBehaviour {
     public int TickNum { get; private set; }
 
     [NonSerialized] private List<Machine> _allMachines;
-    
     [NonSerialized] public AudioSource MusicSource;
-    
+    [NonSerialized] public UI MyUI;
+
+    public int CurCombo { get; private set; }
+    private bool _movedThisBeat;
+    private bool _wasOnBeat;
+
     void Awake() {
         if (_instance == null) {
             _instance = this;
@@ -35,6 +35,8 @@ public class Conductor : MonoBehaviour {
         if (ConveyorBelt == null) {
             throw new Exception("Conveyor Belt gameobj reference set to null!");
         }
+
+        MyUI = FindObjectOfType<UI>();
     }
 
     // Start is called before the first frame update
@@ -50,19 +52,25 @@ public class Conductor : MonoBehaviour {
     }
 
     void UpdateSongPos() {
+        if (_wasOnBeat && !_movedThisBeat && !IsInputOnBeat()) {
+            SetCurCombo(0);
+        }
+        
         bool isNewBeat = currentClip.UpdateSongPos();
         if (isNewBeat) {
             Tick();
         }
+        
+        _wasOnBeat = IsInputOnBeat();
     }
 
     public bool IsInputOnBeat() {
-        return true;
-        // return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.1);
+        // return true;
+        return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.1);
     }
 
-    public Machine InstantiateConveyor(Vector3 newPos) {
-        Machine newConveyor = Instantiate(ConveyorBelt, newPos, transform.rotation).GetComponent<Machine>();
+    public Machine InstantiateConveyor(Vector3 newPos, Quaternion direction) {
+        Machine newConveyor = Instantiate(ConveyorBelt, newPos, direction).GetComponent<Machine>();
         _allMachines.Add(newConveyor);
         return newConveyor;
     }
@@ -93,5 +101,23 @@ public class Conductor : MonoBehaviour {
                 machine.Tick();
             }
         }
+        _movedThisBeat = false;
+    }
+
+    public bool AttemptMove() {
+        bool onBeat = IsInputOnBeat();
+        if (onBeat) {
+            SetCurCombo(CurCombo+1);
+            _movedThisBeat = true;
+        } else {
+            SetCurCombo(0);
+        }
+        return onBeat;
+    }
+
+    public void SetCurCombo(int c) {
+        CurCombo = c;
+        MyUI.Label.text = "Combo: " + c;
+        print("Set combo: " + c);
     }
 }

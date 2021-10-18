@@ -19,7 +19,7 @@ public abstract class MachinePort : MonoBehaviour {
         throw new NotImplementedException();
         Transform parentTransform;
         Vector3 relative = (parentTransform = transform.parent.transform).InverseTransformPoint(transform.position);
-        float relativeRot = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
+        float relativeRot = Mathf.Atan2(relative.x, relative.y) * Mathf.Rad2Deg;
         float parentRot = parentTransform.rotation.eulerAngles.z;
         print(relativeRot + " " + parentRot);
         return relativeRot-parentRot;
