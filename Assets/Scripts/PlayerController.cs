@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
                         Vector3 direction = newPos-transform.position;
                         float angleRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                         Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
-                        Vector3 conveyorPos = new Vector3(newPos.x, newPos.y, -1.5f);
+                        Vector2 conveyorPos = new Vector2(newPos.x, newPos.y);
                         outMachine = _conductor.InstantiateConveyor(conveyorPos, rotation);
                     }
                     Vector3 portPos = (transform.position + newPos) / 2;
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour {
 
         _wasHoldingZ = curZ;
 
-        if (_conductor.IsInputOnBeat()) {
+        if (_conductor.SongIsOnBeat()) {
             _mySR.GetComponent<SpriteRenderer>().color = Color.red;
         }
         else {
@@ -107,9 +107,9 @@ public class PlayerController : MonoBehaviour {
     }
     void OnDrawGizmos() {
         // if (_conductor) { 
-            // Handles.Label(transform.position, ""+_conductor.IsInputOnBeat());
+            // Handles.Label(transform.position, ""+_conductor.SongIsOnBeat());
         // }
         if(_prevMachine) Handles.Label(_prevMachine.transform.position, "Prev");
-        Handles.Label(transform.position, _conductor.CurCombo+"");
+        if(_conductor) Handles.Label(transform.position, _conductor.CurCombo+"");
     }
 }

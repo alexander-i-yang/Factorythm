@@ -6,6 +6,7 @@ using UnityEngine;
 public class Conductor : MonoBehaviour {
     private static Conductor _instance;
     public BeatClip currentClip;
+    public Animator BeatStateAnimator { get; private set; }
 
     public GameObject ConveyorBelt;
     public GameObject OutputPort;
@@ -16,8 +17,9 @@ public class Conductor : MonoBehaviour {
     [NonSerialized] public AudioSource MusicSource;
     [NonSerialized] public UI MyUI;
 
+    private BeatStateMachine _stateMachine;
+    
     public int CurCombo { get; private set; }
-    private bool _movedThisBeat;
     private bool _wasOnBeat;
 
     void Awake() {
@@ -37,6 +39,8 @@ public class Conductor : MonoBehaviour {
         }
 
         MyUI = FindObjectOfType<UI>();
+        BeatStateAnimator = GetComponent<Animator>();
+        _stateMachine = GetComponent<BeatStateMachine>();
     }
 
     // Start is called before the first frame update
@@ -46,31 +50,51 @@ public class Conductor : MonoBehaviour {
         TickNum = 0;
     }
 
-    // Update is called once per frame
-    void Update() {
-        UpdateSongPos();
+    public bool StateIsOnBeat() {
+        if(BeatStateAnimator) return BeatStateAnimator.GetCurrentAnimatorStateInfo(0).IsName("On Beat");
+        return false;
+    }
+    
+    public bool SongIsOnBeat() {
+        // return true;
+        return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.2);
     }
 
-    void UpdateSongPos() {
-        if (_wasOnBeat && !_movedThisBeat && !IsInputOnBeat()) {
-            SetCurCombo(0);
-        }
-        
-        bool isNewBeat = currentClip.UpdateSongPos();
+    // Update is called once per frame
+    void Update() {
+        bool isNewBeat = UpdateSongPos();
         if (isNewBeat) {
             Tick();
         }
-        
-        _wasOnBeat = IsInputOnBeat();
+
+        /*bool onBeat = SongIsOnBeat();
+        bool transition = false;
+        if (onBeat && _stateMachine.OnState<OffBeatState>()) {
+            _stateMachine.Transition<OnBeatState>();
+            transition = true;
+        } else if (!onBeat && _stateMachine.OnState<OffBeatState>()) {
+            _stateMachine.Transition<OffBeatState>();
+            transition = true;
+        }*/
+
+        /*if (transition) {
+            print("Transition");
+            print(_stateMachine.CurState.GetType());
+        }*/
+
+        /*if (StateIsOnBeat() && !SongIsOnBeat()) {
+            BeatStateAnimator.Play("Off Beat");
+        } else if(!StateIsOnBeat() && SongIsOnBeat()) {
+            BeatStateAnimator.Play("On Beat");
+        }*/
     }
 
-    public bool IsInputOnBeat() {
-        // return true;
-        return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.1);
+    bool UpdateSongPos() {
+        return currentClip.UpdateSongPos();
     }
 
-    public Machine InstantiateConveyor(Vector3 newPos, Quaternion direction) {
-        Machine newConveyor = Instantiate(ConveyorBelt, newPos, direction).GetComponent<Machine>();
+    public Machine InstantiateConveyor(Vector2 newPos, Quaternion direction) {
+        Machine newConveyor = Instantiate(ConveyorBelt, new Vector3(newPos.x, newPos.y, ConveyorBelt.transform.position.z), direction).GetComponent<Machine>();
         _allMachines.Add(newConveyor);
         return newConveyor;
     }
@@ -91,6 +115,8 @@ public class Conductor : MonoBehaviour {
         Handles.Label(new Vector3(3, 4, -0.5f), (currentClip.TimeTilNextBeat() <0.3)+"");
         Handles.Label(new Vector3(3.5f, 4, -0.5f), (currentClip.TimeTilNextBeat())+"");
         Gizmos.DrawWireCube(new Vector3(3, 4, -0.5f), new Vector3(currentClip.TimeTilNextBeat()/currentClip.SecPerBeat, 1, -0.5f));
+
+        if (_stateMachine) Handles.Label(new Vector3(3, 2, -0.5f), (_stateMachine.CurState.GetType().ToString())+"A");
     }
 
     public void Tick() {
@@ -101,14 +127,13 @@ public class Conductor : MonoBehaviour {
                 machine.Tick();
             }
         }
-        _movedThisBeat = false;
     }
 
     public bool AttemptMove() {
-        bool onBeat = IsInputOnBeat();
+        bool onBeat = StateIsOnBeat();
         if (onBeat) {
             SetCurCombo(CurCombo+1);
-            _movedThisBeat = true;
+            // _movedThisBeat = true;
         } else {
             SetCurCombo(0);
         }

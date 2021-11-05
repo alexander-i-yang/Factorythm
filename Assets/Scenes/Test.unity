@@ -417,6 +417,24 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &624577166 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7631533364823168574, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
+  m_PrefabInstance: {fileID: 7631533363314659158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &624577170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624577166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fcf8baf32e04c4c874dcff6b4871ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  con: {fileID: 0}
 --- !u!1001 &752221934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3761,7 +3779,7 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: currentClip
       value: 
-      objectReference: {fileID: 8789837842606942011, guid: d067ffaedbe791b46ae12fe9b0264f8d, type: 3}
+      objectReference: {fileID: 3724821215476528915, guid: 743a83f0b3691f64d8e13d22c59ed95d, type: 3}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: ConveyorBelt
       value: 
@@ -3778,5 +3796,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2257568959236117213, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}

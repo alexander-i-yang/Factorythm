@@ -32,7 +32,7 @@ public class SmoothSprite : MonoBehaviour
     
     IEnumerator _moveCoroutine(bool destroyOnComplete) {
         for (float ft = 0; ft <= moveTime; ft += Time.deltaTime) {
-            transform.position = MyMath.ActualLerp(
+            transform.position = Helper.ActualLerp(
                 _beforePosition, 
                 _afterPositon, 
                 movementCurve.Evaluate((float) (ft/moveTime))

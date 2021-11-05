@@ -74,7 +74,7 @@ public class Machine : MonoBehaviour {
             foreachMachine(new List<MachinePort>(InputPorts), m => m.DestroyOutput());
             var newResources = recipe.outToList();
             foreach (Resource r in newResources) {
-                var instantiatePos = new Vector3(position.x, position.y, 0);
+                var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
                 var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
                 OutputBuffer.Add(newObj.GetComponent<Resource>());
             }
@@ -128,11 +128,11 @@ public class Machine : MonoBehaviour {
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
         foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
-            MyMath.DrawArrow(curPos, direction, Color.green);
+            Helper.DrawArrow(curPos, direction, Color.green);
         });
         // foreachMachine(new List<MachinePort>(InputPorts), m => {
         //     Vector3 direction = curPos-m.transform.position - new Vector3(0.1f, 0.1f, 0);
-        //     MyMath.DrawArrow(m.transform.position, direction, Color.blue);
+        //     Helper.DrawArrow(m.transform.position, direction, Color.blue);
         // });
     }
 
