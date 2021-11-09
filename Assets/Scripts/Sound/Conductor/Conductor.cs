@@ -6,7 +6,6 @@ using UnityEngine;
 public class Conductor : MonoBehaviour {
     private static Conductor _instance;
     public BeatClip currentClip;
-    public Animator BeatStateAnimator { get; private set; }
 
     public GameObject ConveyorBelt;
     public GameObject OutputPort;
@@ -39,7 +38,6 @@ public class Conductor : MonoBehaviour {
         }
 
         MyUI = FindObjectOfType<UI>();
-        BeatStateAnimator = GetComponent<Animator>();
         _stateMachine = GetComponent<BeatStateMachine>();
     }
 
@@ -51,7 +49,7 @@ public class Conductor : MonoBehaviour {
     }
 
     public bool StateIsOnBeat() {
-        if(BeatStateAnimator) return BeatStateAnimator.GetCurrentAnimatorStateInfo(0).IsName("On Beat");
+        if (_stateMachine) return _stateMachine.OnState<OnBeatState>();
         return false;
     }
     
@@ -66,27 +64,6 @@ public class Conductor : MonoBehaviour {
         if (isNewBeat) {
             Tick();
         }
-
-        /*bool onBeat = SongIsOnBeat();
-        bool transition = false;
-        if (onBeat && _stateMachine.OnState<OffBeatState>()) {
-            _stateMachine.Transition<OnBeatState>();
-            transition = true;
-        } else if (!onBeat && _stateMachine.OnState<OffBeatState>()) {
-            _stateMachine.Transition<OffBeatState>();
-            transition = true;
-        }*/
-
-        /*if (transition) {
-            print("Transition");
-            print(_stateMachine.CurState.GetType());
-        }*/
-
-        /*if (StateIsOnBeat() && !SongIsOnBeat()) {
-            BeatStateAnimator.Play("Off Beat");
-        } else if(!StateIsOnBeat() && SongIsOnBeat()) {
-            BeatStateAnimator.Play("On Beat");
-        }*/
     }
 
     bool UpdateSongPos() {
@@ -130,19 +107,17 @@ public class Conductor : MonoBehaviour {
     }
 
     public bool AttemptMove() {
-        bool onBeat = StateIsOnBeat();
-        if (onBeat) {
-            SetCurCombo(CurCombo+1);
-            // _movedThisBeat = true;
-        } else {
-            SetCurCombo(0);
-        }
-        return onBeat;
+        bool ret = _stateMachine.AttemptMove();
+        return ret;
+    }
+
+    public void IncrCurCombo() {
+        SetCurCombo(CurCombo+1);
     }
 
     public void SetCurCombo(int c) {
         CurCombo = c;
         MyUI.Label.text = "Combo: " + c;
-        print("Set combo: " + c);
+        print("Set Combo: " + c);
     }
 }
