@@ -10,7 +10,7 @@ public class SmoothSprite : MonoBehaviour
     
     private float _timeAtMoved;
     private Vector3 _beforePosition;
-    private Vector3 _afterPositon;
+    private Vector3 _afterPosition;
     
     // Start is called before the first frame update
     void Start() {
@@ -26,7 +26,7 @@ public class SmoothSprite : MonoBehaviour
     public void Move(Vector3 newPos, bool destroyOnComplete = false) {
         _timeAtMoved = Time.time;
         _beforePosition = transform.position;
-        _afterPositon = new Vector3(newPos.x, newPos.y, transform.position.z);
+        _afterPosition = new Vector3(newPos.x, newPos.y, transform.position.z);
         StartCoroutine(_moveCoroutine(destroyOnComplete));
     }
     
@@ -34,16 +34,16 @@ public class SmoothSprite : MonoBehaviour
         for (float ft = 0; ft <= moveTime; ft += Time.deltaTime) {
             transform.position = Helper.ActualLerp(
                 _beforePosition, 
-                _afterPositon, 
+                _afterPosition, 
                 movementCurve.Evaluate((float) (ft/moveTime))
                 );
             yield return null;
         }
 
         if (destroyOnComplete) {
-            Destroy(this);
+            Destroy(transform.parent.gameObject);
         }
 
-        transform.position = _afterPositon;
+        transform.position = _afterPosition;
     }
 }

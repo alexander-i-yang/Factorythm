@@ -18,6 +18,7 @@ public class OffBeatState : BeatState {
 
     public override bool AttemptMove(BeatStateInput input) {
         input.Con.SetCurCombo(0);
-        return false;
+        // return false;
+        return true;
     }
 }

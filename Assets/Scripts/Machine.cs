@@ -19,7 +19,7 @@ public class Machine : MonoBehaviour {
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
-    private static Conductor _conductor;
+    protected static Conductor OurConductor;
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
@@ -40,7 +40,7 @@ public class Machine : MonoBehaviour {
     }
 
     void Start() {
-        if(_conductor == null) _conductor = FindObjectOfType<Conductor>();
+        if(OurConductor == null) OurConductor = FindObjectOfType<Conductor>();
     }
     
     private static void foreachMachine(List<MachinePort> PortList, Action<Machine> func) {
@@ -58,38 +58,55 @@ public class Machine : MonoBehaviour {
         return recipe.CheckInputs(actualInputs);
     }
 
-    public void DestroyOutput() {
+    public void ClearOutput() {
         OutputBuffer.Clear();
     }
 
-    private void _produce() {
+    public void MoveHere(Resource r, bool destroyOnComplete) {
         var position = transform.position;
-        if (recipe.CreatesNew) {
-            foreachMachine(new List<MachinePort>(InputPorts), m => {
-                foreach (Resource r in m.OutputBuffer) {
-                    var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
-                    r.MySmoothSprite.Move(instantiatePos, true);
-                }
-            });
-            foreachMachine(new List<MachinePort>(InputPorts), m => m.DestroyOutput());
-            var newResources = recipe.outToList();
-            foreach (Resource r in newResources) {
-                var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
-                var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
-                OutputBuffer.Add(newObj.GetComponent<Resource>());
-            }
-        } else {
-            foreachMachine(new List<MachinePort>(InputPorts), m => {
-                OutputBuffer.AddRange(m.OutputBuffer);
-                m.OutputBuffer.Clear();
-            });
+        var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
+        r.MySmoothSprite.Move(instantiatePos, destroyOnComplete);
+    }
 
-            foreach (Resource r in OutputBuffer) {
-                var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
-                // print(instantiatePos);
-                r.MySmoothSprite.Move(instantiatePos, false);
-                // OutputBuffer.Append(r);
+    protected void MoveResourcesIn() {
+        foreachMachine(new List<MachinePort>(InputPorts), m => {
+            OutputBuffer.AddRange(m.OutputBuffer);
+            m.OutputBuffer.Clear();
+        });
+
+        foreach (Resource r in OutputBuffer) {
+            MoveHere(r, false);
+        }
+    }
+
+    protected virtual void CreateOutput() {
+        var position = transform.position;
+        var resourcesToCreate = recipe.outToList();
+        foreach (Resource r in resourcesToCreate) {
+            var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
+            var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
+            OutputBuffer.Add(newObj.GetComponent<Resource>());
+        }
+    }
+
+    public void MoveAndDestroy() {
+        //Foreach resource in each port's input buffer, move to this machine
+        foreachMachine(new List<MachinePort>(InputPorts), m => {
+            foreach (Resource resource in m.OutputBuffer) {
+                MoveHere(resource, true);
             }
+        });
+        //Empty the output list of the input machines
+        foreachMachine(new List<MachinePort>(InputPorts), m => m.ClearOutput());
+        //Create new resources based on the old ones
+        CreateOutput();
+    }
+
+    protected virtual void _produce() {
+        if (recipe.CreatesNewOutput) {
+            MoveAndDestroy();
+        } else {
+            MoveResourcesIn();
         }
     }
 
@@ -146,14 +163,14 @@ public class Machine : MonoBehaviour {
     }
 
     public void AddOutputMachine(Machine m, Vector3 pos) {
-        OutputPort newPort = _conductor.InstantiateOutputPort(pos, transform);
+        OutputPort newPort = OurConductor.InstantiateOutputPort(pos, transform);
         newPort.ConnectedMachine = m;
         OutputPorts = new List<OutputPort>();
         OutputPorts.Add(newPort);
     }
     
     public void AddInputMachine(Machine m, Vector3 pos) {
-        InputPort newPort = _conductor.InstantiateInputPort(pos, transform);
+        InputPort newPort = OurConductor.InstantiateInputPort(pos, transform);
         newPort.ConnectedMachine = m;
         InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);

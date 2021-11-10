@@ -78,6 +78,6 @@ PrefabInstance:
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: recipe
       value: 
-      objectReference: {fileID: -7420448965816891819, guid: 1e80fe826d6916c4da5bba4be6f785b9, type: 3}
+      objectReference: {fileID: 2752254494854485238, guid: 60405be466096ec47875ad39b399f510, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}

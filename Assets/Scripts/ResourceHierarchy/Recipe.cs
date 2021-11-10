@@ -9,11 +9,10 @@ abstract public class Recipe : MonoBehaviour {
 	public ResourceNum[] OutResources;
 
 	public int ticks;
-	public bool CreatesNew { get; private set; }
+	public bool CreatesNewOutput { get; private set; }
 
 	public void Initiate() {
-		
-		CreatesNew = !InResources.SequenceEqual(OutResources);
+		CreatesNewOutput = !InResources.SequenceEqual(OutResources);
 	}
 
 	public static List<Resource> toList(ResourceNum[] rns) {
@@ -58,6 +57,10 @@ abstract public class Recipe : MonoBehaviour {
         }
         
         return enoughInput;
+	}
+
+	public void InvokeOutput() {
+		
 	}
 }
 

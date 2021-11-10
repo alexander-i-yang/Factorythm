@@ -99,8 +99,6 @@ MonoBehaviour:
   recipe: {fileID: 0}
   Perimeter: 0
   MaxStorage: 1
-  OutputPorts: []
-  InputPorts: []
 --- !u!61 &8714590015041616768
 BoxCollider2D:
   m_ObjectHideFlags: 0

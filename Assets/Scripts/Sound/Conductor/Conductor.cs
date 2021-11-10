@@ -21,6 +21,8 @@ public class Conductor : MonoBehaviour {
     public int CurCombo { get; private set; }
     private bool _wasOnBeat;
 
+    public int Cash = 0;
+
     void Awake() {
         if (_instance == null) {
             _instance = this;
@@ -28,7 +30,8 @@ public class Conductor : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
-
+        print(this);
+        print(currentClip);
         currentClip.Init();
         DontDestroyOnLoad(gameObject);
         MusicSource = gameObject.AddComponent<AudioSource>();
@@ -62,7 +65,7 @@ public class Conductor : MonoBehaviour {
     void Update() {
         bool isNewBeat = UpdateSongPos();
         if (isNewBeat) {
-            Tick();
+            // Tick();
         }
     }
 
@@ -118,6 +121,6 @@ public class Conductor : MonoBehaviour {
     public void SetCurCombo(int c) {
         CurCombo = c;
         MyUI.Label.text = "Combo: " + c;
-        print("Set Combo: " + c);
+        // print("Set Combo: " + c);
     }
 }

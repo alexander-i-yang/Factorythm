@@ -53,7 +53,7 @@ public abstract class StateMachine<MyState, MyStateInput> : MonoBehaviour
     }
 
     public void Transition<NextStateType>() where NextStateType : MyState {
-        print("transition");
+        // print("transition");
         CurState.Exit(CurInput);
         SetCurState(typeof(NextStateType));
         CurState.Enter(CurInput);

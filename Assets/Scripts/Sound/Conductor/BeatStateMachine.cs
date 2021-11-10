@@ -11,10 +11,6 @@ public class BeatStateMachine : StateMachine<BeatState, BeatStateInput> {
         SetCurState(typeof(OffBeatState));
     }
 
-    void Update() {
-        base.Update();
-    }
-
     public bool AttemptMove() {
         return CurState.AttemptMove(CurInput);
     }
