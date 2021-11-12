@@ -9,15 +9,19 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D _myRb;
+    private BoxCollider2D _myCollider;
     private Conductor _conductor;
     private SmoothSprite _mySR;
 
+    private Room _curRoom;
+    
     private bool _wasHoldingZ;
     private Machine _prevMachine;
 
     // Start is called before the first frame update
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
+        _myCollider = GetComponent<BoxCollider2D>();
         _mySR = GetComponentInChildren<SmoothSprite>();
         _conductor = FindObjectOfType<Conductor>();
     }
@@ -80,6 +84,35 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private void FixedUpdate() {
+        Collider2D roomCollider = CheckRoomOverlap();
+        if (roomCollider) {
+            if (!_curRoom) {
+                _curRoom = roomCollider.GetComponent<Room>();
+                _curRoom.OnPlayerEnter(this);
+            }
+        } else {
+            if (_curRoom) {
+                _curRoom.OnPlayerExit(this);
+            }
+
+            _curRoom = null;
+        }
+    }
+
+    private Collider2D CheckRoomOverlap() {
+        //So the player touching the edge of the collider isn't counted as an overlap
+        Vector3 alpha = new Vector3(0.05f, 0.05f);
+        Vector2 topLeftCorner = _myCollider.bounds.min + alpha;
+        Vector2 topRightCorner = _myCollider.bounds.max - alpha;
+        Collider2D overlapCollider = Physics2D.OverlapArea(
+            topLeftCorner, 
+            topRightCorner,
+            LayerMask.GetMask("Room")
+        );
+        return overlapCollider;
+    }
+    
     Machine onMachine(Vector3 pos) {
         RaycastHit2D hit =
             Physics2D.Raycast(

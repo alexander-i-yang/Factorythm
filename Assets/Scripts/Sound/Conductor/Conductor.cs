@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class Conductor : MonoBehaviour {
-    private static Conductor _instance;
+    public static Conductor Instance;
     public BeatClip currentClip;
 
     public GameObject ConveyorBelt;
@@ -19,13 +19,14 @@ public class Conductor : MonoBehaviour {
     private BeatStateMachine _stateMachine;
     
     public int CurCombo { get; private set; }
+    public bool ComboEnabled { get; private set; }
     private bool _wasOnBeat;
 
     public int Cash = 0;
 
     void Awake() {
-        if (_instance == null) {
-            _instance = this;
+        if (Instance == null) {
+            Instance = this;
         } else {
             Destroy(gameObject);
             return;
@@ -119,8 +120,17 @@ public class Conductor : MonoBehaviour {
     }
 
     public void SetCurCombo(int c) {
-        CurCombo = c;
-        MyUI.Label.text = "Combo: " + c;
-        // print("Set Combo: " + c);
+        if (ComboEnabled) {
+            CurCombo = c;
+            MyUI.Label.text = "Combo: " + c;
+        }
+    }
+
+    public void DisableCombo() {
+        ComboEnabled = false;
+    }
+    
+    public void EnableCombo() {
+        ComboEnabled = true;
     }
 }

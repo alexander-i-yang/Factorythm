@@ -8,12 +8,12 @@ using Port = UnityEditor.Experimental.GraphView.Port;
 
 public class Machine : MonoBehaviour {
     [SerializeField] public Recipe recipe;
-    private int _maxInputPorts;
-    private int _minInputPorts;
-    private int _maxOutputPorts;
-    private int _minOutputPorts;
-    public int Perimeter;
-    public int MaxStorage = 1;
+    // private int _maxInputPorts;
+    // private int _minInputPorts;
+    // private int _maxOutputPorts;
+    // private int _minOutputPorts;
+    // public int Perimeter;
+    // public int MaxStorage = 1;
 
     [NonSerialized] public List<OutputPort> OutputPorts = new List<OutputPort>();
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
@@ -25,20 +25,20 @@ public class Machine : MonoBehaviour {
 
     protected void Awake() {
         if (recipe.InResources.Length == 0) {
-            _maxInputPorts = 0;
-            _minInputPorts = 0;
+            // _maxInputPorts = 0;
+            // _minInputPorts = 0;
         }
 
         if (recipe.OutResources.Length == 0) {
-            _maxOutputPorts = 0;
-            _minOutputPorts = 0;
+            // _maxOutputPorts = 0;
+            // _minOutputPorts = 0;
         }
 
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
         recipe.Initiate();
     }
-
+    
     void Start() {
         if(OurConductor == null) OurConductor = FindObjectOfType<Conductor>();
     }
