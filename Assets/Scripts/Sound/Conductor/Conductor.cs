@@ -97,7 +97,8 @@ public class Conductor : MonoBehaviour {
         Handles.Label(new Vector3(3.5f, 4, -0.5f), (currentClip.TimeTilNextBeat())+"");
         Gizmos.DrawWireCube(new Vector3(3, 4, -0.5f), new Vector3(currentClip.TimeTilNextBeat()/currentClip.SecPerBeat, 1, -0.5f));
 
-        if (_stateMachine) Handles.Label(new Vector3(3, 2, -0.5f), (_stateMachine.CurState.GetType().ToString())+"A");
+        // if (_stateMachine) Handles.Label(new Vector3(3, 2, -0.5f), (_stateMachine.CurState.GetType().ToString())+"A");
+        Handles.Label(new Vector3(3.5f, 2, -0.5f), ("Cash: " + Cash));
     }
 
     public void Tick() {
@@ -132,5 +133,9 @@ public class Conductor : MonoBehaviour {
     
     public void EnableCombo() {
         ComboEnabled = true;
+    }
+
+    public void Sell(Resource r) {
+        Cash += r.price;
     }
 }

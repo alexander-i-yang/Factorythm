@@ -23,6 +23,9 @@ public class Machine : MonoBehaviour {
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
+    public bool ShouldPrint;
+    public bool ShouldBreak;
+
     protected void Awake() {
         if (recipe.InResources.Length == 0) {
             // _maxInputPorts = 0;
@@ -42,9 +45,18 @@ public class Machine : MonoBehaviour {
     void Start() {
         if(OurConductor == null) OurConductor = FindObjectOfType<Conductor>();
     }
-    
-    private static void foreachMachine(List<MachinePort> PortList, Action<Machine> func) {
-        foreach (MachinePort i in PortList) {
+
+    bool _shouldPrint() {
+        return ShouldPrint;
+        // return transform.name == Helper.Consts.NAME;
+    }
+
+    bool _shouldBreak() {
+        return ShouldBreak;
+    }
+
+    private static void foreachMachine(List<MachinePort> portList, Action<Machine> func) {
+        foreach (MachinePort i in portList) {
             var inputMachine = i.ConnectedMachine;
             if (inputMachine) {
                 func(inputMachine);
@@ -55,7 +67,14 @@ public class Machine : MonoBehaviour {
     private bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
         foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
-        return recipe.CheckInputs(actualInputs);
+        bool ret = recipe.CheckInputs(actualInputs);
+        if (_shouldPrint()) {
+            print("Input resources: ");
+            foreach (Resource i in actualInputs) { print(i);}
+            print("Enough input: "  +ret);
+        }
+
+        return ret;
     }
 
     public void ClearOutput() {
@@ -73,9 +92,9 @@ public class Machine : MonoBehaviour {
             OutputBuffer.AddRange(m.OutputBuffer);
             m.OutputBuffer.Clear();
         });
-
+        
         foreach (Resource r in OutputBuffer) {
-            MoveHere(r, false);
+            MoveHere(r, _shouldDestroyInputs());
         }
     }
 
@@ -85,25 +104,45 @@ public class Machine : MonoBehaviour {
         foreach (Resource r in resourcesToCreate) {
             var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
             var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
+            if (_shouldPrint()) {
+                print("Adding new resource: " + r);
+            }
             OutputBuffer.Add(newObj.GetComponent<Resource>());
         }
+    }
+    
+    // Returns true if the machine destroys its input resources after moving them in.
+    protected virtual bool _shouldDestroyInputs() {
+        return recipe.CreatesNewOutput;
     }
 
     public void MoveAndDestroy() {
         //Foreach resource in each port's input buffer, move to this machine
         foreachMachine(new List<MachinePort>(InputPorts), m => {
             foreach (Resource resource in m.OutputBuffer) {
-                MoveHere(resource, true);
+                if (_shouldPrint()) {
+                    print("moving resource: " + m + resource);
+                }
+                MoveHere(resource, _shouldDestroyInputs());
             }
         });
         //Empty the output list of the input machines
+        if (_shouldPrint()) {
+            print("Emptying input ports' output");
+        }
         foreachMachine(new List<MachinePort>(InputPorts), m => m.ClearOutput());
         //Create new resources based on the old ones
+        if (_shouldPrint()) {
+            print("Creating output");
+        }
         CreateOutput();
     }
 
     protected virtual void _produce() {
         if (recipe.CreatesNewOutput) {
+            if (_shouldPrint()) {
+                print("moving and destroying");
+            }
             MoveAndDestroy();
         } else {
             MoveResourcesIn();
@@ -118,6 +157,9 @@ public class Machine : MonoBehaviour {
         if (!_pokedThisTick) {
             _pokedThisTick = true;
             bool enoughInput = _checkEnoughInput();
+            if (_shouldPrint()) {
+                print("Enough ticks: " + (_ticksSinceProduced >= recipe.ticks));
+            }
 
             if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
                 _produce();
@@ -127,6 +169,10 @@ public class Machine : MonoBehaviour {
                 _ticksSinceProduced++;
             }
             foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
+        }
+
+        if (_shouldBreak()) {
+            Debug.Break();
         }
     }
 
