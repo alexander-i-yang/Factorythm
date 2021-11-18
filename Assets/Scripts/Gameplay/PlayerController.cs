@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
     private Room _curRoom;
     
     private bool _wasHoldingZ;
-    private Machine _prevMachine;
+    public Interactable CurInteractable { get; private set; }
 
     // Start is called before the first frame update
     void Start() {
@@ -55,21 +55,11 @@ public class PlayerController : MonoBehaviour {
         bool curZ = Input.GetKey(KeyCode.Z);
         if (curZ) {
             if (!_wasHoldingZ) {
-                _prevMachine = onMachine(transform.position);
+                CurInteractable = OnInteractable(transform.position);
+                CurInteractable.OnInteract(this);
             } else {
-                if (moved && _prevMachine != null) {
-                    Machine outMachine = onMachine(newPos);
-                    if (outMachine == null) {
-                        Vector3 direction = newPos-transform.position;
-                        float angleRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                        Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
-                        Vector2 conveyorPos = new Vector2(newPos.x, newPos.y);
-                        outMachine = _conductor.InstantiateConveyor(conveyorPos, rotation);
-                    }
-                    Vector3 portPos = (transform.position + newPos) / 2;
-                    outMachine.AddInputMachine(_prevMachine, portPos);
-                    _prevMachine.AddOutputMachine(outMachine, portPos);
-                    _prevMachine = outMachine;
+                if (moved && CurInteractable != null) {
+                    CurInteractable.OnDrag(this, newPos);
                 }
             }
         }
@@ -113,15 +103,14 @@ public class PlayerController : MonoBehaviour {
         return overlapCollider;
     }
     
-    Machine onMachine(Vector3 pos) {
-        RaycastHit2D hit =
-            Physics2D.Raycast(
-                pos, 
-                new Vector3(0, 0, 1), 
-                10.0f, 
-                LayerMask.GetMask("Machine"));
+    public Interactable OnInteractable(Vector3 pos) {
+        RaycastHit2D hit = Physics2D.Raycast(
+            pos,
+            new Vector3(0, 0, 1),
+            10.0f, 
+            LayerMask.GetMask("Interactable"));
         if (hit.transform != null) {
-            return hit.transform.GetComponent<Machine>();
+            return hit.transform.GetComponent<Interactable>();
         } else {
             return null;
         }
@@ -142,7 +131,11 @@ public class PlayerController : MonoBehaviour {
         // if (_conductor) { 
             // Handles.Label(transform.position, ""+_conductor.SongIsOnBeat());
         // }
-        if(_prevMachine) Handles.Label(_prevMachine.transform.position, "Prev");
+        if(CurInteractable != null) Handles.Label(CurInteractable.transform.position, "Prev");
         if(_conductor) Handles.Label(transform.position, _conductor.CurCombo+"");
+    }
+
+    public void SetCurInteractable(Interactable i) {
+        CurInteractable = i;
     }
 }

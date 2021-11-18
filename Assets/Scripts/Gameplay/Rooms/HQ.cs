@@ -9,4 +9,8 @@ public class HQ : Room {
     public override void OnPlayerExit(PlayerController pc) {
         Conductor.Instance.EnableCombo();
     }
+
+    public override bool CanPlaceHere(Machine m) {
+        return false;
+    }
 }

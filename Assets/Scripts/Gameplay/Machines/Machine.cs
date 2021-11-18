@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using Port = UnityEditor.Experimental.GraphView.Port;
 
-public class Machine : MonoBehaviour {
+public class Machine : Interactable {
     [SerializeField] public Recipe recipe;
     // private int _maxInputPorts;
     // private int _minInputPorts;
@@ -220,5 +220,32 @@ public class Machine : MonoBehaviour {
         newPort.ConnectedMachine = m;
         InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);
+    }
+
+    public override void OnInteract(PlayerController p) {
+        // throw new NotImplementedException();
+    }
+
+    public override void OnDrag(PlayerController p, Vector3 newPos) {
+        print(p.OnInteractable(newPos));
+        Interactable nextInteractable = p.OnInteractable(newPos);
+        Machine outMachine;
+        if (nextInteractable == null) {
+            Vector3 direction = newPos-transform.position;
+            float angleRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
+            Vector2 conveyorPos = new Vector2(newPos.x, newPos.y);
+            outMachine = Conductor.Instance.InstantiateConveyor(conveyorPos, rotation);
+        } else {
+            outMachine = nextInteractable.GetComponent<Machine>();
+        }
+        Vector3 portPos = (transform.position + newPos) / 2;
+        outMachine.AddInputMachine(this, portPos);
+        AddOutputMachine(outMachine, portPos);
+        p.SetCurInteractable(outMachine.GetComponent<Interactable>());
+    }
+
+    public override void OnDeInteract(PlayerController p) {
+        throw new NotImplementedException();
     }
 }
