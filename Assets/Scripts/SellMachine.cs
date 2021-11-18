@@ -9,7 +9,8 @@
             Conductor.Instance.Sell(r);
         }
     }
-
+    
+    //TODO: figure out a better way to do this. Rn it completely overrides the produce method. Very spaghetti.
     protected override void _produce() {
         MoveResourcesIn();
         foreach (var resource in OutputBuffer) {
