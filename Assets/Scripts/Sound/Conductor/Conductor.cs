@@ -53,7 +53,7 @@ public class Conductor : MonoBehaviour {
     }
 
     public bool StateIsOnBeat() {
-        if (_stateMachine) return _stateMachine.OnState<OnBeatState>();
+        if (_stateMachine) return _stateMachine.IsOnState<OnBeatState>();
         return false;
     }
     

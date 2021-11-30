@@ -10,23 +10,20 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
-    private Conductor _conductor;
     private SmoothSprite _mySR;
 
     private Room _curRoom;
     
     private bool _wasHoldingZ;
-    public Interactable CurInteractable { get; private set; }
+    private InteractableStateMachine _ism;
 
-    // Start is called before the first frame update
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
         _mySR = GetComponentInChildren<SmoothSprite>();
-        _conductor = FindObjectOfType<Conductor>();
+        _ism = GetComponent<InteractableStateMachine>();
     }
     
-    // Update is called once per frame
     void Update() {
         int inputH = checkInputH();
         int inputV = checkInputV();
@@ -36,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 
 
         if (attemptMove) {
-            bool onBeat = _conductor.AttemptMove();
+            bool onBeat = Conductor.Instance.AttemptMove();
             if (onBeat) {
                 if (inputH != 0) {
                     newPos = _myRb.position + new Vector2(inputH, 0);
@@ -48,28 +45,23 @@ public class PlayerController : MonoBehaviour {
 
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
+                _ism.Move(newPos);
                 moved = true;
             }
         }
 
         bool curZ = Input.GetKey(KeyCode.Z);
-        if (curZ) {
-            if (!_wasHoldingZ) {
-                CurInteractable = OnInteractable(transform.position);
-                CurInteractable.OnInteract(this);
-            } else {
-                if (moved && CurInteractable != null) {
-                    CurInteractable.OnDrag(this, newPos);
-                }
-            }
-        }
+        _ism.SetZPressed(curZ);
+        
+        // print("Cur: " + _ism.CurInput.CurInteractable);
+        // print("Z press: " + curZ);
+        // print("On top of: " + (OnInteractable(newPos) != null));
 
         _wasHoldingZ = curZ;
 
-        if (_conductor.SongIsOnBeat()) {
+        if (Conductor.Instance.SongIsOnBeat()) {
             _mySR.GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else {
+        } else {
             _mySR.GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }
@@ -115,6 +107,10 @@ public class PlayerController : MonoBehaviour {
             return null;
         }
     }
+    
+    public Interactable OnInteractable() {
+        return OnInteractable(transform.position);
+    }
 
     int checkInputH() {
         bool leftPress = Input.GetKeyDown("left");
@@ -131,11 +127,6 @@ public class PlayerController : MonoBehaviour {
         // if (_conductor) { 
             // Handles.Label(transform.position, ""+_conductor.SongIsOnBeat());
         // }
-        if(CurInteractable != null) Handles.Label(CurInteractable.transform.position, "Prev");
-        if(_conductor) Handles.Label(transform.position, _conductor.CurCombo+"");
-    }
-
-    public void SetCurInteractable(Interactable i) {
-        CurInteractable = i;
+        if(Conductor.Instance) Handles.Label(transform.position, Conductor.Instance.CurCombo+"");
     }
 }

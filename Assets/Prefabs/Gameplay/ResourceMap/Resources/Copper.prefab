@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1674082254355355538
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: price
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: ResourceName
+      value: Copper
+      objectReference: {fileID: 0}
+    - target: {fileID: 6242865822691249594, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 61e6d59ac0932e5499f3cbb5ac33023e, type: 3}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8510762756069420883, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8514774875926603717, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+      propertyPath: m_Name
+      value: Copper
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}

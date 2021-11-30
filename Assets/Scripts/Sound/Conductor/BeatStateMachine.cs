@@ -8,7 +8,7 @@ public class BeatStateMachine : StateMachine<BeatState, BeatStateInput> {
     }
 
     protected override void SetInitialState() {
-        SetCurState(typeof(OffBeatState));
+        SetCurState<OffBeatState>();
     }
 
     public bool AttemptMove() {

@@ -226,7 +226,8 @@ public class Machine : Interactable {
         // throw new NotImplementedException();
     }
 
-    public override void OnDrag(PlayerController p, Vector3 newPos) {
+    public override void OnDeInteract(PlayerController p) {
+        Vector3 newPos = p.transform.position;
         print(p.OnInteractable(newPos));
         Interactable nextInteractable = p.OnInteractable(newPos);
         Machine outMachine;
@@ -242,10 +243,5 @@ public class Machine : Interactable {
         Vector3 portPos = (transform.position + newPos) / 2;
         outMachine.AddInputMachine(this, portPos);
         AddOutputMachine(outMachine, portPos);
-        p.SetCurInteractable(outMachine.GetComponent<Interactable>());
-    }
-
-    public override void OnDeInteract(PlayerController p) {
-        throw new NotImplementedException();
     }
 }
