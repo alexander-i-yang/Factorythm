@@ -1,3 +1,4 @@
+# Hope this works
 name: Create .upmconfig.toml UPM authentication file
 on: workflow_dispatch
 jobs:
