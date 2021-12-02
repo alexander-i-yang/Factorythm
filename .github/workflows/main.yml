@@ -1,0 +1,19 @@
+- uses: actions/cache@v2
+  with:
+    path: path/to/your/project/Library
+    key: Library-MyProjectName-TargetPlatform
+    restore-keys: |
+      Library-Overchord-
+      Library-
+- uses: game-ci/unity-builder@v2
+  env:
+    UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  with:
+    targetPlatform: WebGL
+- uses: actions/upload-artifact@v2
+  with:
+    name: Build
+    path: build
+- uses: game-ci/unity-builder@v2
+  with:
+    versioning: Semantic
