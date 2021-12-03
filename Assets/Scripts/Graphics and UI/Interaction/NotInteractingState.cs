@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 
 public class NotInteractingState : InteractableState {
+    private bool _zWasPressed;
+
     public Interactable PCOnInteractable() {
         return MyStateMachine.CurInput.PC.OnInteractable();
     }
 
     public override void SetZPressed(bool zPressed) {
-        if (zPressed && PCOnInteractable()) {
-            Debug.Log("Interacting");
+        if ((!_zWasPressed && zPressed) && PCOnInteractable()) {
             MyStateMachine.Transition<InteractingState>();
         }
+
+        _zWasPressed = zPressed;
     }
 
     public override void Move(Vector3 newPos) {

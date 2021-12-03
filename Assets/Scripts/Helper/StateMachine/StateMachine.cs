@@ -53,7 +53,6 @@ public abstract class StateMachine<MyState, MyStateInput> : MonoBehaviour
     }
 
     public void Transition<NextStateType>() where NextStateType : MyState {
-        print("transition exiting from " + CurState + " to " + typeof(NextStateType));
         CurState.Exit(CurInput);
         SetCurState<NextStateType>();
         CurState.Enter(CurInput);
