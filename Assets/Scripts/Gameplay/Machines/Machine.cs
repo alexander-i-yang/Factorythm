@@ -257,24 +257,30 @@ public class Machine : Draggable {
 
         _dragBluePrints.Clear();
         
-        print("Drag");
         Vector2 delta = newPos - transform.position;
-        print(newPos+ " " + transform.position);
         if (_dragDirection == Vector2.zero) {
             _dragDirection = delta;
             print("setting drag dir" + _dragDirection);
         }
-        int firstDirectionN = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
-        print(firstDirectionN);
-        _dragBluePrints.AddRange(CreateConveyorBluePrintLine(firstDirectionN, transform.position, _dragDirection));
+        int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
+
+        Vector2 d2 = delta-_dragDirection * n1;
+        int n2 = (int) d2.magnitude;
+        d2 = d2 / n2;
+        Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
+        
+        _dragBluePrints.AddRange(CreateConveyorBluePrintLine(n1, transform.position, _dragDirection));
+        _dragBluePrints.AddRange(CreateConveyorBluePrintLine(n2, startPos2, d2));
     }
 
     //Creates n conveyors starting at startPos, going in direction dir
     public List<MachineBluePrint> CreateConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
         List<MachineBluePrint> ret = new List<MachineBluePrint>();
+        float angleRot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
         for (int i = 1; i < n+1; ++i) {
             print(dir*i);
-            ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), transform.rotation));
+            ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), rotation));
         }
         return ret;
     }
