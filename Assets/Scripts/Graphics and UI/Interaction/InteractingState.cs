@@ -9,12 +9,11 @@ using UnityEngine;
 public class InteractingState : InteractableState {
     public override void SetZPressed(bool zPressed) {
         if (!zPressed) {
-            Debug.Log("Exit");
             MyStateMachine.Transition<NotInteractingState>();
         }
     }
 
-    public override void Move(Vector3 newPos) {
+    public override void Move() {
         if (MyStateMachine.CurInput.CurInteractable is Draggable) {
             Debug.Log("Dragging");
             MyStateMachine.Transition<DraggingState>();
@@ -28,8 +27,7 @@ public class InteractingState : InteractableState {
     }
 
     public override void Exit(InteractableStateInput i) {
-        Debug.Log("On De interact");
-        MyStateMachine.CurInput.CurInteractable.OnDeInteract(MyStateMachine.CurInput.PC);
+        
     }
 
     public override void Update(InteractableStateInput i) {

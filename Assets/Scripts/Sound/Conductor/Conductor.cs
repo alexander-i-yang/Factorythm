@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(Pooler))]
 public class Conductor : MonoBehaviour {
     public static Conductor Instance;
     public BeatClip currentClip;
+    private Pooler _pooler;
 
-    public GameObject ConveyorBelt;
-    public GameObject OutputPort;
-    public GameObject InputPort;
     public int TickNum { get; private set; }
 
-    [NonSerialized] private List<Machine> _allMachines;
     [NonSerialized] public AudioSource MusicSource;
     [NonSerialized] public UI MyUI;
 
@@ -37,9 +35,6 @@ public class Conductor : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         MusicSource = gameObject.AddComponent<AudioSource>();
         MusicSource.clip = currentClip.MusicClip;
-        if (ConveyorBelt == null) {
-            throw new Exception("Conveyor Belt gameobj reference set to null!");
-        }
 
         MyUI = FindObjectOfType<UI>();
         _stateMachine = GetComponent<BeatStateMachine>();
@@ -48,7 +43,7 @@ public class Conductor : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         MusicSource.Play();
-        _allMachines = new List<Machine>(FindObjectsOfType<Machine>());
+        _pooler = GetComponent<Pooler>();
         TickNum = 0;
     }
 
@@ -74,20 +69,6 @@ public class Conductor : MonoBehaviour {
         return currentClip.UpdateSongPos();
     }
 
-    public Machine InstantiateConveyor(Vector2 newPos, Quaternion direction) {
-        Machine newConveyor = Instantiate(ConveyorBelt, new Vector3(newPos.x, newPos.y, ConveyorBelt.transform.position.z), direction).GetComponent<Machine>();
-        _allMachines.Add(newConveyor);
-        return newConveyor;
-    }
-
-    public OutputPort InstantiateOutputPort(Vector3 newPos, Transform parent) {
-        return Instantiate(OutputPort, newPos, transform.rotation, parent).GetComponent<OutputPort>();
-    }
-    
-    public InputPort InstantiateInputPort(Vector3 newPos, Transform parent) {
-        return Instantiate(InputPort, newPos, transform.rotation, parent).GetComponent<InputPort>();
-    }
-
     private void OnDrawGizmos() {
         Handles.Label(new Vector3(3, 3, -0.5f), (currentClip.TimeSinceBeat() < 0.15)+"");
         Handles.Label(new Vector3(3.5f, 3, -0.5f), (currentClip.TimeSinceBeat())+"");
@@ -103,8 +84,8 @@ public class Conductor : MonoBehaviour {
 
     public void Tick() {
         TickNum++;
-        foreach(Machine m in _allMachines) {m.PrepareTick();}
-        foreach (Machine machine in _allMachines) {
+        foreach(Machine m in _pooler.AllMachines) {m.PrepareTick();}
+        foreach (Machine machine in _pooler.AllMachines) {
             if (machine.GetNumOutputMachines() == 0) {
                 machine.Tick();
             }
@@ -137,5 +118,9 @@ public class Conductor : MonoBehaviour {
 
     public void Sell(Resource r) {
         Cash += r.price;
+    }
+
+    public static Pooler GetPooler() {
+        return Conductor.Instance._pooler;
     }
 }

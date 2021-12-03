@@ -4,9 +4,10 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using Port = UnityEditor.Experimental.GraphView.Port;
 
-public class Machine : Interactable {
+public class Machine : Draggable {
     [SerializeField] public Recipe recipe;
     // private int _maxInputPorts;
     // private int _minInputPorts;
@@ -19,13 +20,16 @@ public class Machine : Interactable {
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
-    protected static Conductor OurConductor;
+
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
+    private Vector2 _dragDirection;
+    private List<MachineBluePrint> _dragBluePrints;
+    
     public bool ShouldPrint;
     public bool ShouldBreak;
-
+    
     protected void Awake() {
         if (recipe.InResources.Length == 0) {
             // _maxInputPorts = 0;
@@ -43,7 +47,7 @@ public class Machine : Interactable {
     }
     
     void Start() {
-        if(OurConductor == null) OurConductor = FindObjectOfType<Conductor>();
+        _dragBluePrints = new List<MachineBluePrint>();
     }
 
     bool _shouldPrint() {
@@ -209,14 +213,14 @@ public class Machine : Interactable {
     }
 
     public void AddOutputMachine(Machine m, Vector3 pos) {
-        OutputPort newPort = OurConductor.InstantiateOutputPort(pos, transform);
+        OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(pos, transform);
         newPort.ConnectedMachine = m;
         OutputPorts = new List<OutputPort>();
         OutputPorts.Add(newPort);
     }
     
     public void AddInputMachine(Machine m, Vector3 pos) {
-        InputPort newPort = OurConductor.InstantiateInputPort(pos, transform);
+        InputPort newPort = Conductor.GetPooler().InstantiateInputPort(pos, transform);
         newPort.ConnectedMachine = m;
         InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);
@@ -227,7 +231,8 @@ public class Machine : Interactable {
     }
 
     public override void OnDeInteract(PlayerController p) {
-        Vector3 newPos = p.transform.position;
+        _dragDirection = Vector2.zero;
+        /*Vector3 newPos = p.transform.position;
         print(p.OnInteractable(newPos));
         Interactable nextInteractable = p.OnInteractable(newPos);
         Machine outMachine;
@@ -236,12 +241,41 @@ public class Machine : Interactable {
             float angleRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
             Vector2 conveyorPos = new Vector2(newPos.x, newPos.y);
-            outMachine = Conductor.Instance.InstantiateConveyor(conveyorPos, rotation);
+            outMachine = Conductor.GetPooler().InstantiateConveyor(conveyorPos, rotation);
         } else {
             outMachine = nextInteractable.GetComponent<Machine>();
         }
         Vector3 portPos = (transform.position + newPos) / 2;
         outMachine.AddInputMachine(this, portPos);
-        AddOutputMachine(outMachine, portPos);
+        AddOutputMachine(outMachine, portPos);*/
+    }
+
+    public override void OnDrag(PlayerController p, Vector3 newPos) {
+        foreach (MachineBluePrint m in _dragBluePrints) {
+            Destroy(m.gameObject);
+        }
+
+        _dragBluePrints.Clear();
+        
+        print("Drag");
+        Vector2 delta = newPos - transform.position;
+        print(newPos+ " " + transform.position);
+        if (_dragDirection == Vector2.zero) {
+            _dragDirection = delta;
+            print("setting drag dir" + _dragDirection);
+        }
+        int firstDirectionN = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
+        print(firstDirectionN);
+        _dragBluePrints.AddRange(CreateConveyorBluePrintLine(firstDirectionN, transform.position, _dragDirection));
+    }
+
+    //Creates n conveyors starting at startPos, going in direction dir
+    public List<MachineBluePrint> CreateConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
+        List<MachineBluePrint> ret = new List<MachineBluePrint>();
+        for (int i = 1; i < n+1; ++i) {
+            print(dir*i);
+            ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), transform.rotation));
+        }
+        return ret;
     }
 }

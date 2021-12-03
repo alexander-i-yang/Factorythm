@@ -2,15 +2,21 @@
 
 public class DraggingState : InteractableState {
     public override void SetZPressed(bool zPressed) {
-        
+        if (!zPressed) {
+            MyStateMachine.Transition<NotInteractingState>();
+        }
     }
 
-    public override void Move(Vector3 newPos) {
-        
+    public override void Move() {
+        ((Draggable)MyStateMachine.CurInput.CurInteractable).OnDrag(
+            MyStateMachine.CurInput.PC,
+            MyStateMachine.CurInput.NewPos
+        );
     }
 
     public override void Enter(InteractableStateInput i) {
-        
+        Debug.Log("Enter drag");
+        ((Draggable)(MyStateMachine.CurInput.CurInteractable)).OnDrag(MyStateMachine.CurInput.PC, MyStateMachine.CurInput.NewPos);
     }
 
     public override void Exit(InteractableStateInput i) {

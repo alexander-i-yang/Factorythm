@@ -16,16 +16,20 @@ public class InteractableStateMachine : StateMachine<InteractableState, Interact
     }
 
     public void Move(Vector3 newPos) {
-        CurState.Move(newPos);
+        CurInput.NewPos = newPos;
+        CurState.Move();
     }
 }
 
 public abstract class InteractableState : State<InteractableState, InteractableStateInput> {
     public abstract void SetZPressed(bool zPressed);
-    public abstract void Move(Vector3 newPos);
+
+    public abstract void Move();
 }
 
 public class InteractableStateInput : StateInput {
     public PlayerController PC;
+    public Vector3 NewPos;
     public Interactable CurInteractable;
+    public Draggable CurDraggable;
 }

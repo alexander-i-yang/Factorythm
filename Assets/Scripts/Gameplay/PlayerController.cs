@@ -38,13 +38,14 @@ public class PlayerController : MonoBehaviour {
                 if (inputH != 0) {
                     newPos = _myRb.position + new Vector2(inputH, 0);
                 }
-
+                
                 if (inputV != 0) {
                     newPos = _myRb.position + new Vector2(0, inputV);
                 }
 
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
+                print(newPos);
                 _ism.Move(newPos);
                 moved = true;
             }

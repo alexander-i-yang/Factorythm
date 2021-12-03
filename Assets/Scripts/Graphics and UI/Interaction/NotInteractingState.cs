@@ -15,8 +15,7 @@ public class NotInteractingState : InteractableState {
         _zWasPressed = zPressed;
     }
 
-    public override void Move(Vector3 newPos) {
-        
+    public override void Move() {
     }
 
     public override void Enter(InteractableStateInput i) {
