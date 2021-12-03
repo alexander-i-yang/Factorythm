@@ -45,7 +45,6 @@ public class PlayerController : MonoBehaviour {
 
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
-                print(newPos);
                 _ism.Move(newPos);
                 moved = true;
             }

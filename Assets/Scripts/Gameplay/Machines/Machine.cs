@@ -261,7 +261,14 @@ public class Machine : Draggable {
         if (_dragDirection == Vector2.zero) {
             _dragDirection = delta;
             print("setting drag dir" + _dragDirection);
+        } else {
+            float deltaAngle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
+            float dragDirAngle = Mathf.Atan2(_dragDirection.y, _dragDirection.x) * Mathf.Rad2Deg;
+            if (Math.Abs(deltaAngle - dragDirAngle) > 0.00001 && Math.Abs(deltaAngle - dragDirAngle) % 90 < 0.00001) {
+                _dragDirection = delta / delta.magnitude;
+            }
         }
+
         int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
 
         Vector2 d2 = delta-_dragDirection * n1;
@@ -279,7 +286,6 @@ public class Machine : Draggable {
         float angleRot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
         for (int i = 1; i < n+1; ++i) {
-            print(dir*i);
             ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), rotation));
         }
         return ret;
