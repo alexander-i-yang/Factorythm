@@ -29,8 +29,6 @@ public class Conductor : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
-        print(this);
-        print(currentClip);
         currentClip.Init();
         DontDestroyOnLoad(gameObject);
         MusicSource = gameObject.AddComponent<AudioSource>();
@@ -59,10 +57,11 @@ public class Conductor : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        bool isNewBeat = UpdateSongPos();
+        UpdateSongPos();
+        /*bool isNewBeat = UpdateSongPos();
         if (isNewBeat) {
-            // Tick();
-        }
+            Tick();
+        }*/
     }
 
     bool UpdateSongPos() {

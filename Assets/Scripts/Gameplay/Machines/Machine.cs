@@ -169,8 +169,7 @@ public class Machine : Draggable {
             if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
                 _produce();
                 _ticksSinceProduced = 0;
-            }
-            else {
+            } else {
                 _ticksSinceProduced++;
             }
             foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
@@ -198,10 +197,10 @@ public class Machine : Draggable {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             Helper.DrawArrow(curPos, direction, Color.green);
         });
-        // foreachMachine(new List<MachinePort>(InputPorts), m => {
-        //     Vector3 direction = curPos-m.transform.position - new Vector3(0.1f, 0.1f, 0);
-        //     Helper.DrawArrow(m.transform.position, direction, Color.blue);
-        // });
+        foreachMachine(new List<MachinePort>(InputPorts), m => {
+            Vector3 direction = curPos-m.transform.position - new Vector3(0.1f, 0.1f, 0);
+            Helper.DrawArrow(m.transform.position, direction, Color.blue);
+        });
     }
 
     public int GetNumOutputMachines() {
@@ -212,17 +211,25 @@ public class Machine : Draggable {
 
         return ret;
     }
-
+    
+    /**
+     * <summary>
+     *      Creates a new output port for [m]. Also creates new input port on [m] for this
+     * </summary>
+     */
     public void AddOutputMachine(Machine m) {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
         OutputPorts = new List<OutputPort>();
         OutputPorts.Add(newPort);
+        
+        m.AddInputMachine(this);
     }
     
-    public void AddInputMachine(Machine m, Vector3 pos) {
-        InputPort newPort = Conductor.GetPooler().InstantiateInputPort(pos, transform);
+    public void AddInputMachine(Machine m) {
+        Vector3 portPos = (m.transform.position + transform.position) / 2;
+        InputPort newPort = Conductor.GetPooler().InstantiateInputPort(portPos, transform);
         newPort.ConnectedMachine = m;
         InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);
@@ -241,17 +248,8 @@ public class Machine : Draggable {
         }
         List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
         ClearDragBluePrints();
-
-        for (int i = 0; i < conveyors.Count; ++i) {
-            Machine curMachine = conveyors[i];
-            // If this is the last conveyor in the line and the player is on a machine,
-            // Set the output of the new conveyor to the new machine
-            if (i > conveyors.Count - 1) {
-                if (onMachine) {
-                    curMachine.AddOutputMachine(onMachine);
-                }
-            }
-        }
+        ConfigureDragPorts(conveyors, onMachine);
+        
         /*Vector3 newPos = p.transform.position;
         print(p.OnInteractable(newPos));
         Interactable nextInteractable = p.OnInteractable(newPos);
@@ -272,7 +270,7 @@ public class Machine : Draggable {
     
     
     /** <summary>
-     *      For each blueprint in the blueprint list, instantiate a new machine
+     *      For each blueprint in [dragBluePrints], instantiate a new machine
      *      Assumes the blueprint list is ordered by distance from this machine
      * </summary>
      **/
@@ -286,15 +284,40 @@ public class Machine : Draggable {
             if (i == dragBluePrints.Count - 1 && onMachine) {
                 break;
             }
-
-            Machine machine = Instantiate(bluePrint.MachineCopy);
-            Transform machineTransform = machine.transform;
             
-            machineTransform.rotation = bluePrintTransform.rotation;
-            machineTransform.position = bluePrintTransform.position;
-            ret.Add(machine);
+            // Instantiate a new conveyor
+            Machine instMachine = Conductor.GetPooler().InstantiateConveyor(
+                bluePrintTransform.position,
+                bluePrintTransform.rotation
+            );
+            ret.Add(instMachine);
         }
         return ret;
+    }
+
+    /**
+     * <summary>
+     *      Sets the input and output ports of each conveyor in [conveyors].
+     * </summary>
+     */
+    public void ConfigureDragPorts(List<Machine> conveyors, Machine onMachine) {
+        for (int i = 0; i < conveyors.Count; ++i) {
+            Machine curMachine = conveyors[i];
+            // If this is the first conveyor in the line, set the machine to it.
+            if (i == 0) {
+                this.AddOutputMachine(curMachine);
+            }
+
+            // If this is the last conveyor in the line and the player is on a machine,
+            // Set the output of the new conveyor to the new machine
+            if (i == conveyors.Count - 1) {
+                if (onMachine) {
+                    curMachine.AddOutputMachine(onMachine);
+                }
+            } else {
+                curMachine.AddOutputMachine(conveyors[i+1]);
+            }
+        }
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
