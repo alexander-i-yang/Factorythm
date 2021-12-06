@@ -9,6 +9,7 @@ public class NotInteractingState : InteractableState {
 
     public override void SetZPressed(bool zPressed) {
         if ((!_zWasPressed && zPressed) && PCOnInteractable()) {
+            MyStateMachine.CurInput.CurInteractable = PCOnInteractable();
             MyStateMachine.Transition<InteractingState>();
         }
 
@@ -25,8 +26,7 @@ public class NotInteractingState : InteractableState {
     }
 
     public override void Exit(InteractableStateInput i) {
-        //Might cause problems depending on execution order, PC could move before exit is called???
-        MyStateMachine.CurInput.CurInteractable = PCOnInteractable();
+        
     }
 
     public override void Update(InteractableStateInput i) {

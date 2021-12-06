@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
@@ -212,8 +213,9 @@ public class Machine : Draggable {
         return ret;
     }
 
-    public void AddOutputMachine(Machine m, Vector3 pos) {
-        OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(pos, transform);
+    public void AddOutputMachine(Machine m) {
+        Vector3 portPos = (m.transform.position + transform.position) / 2;
+        OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
         OutputPorts = new List<OutputPort>();
         OutputPorts.Add(newPort);
@@ -232,6 +234,24 @@ public class Machine : Draggable {
 
     public override void OnDeInteract(PlayerController p) {
         _dragDirection = Vector2.zero;
+        Interactable onInteractable = p.OnInteractable();
+        Machine onMachine = null;
+        if (onInteractable != null) {
+            onMachine = onInteractable.gameObject.GetComponent<Machine>();
+        }
+        List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
+        ClearDragBluePrints();
+
+        for (int i = 0; i < conveyors.Count; ++i) {
+            Machine curMachine = conveyors[i];
+            // If this is the last conveyor in the line and the player is on a machine,
+            // Set the output of the new conveyor to the new machine
+            if (i > conveyors.Count - 1) {
+                if (onMachine) {
+                    curMachine.AddOutputMachine(onMachine);
+                }
+            }
+        }
         /*Vector3 newPos = p.transform.position;
         print(p.OnInteractable(newPos));
         Interactable nextInteractable = p.OnInteractable(newPos);
@@ -249,41 +269,83 @@ public class Machine : Draggable {
         outMachine.AddInputMachine(this, portPos);
         AddOutputMachine(outMachine, portPos);*/
     }
+    
+    
+    /** <summary>
+     *      For each blueprint in the blueprint list, instantiate a new machine
+     *      Assumes the blueprint list is ordered by distance from this machine
+     * </summary>
+     **/
+    public List<Machine> InstantiateFromBluePrints(List<MachineBluePrint> dragBluePrints, Machine onMachine) {
+        List<Machine> ret = new List<Machine>();
+        for (int i = 0; i < dragBluePrints.Count; i++) {
+            MachineBluePrint bluePrint = dragBluePrints[i];
+            Transform bluePrintTransform = bluePrint.transform;
+
+            // If this is the last conveyor and the player is on a machine, break
+            if (i == dragBluePrints.Count - 1 && onMachine) {
+                break;
+            }
+
+            Machine machine = Instantiate(bluePrint.MachineCopy);
+            Transform machineTransform = machine.transform;
+            
+            machineTransform.rotation = bluePrintTransform.rotation;
+            machineTransform.position = bluePrintTransform.position;
+            ret.Add(machine);
+        }
+        return ret;
+    }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
+        ClearDragBluePrints();
+        
+        Vector2 delta = newPos - transform.position;
+        _dragDirection = GetNewInitDragDirection(_dragDirection, delta);
+        
+        // Get the component of delta in the direction of dir
+        int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
+        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection));
+        
+        // Get the component of delta orthogonal to the direction of dir
+        Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
+        Vector2 orthoDir = delta - n1*_dragDirection;
+        int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
+        if (n2 != 0) {
+            orthoDir = orthoDir / n2;
+            _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
+        }
+    }
+
+    public void ClearDragBluePrints() {
         foreach (MachineBluePrint m in _dragBluePrints) {
             Destroy(m.gameObject);
         }
-
         _dragBluePrints.Clear();
-        
-        Vector2 delta = newPos - transform.position;
-        if (_dragDirection == Vector2.zero) {
-            _dragDirection = delta;
-            print("setting drag dir" + _dragDirection);
+    }
+
+    public Vector3 GetNewInitDragDirection(Vector2 dragInitDirection, Vector2 delta) {
+        //If the player just started dragging, set drag dir to delta
+        if (dragInitDirection == Vector2.zero) {
+            return delta;
         } else {
+            // If the player crosses a boundary that indicates a new drag direction, set drag dir to the direction of the boundary
             float deltaAngle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-            float dragDirAngle = Mathf.Atan2(_dragDirection.y, _dragDirection.x) * Mathf.Rad2Deg;
+            float dragDirAngle = Mathf.Atan2(dragInitDirection.y, dragInitDirection.x) * Mathf.Rad2Deg;
             if (Math.Abs(deltaAngle - dragDirAngle) > 0.00001 && Math.Abs(deltaAngle - dragDirAngle) % 90 < 0.00001) {
-                _dragDirection = delta / delta.magnitude;
+                return delta / delta.magnitude;
             }
         }
-
-        int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
-
-        Vector2 d2 = delta-_dragDirection * n1;
-        int n2 = (int) d2.magnitude;
-        d2 = d2 / n2;
-        Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
-        
-        _dragBluePrints.AddRange(CreateConveyorBluePrintLine(n1, transform.position, _dragDirection));
-        _dragBluePrints.AddRange(CreateConveyorBluePrintLine(n2, startPos2, d2));
+        // Just return the old drag init dir
+        return dragInitDirection;
     }
 
     //Creates n conveyors starting at startPos, going in direction dir
-    public List<MachineBluePrint> CreateConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
+    public List<MachineBluePrint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
         List<MachineBluePrint> ret = new List<MachineBluePrint>();
         float angleRot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        // Account for dir.x being 0 which causes a div by 0 error
+
         Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
         for (int i = 1; i < n+1; ++i) {
             ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), rotation));
