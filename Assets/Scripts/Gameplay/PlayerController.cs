@@ -10,23 +10,20 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
-    private Conductor _conductor;
     private SmoothSprite _mySR;
 
     private Room _curRoom;
     
     private bool _wasHoldingZ;
-    private Machine _prevMachine;
+    private InteractableStateMachine _ism;
 
-    // Start is called before the first frame update
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
         _mySR = GetComponentInChildren<SmoothSprite>();
-        _conductor = FindObjectOfType<Conductor>();
+        _ism = GetComponent<InteractableStateMachine>();
     }
     
-    // Update is called once per frame
     void Update() {
         int inputH = checkInputH();
         int inputV = checkInputV();
@@ -36,50 +33,35 @@ public class PlayerController : MonoBehaviour {
 
 
         if (attemptMove) {
-            bool onBeat = _conductor.AttemptMove();
+            bool onBeat = Conductor.Instance.AttemptMove();
             if (onBeat) {
                 if (inputH != 0) {
                     newPos = _myRb.position + new Vector2(inputH, 0);
                 }
-
+                
                 if (inputV != 0) {
                     newPos = _myRb.position + new Vector2(0, inputV);
                 }
 
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
+                _ism.Move(newPos);
                 moved = true;
             }
         }
 
         bool curZ = Input.GetKey(KeyCode.Z);
-        if (curZ) {
-            if (!_wasHoldingZ) {
-                _prevMachine = onMachine(transform.position);
-            } else {
-                if (moved && _prevMachine != null) {
-                    Machine outMachine = onMachine(newPos);
-                    if (outMachine == null) {
-                        Vector3 direction = newPos-transform.position;
-                        float angleRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                        Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
-                        Vector2 conveyorPos = new Vector2(newPos.x, newPos.y);
-                        outMachine = _conductor.InstantiateConveyor(conveyorPos, rotation);
-                    }
-                    Vector3 portPos = (transform.position + newPos) / 2;
-                    outMachine.AddInputMachine(_prevMachine, portPos);
-                    _prevMachine.AddOutputMachine(outMachine, portPos);
-                    _prevMachine = outMachine;
-                }
-            }
-        }
+        _ism.SetZPressed(curZ);
+        
+        // print("Cur: " + _ism.CurInput.CurInteractable);
+        // print("Z press: " + curZ);
+        // print("On top of: " + (OnInteractable(newPos) != null));
 
         _wasHoldingZ = curZ;
 
-        if (_conductor.SongIsOnBeat()) {
+        if (Conductor.Instance.SongIsOnBeat()) {
             _mySR.GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else {
+        } else {
             _mySR.GetComponent<SpriteRenderer>().color = Color.blue;
         }
     }
@@ -113,18 +95,21 @@ public class PlayerController : MonoBehaviour {
         return overlapCollider;
     }
     
-    Machine onMachine(Vector3 pos) {
-        RaycastHit2D hit =
-            Physics2D.Raycast(
-                pos, 
-                new Vector3(0, 0, 1), 
-                10.0f, 
-                LayerMask.GetMask("Machine"));
+    public Interactable OnInteractable(Vector3 pos) {
+        RaycastHit2D hit = Physics2D.Raycast(
+            pos,
+            new Vector3(0, 0, 1),
+            10.0f, 
+            LayerMask.GetMask("Interactable"));
         if (hit.transform != null) {
-            return hit.transform.GetComponent<Machine>();
+            return hit.transform.GetComponent<Interactable>();
         } else {
             return null;
         }
+    }
+    
+    public Interactable OnInteractable() {
+        return OnInteractable(transform.position);
     }
 
     int checkInputH() {
@@ -142,7 +127,6 @@ public class PlayerController : MonoBehaviour {
         // if (_conductor) { 
             // Handles.Label(transform.position, ""+_conductor.SongIsOnBeat());
         // }
-        if(_prevMachine) Handles.Label(_prevMachine.transform.position, "Prev");
-        if(_conductor) Handles.Label(transform.position, _conductor.CurCombo+"");
+        if(Conductor.Instance) Handles.Label(transform.position, Conductor.Instance.CurCombo+"");
     }
 }

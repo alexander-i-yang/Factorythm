@@ -15,11 +15,11 @@ public abstract class StateMachine<MyState, MyStateInput> : MonoBehaviour
     public MyState CurState { get; protected set; }
     public MyStateInput CurInput { get; private set; }
 
-    public void SetCurState(Type nextStateType) {
-        if (StateMap.ContainsKey(nextStateType)) {
-            CurState = StateMap[nextStateType];
+    protected void SetCurState<T>() where T : MyState {
+        if (StateMap.ContainsKey(typeof(T))) {
+            CurState = StateMap[typeof(T)];
         } else {
-            Debug.LogError("Error: state machine doesn't include type " + nextStateType);
+            Debug.LogError("Error: state machine doesn't include type " + typeof(T));
             Debug.Break();
         }
     }
@@ -53,13 +53,12 @@ public abstract class StateMachine<MyState, MyStateInput> : MonoBehaviour
     }
 
     public void Transition<NextStateType>() where NextStateType : MyState {
-        // print("transition");
         CurState.Exit(CurInput);
-        SetCurState(typeof(NextStateType));
+        SetCurState<NextStateType>();
         CurState.Enter(CurInput);
     }
 
-    public bool OnState<CheckStateType>() where CheckStateType : MyState{
+    public bool IsOnState<CheckStateType>() where CheckStateType : MyState{
         return CurState.GetType() == typeof(CheckStateType);
     }
 
