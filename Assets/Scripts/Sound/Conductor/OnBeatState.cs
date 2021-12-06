@@ -7,13 +7,12 @@ public class OnBeatState : BeatState {
     public int MovesThisTick { get; private set; }
     public override void Enter(BeatStateInput input) {
         MovesThisTick = 0;
-        // throw new System.NotImplementedException();
     }
 
     public override void Exit(BeatStateInput input) {
         if (MovesThisTick == 0) {
-            input.Con.Tick();
-            input.Con.SetCurCombo(0);
+            Conductor.Instance.Tick();
+            Conductor.Instance.SetCurCombo(0);
         }
     }
 
@@ -21,15 +20,16 @@ public class OnBeatState : BeatState {
         if (!input.Con.SongIsOnBeat()) {
             MyStateMachine.Transition<OffBeatState>();
         }
-        // throw new System.NotImplementedException();
     }
 
     public override bool AttemptMove(BeatStateInput input) {
+        // Call tick here to move all resources with the player
         if (MovesThisTick == 0) {
-            input.Con.Tick();
+            Conductor.Instance.Tick();
         }
 
         MovesThisTick++;
+        
         input.Con.IncrCurCombo();
         return true;
     }
