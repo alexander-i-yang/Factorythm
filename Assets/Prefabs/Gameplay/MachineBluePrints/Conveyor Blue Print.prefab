@@ -90,6 +90,6 @@ PrefabInstance:
     - target: {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: MachineCopy
       value: 
-      objectReference: {fileID: 1414417743092410378, guid: eb894222aba72884aa9d97040fe065a2, type: 3}
+      objectReference: {fileID: 1414417743092410389, guid: eb894222aba72884aa9d97040fe065a2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}

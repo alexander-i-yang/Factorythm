@@ -12,11 +12,11 @@ public class SmoothSprite : MonoBehaviour
     private Vector3 _beforePosition;
     private Vector3 _afterPosition;
 
-    public SpriteRenderer SR { get; private set; }
+    public SpriteRenderer SpriteRenderer { get; private set; }
 
     // Start is called before the first frame update
     void Start() {
-        SR = GetComponent<SpriteRenderer>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
