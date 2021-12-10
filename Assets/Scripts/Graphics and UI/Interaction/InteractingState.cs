@@ -15,7 +15,6 @@ public class InteractingState : InteractableState {
 
     public override void Move() {
         if (MyStateMachine.CurInput.CurInteractable is Draggable) {
-            Debug.Log("Dragging");
             MyStateMachine.Transition<DraggingState>();
         } else {
             MyStateMachine.Transition<NotInteractingState>();

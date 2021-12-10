@@ -11,7 +11,7 @@ public class OnBeatState : BeatState {
 
     public override void Exit(BeatStateInput input) {
         if (MovesThisTick == 0) {
-            Conductor.Instance.Tick();
+            if (Conductor.Instance.RhythmLock) Conductor.Instance.Tick();
             Conductor.Instance.SetCurCombo(0);
         }
     }

@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
     private bool _wasHoldingZ;
     private InteractableStateMachine _ism;
 
+    public bool RhythmLocked = true;
+
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
@@ -33,7 +35,18 @@ public class PlayerController : MonoBehaviour {
 
 
         if (attemptMove) {
-            bool onBeat = Conductor.Instance.AttemptMove();
+            bool onBeat;
+            if (!Conductor.Instance.RhythmLock) {
+                onBeat = true;
+                Conductor.Instance.Tick();
+            } else {
+                if (this.RhythmLocked) {
+                    onBeat = Conductor.Instance.AttemptMove();
+                } else {
+                    onBeat = true;
+                }
+            }
+
             if (onBeat) {
                 if (inputH != 0) {
                     newPos = _myRb.position + new Vector2(inputH, 0);
@@ -83,8 +96,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private Collider2D CheckRoomOverlap() {
-        //So the player touching the edge of the collider isn't counted as an overlap
-        Vector3 alpha = new Vector3(0.05f, 0.05f);
+        Vector3 alpha = new Vector3(0.05f, 0.05f); //So the player touching the edge of the collider isn't counted as an overlap
         Vector2 topLeftCorner = _myCollider.bounds.min + alpha;
         Vector2 topRightCorner = _myCollider.bounds.max - alpha;
         Collider2D overlapCollider = Physics2D.OverlapArea(

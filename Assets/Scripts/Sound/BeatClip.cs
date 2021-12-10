@@ -43,4 +43,8 @@ public class BeatClip : MonoBehaviour
     public float TimeTilNextBeat() {
         return SecPerBeat - TimeSinceBeat();
     }
+
+    public bool IsOnBeat() {
+        return TimeSinceBeat() < SecPerBeat/4 || TimeTilNextBeat() < SecPerBeat/4;
+    }
 }

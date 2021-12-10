@@ -321,6 +321,8 @@ public class Machine : Draggable {
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
+        
+        Debug.Log(gameObject);
         ClearDragBluePrints();
         
         Vector2 delta = newPos - transform.position;

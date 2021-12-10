@@ -15,7 +15,6 @@ public class DraggingState : InteractableState {
     }
 
     public override void Enter(InteractableStateInput i) {
-        Debug.Log("Enter drag");
         ((Draggable)(MyStateMachine.CurInput.CurInteractable)).OnDrag(MyStateMachine.CurInput.PC, MyStateMachine.CurInput.NewPos);
     }
 

@@ -9,6 +9,8 @@ public class Conductor : MonoBehaviour {
     public BeatClip currentClip;
     private Pooler _pooler;
 
+    public bool RhythmLock = false;
+    
     public int TickNum { get; private set; }
 
     [NonSerialized] public AudioSource MusicSource;
@@ -45,14 +47,8 @@ public class Conductor : MonoBehaviour {
         TickNum = 0;
     }
 
-    public bool StateIsOnBeat() {
-        if (_stateMachine) return _stateMachine.IsOnState<OnBeatState>();
-        return false;
-    }
-    
     public bool SongIsOnBeat() {
-        // return true;
-        return (currentClip.TimeSinceBeat() < 0.1 || currentClip.TimeTilNextBeat() < 0.2);
+        return currentClip.IsOnBeat();
     }
 
     // Update is called once per frame
