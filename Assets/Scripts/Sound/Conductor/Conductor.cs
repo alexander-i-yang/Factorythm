@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 [RequireComponent(typeof(Pooler))]
@@ -65,21 +61,6 @@ public class Conductor : MonoBehaviour {
     bool UpdateSongPos() {
         return currentClip.UpdateSongPos();
     }
-    
-    #if UNITY_EDITOR
-    private void OnDrawGizmos() {
-        Handles.Label(new Vector3(3, 3, -0.5f), (currentClip.TimeSinceBeat() < 0.15)+"");
-        Handles.Label(new Vector3(3.5f, 3, -0.5f), (currentClip.TimeSinceBeat())+"");
-        Gizmos.DrawWireCube(new Vector3(3, 3, -0.5f), new Vector3(currentClip.TimeSinceBeat()/currentClip.SecPerBeat, 1, -0.5f));
-        
-        Handles.Label(new Vector3(3, 4, -0.5f), (currentClip.TimeTilNextBeat() <0.3)+"");
-        Handles.Label(new Vector3(3.5f, 4, -0.5f), (currentClip.TimeTilNextBeat())+"");
-        Gizmos.DrawWireCube(new Vector3(3, 4, -0.5f), new Vector3(currentClip.TimeTilNextBeat()/currentClip.SecPerBeat, 1, -0.5f));
-
-        // if (_stateMachine) Handles.Label(new Vector3(3, 2, -0.5f), (_stateMachine.CurState.GetType().ToString())+"A");
-        Handles.Label(new Vector3(3.5f, 2, -0.5f), ("Cash: " + Cash));
-    }
-    #endif
 
     public void Tick() {
         TickNum++;

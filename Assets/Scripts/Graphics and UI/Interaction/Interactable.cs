@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour {
     // Called when the player presses z while hovering over this object

@@ -1,6 +1,3 @@
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -132,13 +129,4 @@ public class PlayerController : MonoBehaviour {
         bool downPress = Input.GetKeyDown("down");
         return upPress ? 1 : (downPress ? -1 : 0);
     }
-    
-    #if UNITY_EDITOR
-    void OnDrawGizmos() {
-        // if (_conductor) { 
-            // Handles.Label(transform.position, ""+_conductor.SongIsOnBeat());
-        // }
-        if(Conductor.Instance) Handles.Label(transform.position, Conductor.Instance.CurCombo+"");
-    }
-    #endif
 }

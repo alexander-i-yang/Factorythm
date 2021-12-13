@@ -1,8 +1,4 @@
-﻿using System;
-using System.Transactions;
-using UnityEngine;
-
-public class BeatStateMachine : StateMachine<BeatState, BeatStateInput> {
+﻿public class BeatStateMachine : StateMachine<BeatState, BeatStateInput> {
     protected override void Init() {
         CurInput.Con = GetComponent<Conductor>();
     }
