@@ -15,11 +15,25 @@ public class Pooler : MonoBehaviour {
     void Start() {
         AllMachines = new List<Machine>(FindObjectsOfType<Machine>());
     }
+
+    public Machine InstantiateMachine(GameObject copy, Vector2 newPos, Quaternion rotation) {
+        Machine newMachine = Instantiate(
+            copy, 
+            new Vector3(newPos.x, newPos.y, copy.transform.position.z),
+            rotation
+        ).GetComponent<Machine>();
+        
+        AllMachines.Add(newMachine);
+        return newMachine;
+    }
     
+    //For some reason c# wouldn't let me do default arguments so I just had to overload this one
+    public Machine InstantiateMachine(GameObject copy, Vector2 newPos) {
+        return InstantiateMachine(copy, newPos, Quaternion.identity); // Quaternion.identity means no rotation
+    }
+
     public Machine InstantiateConveyor(Vector2 newPos, Quaternion direction) {
-        Machine newConveyor = Instantiate(ConveyorBelt, new Vector3(newPos.x, newPos.y, ConveyorBelt.transform.position.z), direction).GetComponent<Machine>();
-        AllMachines.Add(newConveyor);
-        return newConveyor;
+        return InstantiateMachine(ConveyorBelt, newPos, direction);
     }
 
     public OutputPort InstantiateOutputPort(Vector3 newPos, Transform parent) {
