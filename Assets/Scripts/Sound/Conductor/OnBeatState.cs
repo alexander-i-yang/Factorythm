@@ -1,9 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
-using UnityEditor;
-
-public class OnBeatState : BeatState {
+﻿public class OnBeatState : BeatState {
     public int MovesThisTick { get; private set; }
     public override void Enter(BeatStateInput input) {
         MovesThisTick = 0;

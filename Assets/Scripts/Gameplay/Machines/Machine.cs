@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
-using UnityEngine.U2D;
-using UnityEngine.UI;
-using Port = UnityEditor.Experimental.GraphView.Port;
 
 public class Machine : Draggable {
     [SerializeField] public Recipe recipe;

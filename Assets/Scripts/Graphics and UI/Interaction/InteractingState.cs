@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-
-public class InteractingState : InteractableState {
+﻿public class InteractingState : InteractableState {
     public override void SetZPressed(bool zPressed) {
         if (!zPressed) {
             MyStateMachine.Transition<NotInteractingState>();
