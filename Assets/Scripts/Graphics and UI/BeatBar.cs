@@ -1,42 +1,47 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class BeatBar : MonoBehaviour {
-    public GameObject BeatLine;
+    public GameObject BeatLineInstance;
 
     private List<BeatLine> _beatLines;
-    private Vector3 _startPos;
-    private Vector3 _endPos;
+    public Vector3 StartPos { get; private set; }
+    public Vector3 EndPos { get; private set; }
+    
+    private float _endZoneWidth; //In units
 
-    private float _travelLength;
-
+    [Tooltip("The amount of time a player can press before the beat line touches the end zone. Multiplied by seconds/beat")]
+    [SerializeField] private float _graceTime = 0.1f;
+    
+    [Tooltip("The amount of time it takes for a beat line to dissapate after stopping. Multiplied by seconds/beat")]
+    [SerializeField] private float _dissolveTime = 0f;
 
     void Start() {
-        _startPos = transform.Find("StartPos").localPosition;
-        _endPos = transform.Find("End zone").localPosition;
-        _startPos.z = BeatLine.transform.position.z;
+        StartPos = transform.Find("StartPos").localPosition;
+        StartPos = new Vector3(StartPos.x, StartPos.y, BeatLineInstance.transform.position.z);
+        EndPos = transform.Find("End zone").localPosition;
 
-        _travelLength = _startPos.x - _endPos.x;
+        _endZoneWidth = transform.Find("End zone").GetComponent<SpriteRenderer>().bounds.size.x;
         
         _beatLines = new List<BeatLine>();
-        for (int i = 0; i < 10; ++i) {
-            BeatLine b = InitBeatClipAtEnd();
-            b.gameObject.SetActive(false);
-            _beatLines.Add(b);
-        }
-        
+        InitBeatClipAtStart();
+
         //Find an inactive beatline
         // BeatLine initLine = _beatLines.Find(e => !e.gameObject.activeSelf);
     }
 
-    BeatLine InitBeatClipAtEnd() {
-        GameObject beatLine = Instantiate(BeatLine, transform);
-        beatLine.transform.localPosition = _startPos;
-        return beatLine.GetComponent<BeatLine>();
+    BeatLine InitBeatClipAtStart() {
+        GameObject g = Instantiate(BeatLineInstance, transform);
+        g.transform.localPosition = StartPos;
+        BeatLine beatLine = g.GetComponent<BeatLine>();
+        beatLine.beatBar = this;
+        _beatLines.Add(beatLine);
+        return beatLine;
     }
 
     void Update() {
-        
+        // _beatLines[0].transform.position.x
         // print(Conductor.Instance.currentClip.BPM);
     }
 }
