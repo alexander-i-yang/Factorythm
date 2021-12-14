@@ -4,13 +4,23 @@ using UnityEngine;
 public class BeatLine : MonoBehaviour {
     private float _moveStartTime;
     public BeatBar beatBar;
+    private SpriteRenderer _mySR;
 
     void Start() {
         _moveStartTime = Time.time;
+        _mySR = GetComponent<SpriteRenderer>();
     }
 
     void Update() {
-        float newX = Helper.ActualLerp(beatBar.StartPos.x, beatBar.EndPos.x, Time.time-_moveStartTime);
+        float startX = beatBar.StartPos.x;
+        float endX = beatBar.EndPos.x;
+        
+        float t = (float) ((Time.time-_moveStartTime)/((startX-endX)/beatBar.GetVelocity()));
+        if (t > 1) {
+            Destroy(gameObject);
+        }
+
+        float newX = Helper.ActualLerp(startX, endX, t)-1;// Terrible practice, idk how to fix
         
         //Set localPos.x to newX
         var localPosition = transform.localPosition;
@@ -18,8 +28,14 @@ public class BeatLine : MonoBehaviour {
         transform.localPosition = localPosition;
     }
 
-    public void Move(Vector3 start, Vector3 end) {
-        
+    IEnumerator Fade(float time) {
+        for (float ft = 0; ft <= time; ft += Time.deltaTime) {
+            Color col = _mySR.color;
+            col.a = ft / time;
+            _mySR.color = col;
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 
     /*public void Move(Vector3 newPos, bool destroyOnComplete = false) {

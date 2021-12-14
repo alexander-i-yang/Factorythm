@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
             bool onBeat;
             if (!Conductor.Instance.RhythmLock) {
                 onBeat = true;
-                Conductor.Instance.Tick();
+                // Conductor.Instance.MachineTick();
             } else {
                 if (this.RhythmLocked) {
                     onBeat = Conductor.Instance.AttemptMove();

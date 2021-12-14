@@ -8,14 +8,20 @@ public class BeatBar : MonoBehaviour {
     private List<BeatLine> _beatLines;
     public Vector3 StartPos { get; private set; }
     public Vector3 EndPos { get; private set; }
-    
-    private float _endZoneWidth; //In units
 
+    [Header("Math for beatline movement calculations")]
+    //Not rigorously tested 
+    private double _endZoneWidth; //In units
+    private double _beatLineWidth; //In units
+    
     [Tooltip("The amount of time a player can press before the beat line touches the end zone. Multiplied by seconds/beat")]
     [SerializeField] private float _graceTime = 0.1f;
-    
+
     [Tooltip("The amount of time it takes for a beat line to dissapate after stopping. Multiplied by seconds/beat")]
-    [SerializeField] private float _dissolveTime = 0f;
+    [SerializeField] private float dissolveTime = 0f;
+    public float GetDissolveTime() {
+        return dissolveTime;
+    }
 
     void Start() {
         StartPos = transform.Find("StartPos").localPosition;
@@ -23,9 +29,9 @@ public class BeatBar : MonoBehaviour {
         EndPos = transform.Find("End zone").localPosition;
 
         _endZoneWidth = transform.Find("End zone").GetComponent<SpriteRenderer>().bounds.size.x;
+        _beatLineWidth = BeatLineInstance.GetComponent<SpriteRenderer>().bounds.size.x;
         
         _beatLines = new List<BeatLine>();
-        InitBeatClipAtStart();
 
         //Find an inactive beatline
         // BeatLine initLine = _beatLines.Find(e => !e.gameObject.activeSelf);
@@ -40,8 +46,19 @@ public class BeatBar : MonoBehaviour {
         return beatLine;
     }
 
-    void Update() {
-        // _beatLines[0].transform.position.x
-        // print(Conductor.Instance.currentClip.BPM);
+    public double GetVelocity() {
+        double secPerBeat = Conductor.Instance.currentClip.SecPerBeat;
+        double validMult = Conductor.Instance.currentClip.ValidTime;
+
+        // Represents the total time between the moment a beatline crosses the valid threshold and the moment it reaches
+        // The center of the endzone
+        double timeElapsed = secPerBeat*validMult - dissolveTime - _graceTime*secPerBeat;
+
+        double v = (_endZoneWidth + _beatLineWidth) / (2 * timeElapsed);
+        return v;
+    }
+
+    public void Tick() {
+        InitBeatClipAtStart();
     }
 }

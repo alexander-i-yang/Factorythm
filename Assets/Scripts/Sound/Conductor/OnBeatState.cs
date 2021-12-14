@@ -1,4 +1,6 @@
-﻿public class OnBeatState : BeatState {
+﻿using System;
+
+public class OnBeatState : BeatState {
     public int MovesThisTick { get; private set; }
     public override void Enter(BeatStateInput input) {
         MovesThisTick = 0;
@@ -6,7 +8,7 @@
 
     public override void Exit(BeatStateInput input) {
         if (MovesThisTick == 0) {
-            if (Conductor.Instance.RhythmLock) Conductor.Instance.Tick();
+            if (Conductor.Instance.RhythmLock) Conductor.Instance.MachineTick();
             Conductor.Instance.SetCurCombo(0);
         }
     }
@@ -20,7 +22,7 @@
     public override bool AttemptMove(BeatStateInput input) {
         // Call tick here to move all resources with the player
         if (MovesThisTick == 0) {
-            Conductor.Instance.Tick();
+            Conductor.Instance.MachineTick();
         }
 
         MovesThisTick++;

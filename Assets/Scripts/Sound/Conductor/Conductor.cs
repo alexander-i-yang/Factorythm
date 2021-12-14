@@ -12,7 +12,7 @@ public class Conductor : MonoBehaviour {
     public int TickNum { get; private set; }
 
     [NonSerialized] public AudioSource MusicSource;
-    [NonSerialized] public UI MyUI;
+    [NonSerialized] public UIManager MyUIManager;
 
     private BeatStateMachine _stateMachine;
     
@@ -34,7 +34,7 @@ public class Conductor : MonoBehaviour {
         MusicSource = gameObject.AddComponent<AudioSource>();
         MusicSource.clip = currentClip.MusicClip;
 
-        MyUI = FindObjectOfType<UI>();
+        MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
     }
 
@@ -51,25 +51,35 @@ public class Conductor : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        UpdateSongPos();
-        /*bool isNewBeat = UpdateSongPos();
+        // UpdateSongPos();
+        bool isNewBeat = UpdateSongPos();
         if (isNewBeat) {
-            Tick();
-        }*/
+            TrueTick();
+            if (!RhythmLock) {
+                MachineTick();
+            }
+        }
     }
 
     bool UpdateSongPos() {
         return currentClip.UpdateSongPos();
     }
-
-    public void Tick() {
+    
+    //Called whenever you want to update all machines
+    public void MachineTick() {
         TickNum++;
+
         foreach(Machine m in _pooler.AllMachines) {m.PrepareTick();}
         foreach (Machine machine in _pooler.AllMachines) {
             if (machine.GetNumOutputMachines() == 0) {
                 machine.Tick();
             }
         }
+    }
+    
+    // Called whenever the song hits a new beat
+    public void TrueTick() {
+        MyUIManager.Tick();
     }
 
     public bool AttemptMove() {
@@ -84,7 +94,7 @@ public class Conductor : MonoBehaviour {
     public void SetCurCombo(int c) {
         if (ComboEnabled) {
             CurCombo = c;
-            MyUI.Label.text = "Combo: " + c;
+            MyUIManager.Label.text = "Combo: " + c;
         }
     }
 

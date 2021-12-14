@@ -8,18 +8,21 @@ public class BeatClip : MonoBehaviour
     public float BeatOffset;
     public AudioClip MusicClip;
 
-    [NonSerialized] public float SongPosition = 0;
-    [NonSerialized] public float SongPositionInBeats = 0;
+    [NonSerialized] public double SongPosition = 0;
+    [NonSerialized] public double SongPositionInBeats = 0;
     [NonSerialized] public int LastSongPosWholeBeats = 0;
-    [NonSerialized] public float DSPSongTime = 0;
+    [NonSerialized] public double DSPSongTime = 0;
+
+    //Controls time window for a valid input. Multiplied by seconds/beat
+    [SerializeField] public double ValidTime { get; private set; } = 0.25;
 
     public void Init() {
         SecPerBeat = 60.0f/BPM;
-        DSPSongTime = (float)AudioSettings.dspTime;
+        DSPSongTime = AudioSettings.dspTime;
     }
     
     public bool UpdateSongPos() {
-        SongPosition = (float) (AudioSettings.dspTime-DSPSongTime-BeatOffset*SecPerBeat);
+        SongPosition = AudioSettings.dspTime-DSPSongTime-BeatOffset*SecPerBeat;
         // print(BeatOffset*SecPerBeat);
         SongPositionInBeats = SongPosition / SecPerBeat;
         bool isNewBeat = IsNewBeat();
@@ -33,16 +36,16 @@ public class BeatClip : MonoBehaviour
         return SongPositionInBeats - LastSongPosWholeBeats > 1;
     }
 
-    public float TimeSinceBeat() {
+    public double TimeSinceBeat() {
         return (SongPositionInBeats - LastSongPosWholeBeats)*SecPerBeat;
         
     }
 
-    public float TimeTilNextBeat() {
+    public double TimeTilNextBeat() {
         return SecPerBeat - TimeSinceBeat();
     }
 
     public bool IsOnBeat() {
-        return TimeSinceBeat() < SecPerBeat/4 || TimeTilNextBeat() < SecPerBeat/4;
+        return TimeSinceBeat() < SecPerBeat*ValidTime || TimeTilNextBeat() < SecPerBeat*ValidTime;
     }
 }
