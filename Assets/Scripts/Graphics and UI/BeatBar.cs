@@ -5,8 +5,19 @@ public class BeatBar : MonoBehaviour {
     public GameObject BeatLine;
 
     private List<BeatLine> _beatLines;
-    
+    private Vector3 _startPos;
+    private Vector3 _endPos;
+
+    private float _travelLength;
+
+
     void Start() {
+        _startPos = transform.Find("StartPos").localPosition;
+        _endPos = transform.Find("End zone").localPosition;
+        _startPos.z = BeatLine.transform.position.z;
+
+        _travelLength = _startPos.x - _endPos.x;
+        
         _beatLines = new List<BeatLine>();
         for (int i = 0; i < 10; ++i) {
             BeatLine b = InitBeatClipAtEnd();
@@ -19,12 +30,9 @@ public class BeatBar : MonoBehaviour {
     }
 
     BeatLine InitBeatClipAtEnd() {
-        Vector3 initPos = BeatLine.transform.position;
-        return Instantiate(
-            BeatLine, 
-            new Vector3(1, 0, initPos.z), 
-            Quaternion.identity,
-            transform).GetComponent<BeatLine>();
+        GameObject beatLine = Instantiate(BeatLine, transform);
+        beatLine.transform.localPosition = _startPos;
+        return beatLine.GetComponent<BeatLine>();
     }
 
     void Update() {
