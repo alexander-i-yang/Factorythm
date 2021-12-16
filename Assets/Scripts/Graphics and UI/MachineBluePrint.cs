@@ -1,6 +1,4 @@
-﻿using System;
-using TreeEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MachineBluePrint : Draggable {
     public GameObject MachineCopy;

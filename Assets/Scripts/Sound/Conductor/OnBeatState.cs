@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using UnityEngine;
-using UnityEditor;
 
 public class OnBeatState : BeatState {
     public int MovesThisTick { get; private set; }
@@ -11,7 +8,7 @@ public class OnBeatState : BeatState {
 
     public override void Exit(BeatStateInput input) {
         if (MovesThisTick == 0) {
-            if (Conductor.Instance.RhythmLock) Conductor.Instance.Tick();
+            if (Conductor.Instance.RhythmLock) Conductor.Instance.MachineTick();
             Conductor.Instance.SetCurCombo(0);
         }
     }
@@ -25,7 +22,7 @@ public class OnBeatState : BeatState {
     public override bool AttemptMove(BeatStateInput input) {
         // Call tick here to move all resources with the player
         if (MovesThisTick == 0) {
-            Conductor.Instance.Tick();
+            Conductor.Instance.MachineTick();
         }
 
         MovesThisTick++;

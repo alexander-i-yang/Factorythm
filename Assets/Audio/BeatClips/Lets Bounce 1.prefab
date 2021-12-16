@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: eb6778cab841a2144abc0903c0bae919, type: 3}
     - target: {fileID: 3726595306961373515, guid: e77ce75eaf9904b46b1f22f9a104c0fe, type: 3}
       propertyPath: BeatOffset
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4652852300290996968, guid: e77ce75eaf9904b46b1f22f9a104c0fe, type: 3}
       propertyPath: m_Name

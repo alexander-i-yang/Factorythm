@@ -1,7 +1,4 @@
-﻿using System;
-using UnityEngine;
-
-public class OffBeatState : BeatState {
+﻿public class OffBeatState : BeatState {
     public override void Enter(BeatStateInput i) {
         
         // throw new System.NotImplementedException();

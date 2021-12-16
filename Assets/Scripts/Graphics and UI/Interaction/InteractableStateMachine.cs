@@ -1,6 +1,4 @@
-﻿using System;
-using System.Numerics;
-using Vector3 = UnityEngine.Vector3;
+﻿using Vector3 = UnityEngine.Vector3;
 
 public class InteractableStateMachine : StateMachine<InteractableState, InteractableStateInput>{
     protected override void Init() {

@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
-using UnityEngine.U2D;
-using UnityEngine.UI;
-using Port = UnityEditor.Experimental.GraphView.Port;
 
 public class Machine : Draggable {
     [SerializeField] public Recipe recipe;
@@ -249,23 +243,6 @@ public class Machine : Draggable {
         List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
         ClearDragBluePrints();
         ConfigureDragPorts(conveyors, onMachine);
-        
-        /*Vector3 newPos = p.transform.position;
-        print(p.OnInteractable(newPos));
-        Interactable nextInteractable = p.OnInteractable(newPos);
-        Machine outMachine;
-        if (nextInteractable == null) {
-            Vector3 direction = newPos-transform.position;
-            float angleRot = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
-            Vector2 conveyorPos = new Vector2(newPos.x, newPos.y);
-            outMachine = Conductor.GetPooler().InstantiateConveyor(conveyorPos, rotation);
-        } else {
-            outMachine = nextInteractable.GetComponent<Machine>();
-        }
-        Vector3 portPos = (transform.position + newPos) / 2;
-        outMachine.AddInputMachine(this, portPos);
-        AddOutputMachine(outMachine, portPos);*/
     }
     
     
@@ -280,8 +257,10 @@ public class Machine : Draggable {
             MachineBluePrint bluePrint = dragBluePrints[i];
             Transform bluePrintTransform = bluePrint.transform;
 
-            // If this is the last conveyor and the player is on a machine, break
+            // If this is the last conveyor and the player is on a machine,
+            // add onMachine to the return list, then break
             if (i == dragBluePrints.Count - 1 && onMachine) {
+                ret.Add(onMachine);
                 break;
             }
             
@@ -298,6 +277,7 @@ public class Machine : Draggable {
     /**
      * <summary>
      *      Sets the input and output ports of each conveyor in [conveyors].
+     *      Treats the onMachine like another conveyor.
      * </summary>
      */
     public void ConfigureDragPorts(List<Machine> conveyors, Machine onMachine) {
@@ -305,15 +285,13 @@ public class Machine : Draggable {
             Machine curMachine = conveyors[i];
             // If this is the first conveyor in the line, set the machine to it.
             if (i == 0) {
-                this.AddOutputMachine(curMachine);
+                AddOutputMachine(curMachine);
             }
 
             // If this is the last conveyor in the line and the player is on a machine,
             // Set the output of the new conveyor to the new machine
-            if (i == conveyors.Count - 1) {
-                if (onMachine) {
-                    curMachine.AddOutputMachine(onMachine);
-                }
+            if (i >= conveyors.Count - 1) {
+                break;
             } else {
                 curMachine.AddOutputMachine(conveyors[i+1]);
             }

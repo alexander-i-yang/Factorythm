@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Room : MonoBehaviour, Area {
     private BoxCollider2D _myCollider;

@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -38,7 +32,7 @@ public class PlayerController : MonoBehaviour {
             bool onBeat;
             if (!Conductor.Instance.RhythmLock) {
                 onBeat = true;
-                Conductor.Instance.Tick();
+                // Conductor.Instance.MachineTick();
             } else {
                 if (this.RhythmLocked) {
                     onBeat = Conductor.Instance.AttemptMove();
@@ -134,11 +128,5 @@ public class PlayerController : MonoBehaviour {
         bool upPress = Input.GetKeyDown("up");
         bool downPress = Input.GetKeyDown("down");
         return upPress ? 1 : (downPress ? -1 : 0);
-    }
-    void OnDrawGizmos() {
-        // if (_conductor) { 
-            // Handles.Label(transform.position, ""+_conductor.SongIsOnBeat());
-        // }
-        if(Conductor.Instance) Handles.Label(transform.position, Conductor.Instance.CurCombo+"");
     }
 }
