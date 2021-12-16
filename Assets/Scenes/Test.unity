@@ -4296,7 +4296,7 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: currentClip
       value: 
-      objectReference: {fileID: 3724821215476528915, guid: 743a83f0b3691f64d8e13d22c59ed95d, type: 3}
+      objectReference: {fileID: 2597933047597158024, guid: d5bd280b2b15c624fa50fb7d680c61cd, type: 3}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: ConveyorBelt
       value: 

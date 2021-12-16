@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
-
+// Not rigorously tested. Proceed with caution.
 public class BeatLine : MonoBehaviour {
     private float _moveStartTime;
     public BeatBar beatBar;
@@ -17,7 +17,10 @@ public class BeatLine : MonoBehaviour {
         
         float t = (float) ((Time.time-_moveStartTime)/((startX-endX)/beatBar.GetVelocity()));
         if (t > 1) {
-            Destroy(gameObject);
+            t = 1;
+            StartCoroutine(Fade(beatBar.DissolveTime));
+            // StartCoroutine(Fade(0.2f));
+            // Destroy(gameObject);
         }
 
         float newX = Helper.ActualLerp(startX, endX, t);
@@ -29,7 +32,7 @@ public class BeatLine : MonoBehaviour {
     }
 
     IEnumerator Fade(float time) {
-        for (float ft = 0; ft <= time; ft += Time.deltaTime) {
+        for (float ft = time; ft > 0; ft -= Time.deltaTime) {
             Color col = _mySR.color;
             col.a = ft / time;
             _mySR.color = col;
@@ -37,27 +40,4 @@ public class BeatLine : MonoBehaviour {
         }
         Destroy(gameObject);
     }
-
-    /*public void Move(Vector3 newPos, bool destroyOnComplete = false) {
-        _beforePosition = transform.position;
-        _afterPosition = new Vector3(newPos.x, newPos.y, transform.position.z);
-        StartCoroutine(_moveCoroutine(destroyOnComplete));
-    }
-
-    IEnumerator _moveCoroutine(bool destroyOnComplete) {
-        for (float ft = 0; ft <= moveTime; ft += Time.deltaTime) {
-            transform.position = Helper.ActualLerp(
-                _beforePosition,
-                _afterPosition,
-                movementCurve.Evaluate((float) (ft / moveTime))
-            );
-            yield return null;
-        }
-
-        if (destroyOnComplete) {
-            Destroy(transform.parent.gameObject);
-        }
-
-        transform.position = _afterPosition;
-    }*/
 }
