@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class NotInteractingState : InteractableState {
+﻿public class NotInteractingState : InteractableState {
     private bool _zWasPressed;
 
     public Interactable PCOnInteractable() {
