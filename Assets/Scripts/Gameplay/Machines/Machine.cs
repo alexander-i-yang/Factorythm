@@ -22,8 +22,8 @@ public class Machine : Draggable {
     private Vector2 _dragDirection;
     private List<MachineBluePrint> _dragBluePrints;
     
-    public bool ShouldPrint;
-    public bool ShouldBreak;
+    [SerializeField] private bool _shouldPrint;
+    [SerializeField] private bool _shouldBreak;
     
     protected void Awake() {
         if (recipe.InResources.Length == 0) {
@@ -45,15 +45,6 @@ public class Machine : Draggable {
         _dragBluePrints = new List<MachineBluePrint>();
     }
 
-    bool _shouldPrint() {
-        return ShouldPrint;
-        // return transform.name == Helper.Consts.NAME;
-    }
-
-    bool _shouldBreak() {
-        return ShouldBreak;
-    }
-
     private static void foreachMachine(List<MachinePort> portList, Action<Machine> func) {
         foreach (MachinePort i in portList) {
             var inputMachine = i.ConnectedMachine;
@@ -63,11 +54,11 @@ public class Machine : Draggable {
         }
     }
 
-    private bool _checkEnoughInput() {
+    protected bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
         foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
         bool ret = recipe.CheckInputs(actualInputs);
-        if (_shouldPrint()) {
+        if (_shouldPrint) {
             print("Input resources: ");
             foreach (Resource i in actualInputs) { print(i);}
             print("Enough input: "  +ret);
@@ -102,8 +93,8 @@ public class Machine : Draggable {
         var resourcesToCreate = recipe.outToList();
         foreach (Resource r in resourcesToCreate) {
             var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
-            var newObj = Instantiate(r.transform, instantiatePos, transform.rotation);
-            if (_shouldPrint()) {
+            var newObj = Instantiate(r, instantiatePos, transform.rotation);
+            if (_shouldPrint) {
                 print("Adding new resource: " + r);
             }
             OutputBuffer.Add(newObj.GetComponent<Resource>());
@@ -119,19 +110,19 @@ public class Machine : Draggable {
         //Foreach resource in each port's input buffer, move to this machine
         foreachMachine(new List<MachinePort>(InputPorts), m => {
             foreach (Resource resource in m.OutputBuffer) {
-                if (_shouldPrint()) {
+                if (_shouldPrint) {
                     print("moving resource: " + m + resource);
                 }
                 MoveHere(resource, _shouldDestroyInputs());
             }
         });
         //Empty the output list of the input machines
-        if (_shouldPrint()) {
+        if (_shouldPrint) {
             print("Emptying input ports' output");
         }
         foreachMachine(new List<MachinePort>(InputPorts), m => m.ClearOutput());
         //Create new resources based on the old ones
-        if (_shouldPrint()) {
+        if (_shouldPrint) {
             print("Creating output");
         }
         CreateOutput();
@@ -139,7 +130,7 @@ public class Machine : Draggable {
 
     protected virtual void _produce() {
         if (recipe.CreatesNewOutput) {
-            if (_shouldPrint()) {
+            if (_shouldPrint) {
                 print("moving and destroying");
             }
             MoveAndDestroy();
@@ -156,7 +147,7 @@ public class Machine : Draggable {
         if (!_pokedThisTick) {
             _pokedThisTick = true;
             bool enoughInput = _checkEnoughInput();
-            if (_shouldPrint()) {
+            if (_shouldPrint) {
                 print("Enough ticks: " + (_ticksSinceProduced >= recipe.ticks));
             }
 
@@ -169,7 +160,7 @@ public class Machine : Draggable {
             foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
         }
 
-        if (_shouldBreak()) {
+        if (_shouldBreak) {
             Debug.Break();
         }
     }
