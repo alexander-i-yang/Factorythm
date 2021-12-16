@@ -14,7 +14,7 @@ public class OnBeatState : BeatState {
     }
 
     public override void Update(BeatStateInput input) {
-        if (!input.Con.SongIsOnBeat()) {
+        if (!Conductor.Instance.SongIsOnBeat()) {
             MyStateMachine.Transition<OffBeatState>();
         }
     }
@@ -27,7 +27,7 @@ public class OnBeatState : BeatState {
 
         MovesThisTick++;
         
-        input.Con.IncrCurCombo();
+        Conductor.Instance.IncrCurCombo();
         return true;
     }
 }

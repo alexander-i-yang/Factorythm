@@ -1,6 +1,6 @@
 ﻿public class BeatStateMachine : StateMachine<BeatState, BeatStateInput> {
     protected override void Init() {
-        CurInput.Con = GetComponent<Conductor>();
+        // CurInput.Con = GetComponent<Conductor>();
     }
 
     protected override void SetInitialState() {
@@ -17,5 +17,5 @@ public abstract class BeatState : State<BeatState, BeatStateInput> {
 }
 
 public class BeatStateInput : StateInput {
-    public Conductor Con;
+    // public Conductor Con;
 }
