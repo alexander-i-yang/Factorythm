@@ -20,7 +20,7 @@ public class BeatLine : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        float newX = Helper.ActualLerp(startX, endX, t)-1;// Terrible practice, idk how to fix
+        float newX = Helper.ActualLerp(startX, endX, t);
         
         //Set localPos.x to newX
         var localPosition = transform.localPosition;
