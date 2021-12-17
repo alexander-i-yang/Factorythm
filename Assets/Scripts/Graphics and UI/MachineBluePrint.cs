@@ -19,12 +19,19 @@ public class MachineBluePrint : Draggable {
     }
 
     public override void OnDeInteract(PlayerController p) {
+        if (CanPlace(transform.position)) {
+            Destroy(gameObject);
+        }
         Conductor.GetPooler().InstantiateMachine(MachineCopy, p.transform.position);
-        Destroy(gameObject);
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
         SmoothSprite.Move(newPos);
         // throw new System.NotImplementedException();
+    }
+
+    public bool CanPlace(Vector3 pos) {
+        
+        return true;
     }
 }

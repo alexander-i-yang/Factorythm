@@ -17,8 +17,7 @@ public class BluePrintCreator : Button {
             _myMachineBluePrint = Conductor.GetPooler().CreateMachineBluePrint(machineBPInstance, _spawnPoint);
             _myMachineBluePrint.SmoothSprite.transform.position = transform.position;
             _myMachineBluePrint.SmoothSprite.Move(_spawnPoint);
-        }
-        else {  
+        } else {  
             // print("Occupied");
         }
     }

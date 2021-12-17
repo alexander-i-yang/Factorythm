@@ -255,6 +255,9 @@ public class Machine : Draggable {
                 break;
             }
             
+            // if (bluePrintTransform.position)
+            // RaycastHit
+
             // Instantiate a new conveyor
             Machine instMachine = Conductor.GetPooler().InstantiateConveyor(
                 bluePrintTransform.position,
