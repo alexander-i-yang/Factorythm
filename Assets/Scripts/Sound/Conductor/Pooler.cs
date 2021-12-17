@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Pooler : MonoBehaviour {
@@ -44,5 +45,10 @@ public class Pooler : MonoBehaviour {
 
     public MachineBluePrint CreateConveyorBluePrint(Vector3 pos, Quaternion rot) {
         return Instantiate(ConveyorBluePrint, pos, rot);
+    }
+
+    public MachineBluePrint CreateMachineBluePrint(GameObject m, Vector2 pos) {
+        Vector3 instantiatePos = new Vector3(pos.x, pos.y, m.transform.position.z);
+        return Instantiate(m, instantiatePos, Quaternion.identity).GetComponent<MachineBluePrint>();
     }
 }

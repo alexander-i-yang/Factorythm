@@ -1,28 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MachineBluePrint : Draggable {
     public GameObject MachineCopy;
 
-    private SmoothSprite _smoothSprite;
-    
-    private void Start() {
-        _smoothSprite = GetComponentInChildren<SmoothSprite>();
+    public SmoothSprite SmoothSprite { get; private set; }
+
+    private void Awake() {
+        SmoothSprite = GetComponentInChildren<SmoothSprite>();
+        print(SmoothSprite);
     }
 
     public override void OnInteract(PlayerController p) {
         print("Helo");
-        Color c = _smoothSprite.SpriteRenderer.color;
+        Color c = SmoothSprite.SpriteRenderer.color;
         c.a = 0.8f;
-        _smoothSprite.SpriteRenderer.color = c;
+        SmoothSprite.SpriteRenderer.color = c;
     }
 
     public override void OnDeInteract(PlayerController p) {
+        if (CanPlace(transform.position)) {
+            Destroy(gameObject);
+        }
         Conductor.GetPooler().InstantiateMachine(MachineCopy, p.transform.position);
-        Destroy(gameObject);
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
-        _smoothSprite.Move(newPos);
+        SmoothSprite.Move(newPos);
         // throw new System.NotImplementedException();
+    }
+
+    public bool CanPlace(Vector3 pos) {
+        
+        return true;
     }
 }
