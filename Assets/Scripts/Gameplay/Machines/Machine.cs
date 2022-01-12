@@ -27,15 +27,15 @@ public class Machine : Draggable {
     [SerializeField] private bool _shouldBreak;
     
     protected void Awake() {
-        if (recipeObj.InResources.Length == 0) {
-            // _maxInputPorts = 0;
-            // _minInputPorts = 0;
+        /*if (recipeObj.InCriteria.Length == 0) {
+            _maxInputPorts = 0;
+            _minInputPorts = 0;
         }
         
-        if (recipeObj.OutResources.Length == 0) {
-            // _maxOutputPorts = 0;
-            // _minOutputPorts = 0;
-        }
+        if (recipeObj.OutCriteria.Length == 0) {
+            _maxOutputPorts = 0;
+            _minOutputPorts = 0;
+        }*/
 
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();

@@ -292,10 +292,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4196126780359366102, guid: d347fb0748b5ea047bf85639c8502407, type: 3}
-      propertyPath: recipe
-      value: 
-      objectReference: {fileID: 5868530607594993500, guid: 31705b6e0e1dca54ab37b0faa5f589e4, type: 3}
-    - target: {fileID: 4196126780359366102, guid: d347fb0748b5ea047bf85639c8502407, type: 3}
       propertyPath: ShouldBreak
       value: 0
       objectReference: {fileID: 0}
@@ -613,10 +609,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1427211780606109062, guid: 6b1fd7c3d622c674c9e62ba9c774e06e, type: 3}
-      propertyPath: recipeObj
-      value: 
-      objectReference: {fileID: 11400000, guid: 4597bd7f4a01f554c974211b17f245d9, type: 2}
     - target: {fileID: 1427211780606109063, guid: 6b1fd7c3d622c674c9e62ba9c774e06e, type: 3}
       propertyPath: m_Sprite
       value: 
