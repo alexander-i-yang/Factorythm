@@ -55,7 +55,7 @@ public class Machine : Draggable {
         }
     }
 
-    protected bool _checkEnoughInput() {
+    /*protected bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
         foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
         bool ret = recipe.CheckInputs(actualInputs);
@@ -66,8 +66,22 @@ public class Machine : Draggable {
         }
 
         return ret;
-    }
+    }*/
+    
+    protected bool _checkEnoughInput() {
+        var actualInputs = new List<Resource>();
+        foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
+        
+        bool ret = recipeObj.CheckInputs(actualInputs);
+        if (_shouldPrint) {
+            print("Input resources: ");
+            foreach (Resource i in actualInputs) { print(i);}
+            print("Enough input: "  +ret);
+        }
 
+        return ret;
+    }
+    
     public void ClearOutput() {
         OutputBuffer.Clear();
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Recipe", menuName = "ScriptableObjects/Recipe")]
 public class RecipeScriptableObj : ScriptableObject {
@@ -9,4 +10,8 @@ public class RecipeScriptableObj : ScriptableObject {
     
     public int ticks;
     public bool CreatesNewOutput;
+
+    public bool CheckInputs(List<Resource> actualInputs) {
+        return InCriteria.CheckInputs(actualInputs);
+    }
 }
