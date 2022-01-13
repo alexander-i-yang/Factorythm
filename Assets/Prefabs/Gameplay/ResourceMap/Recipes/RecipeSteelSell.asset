@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f704d344b244a02a05164ca23c79555, type: 3}
+  m_Name: RecipeSteelSell
+  m_EditorClassIdentifier: 
+  InCriteria:
+    resources:
+    - resource: {fileID: 4260335696561330830, guid: 75c4d2b5ab0c7214fb6a28370db70b61, type: 3}
+      num: 1
+    Cash: 0
+  OutCriteria:
+    resources: []
+    Cash: 12
+  ticks: 4
+  CreatesNewOutput: 1

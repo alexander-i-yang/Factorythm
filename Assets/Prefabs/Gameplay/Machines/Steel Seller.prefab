@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recipe: {fileID: 1548732854855466026, guid: 41c209970c2da35438e5d9e347dd7677, type: 3}
-  Perimeter: 0
-  MaxStorage: 1
+  recipeObj: {fileID: 11400000, guid: 4fd3e25468d2ab54789799100f4083ea, type: 2}
+  _shouldPrint: 0
+  _shouldBreak: 0
 --- !u!1001 &7019437383495230783
 PrefabInstance:
   m_ObjectHideFlags: 0

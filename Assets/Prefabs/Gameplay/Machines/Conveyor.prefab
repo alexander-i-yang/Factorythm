@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: recipe
       value: 
       objectReference: {fileID: 2752254494854485238, guid: 60405be466096ec47875ad39b399f510, type: 3}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipeObj
+      value: 
+      objectReference: {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
     - target: {fileID: 8714590015041616768, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.75

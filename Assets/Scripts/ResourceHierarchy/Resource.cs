@@ -3,7 +3,8 @@ using UnityEngine;
 
 public enum ResourceMatter {
     Solid,
-    Liquid
+    Liquid,
+    None
 }
 
 [Serializable]
