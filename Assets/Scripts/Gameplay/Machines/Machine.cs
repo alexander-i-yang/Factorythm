@@ -74,7 +74,7 @@ public class Machine : Draggable {
         
         bool ret = recipeObj.CheckInputs(actualInputs);
         if (_shouldPrint) {
-            print("Input resources: ");
+            // print("Input resources: ");
             foreach (Resource i in actualInputs) { print(i);}
             print("Enough input: "  +ret);
         }

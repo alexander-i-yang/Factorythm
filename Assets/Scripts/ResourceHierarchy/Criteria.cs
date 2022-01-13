@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEditor;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public struct Criteria {
     [SerializeField] public ResourceNum[] resources;
     public int Cash;
-    
+
     public List<Resource> toList() {
         List<Resource> ret = new List<Resource>();
         foreach (ResourceNum rn in resources) {
@@ -22,7 +26,9 @@ public struct Criteria {
         foreach (ResourceNum rn in resources) {
             bool resourceInInput = false;
             foreach (var inputOccurence in inputOccurences) {
-                if (inputOccurence.Value >= rn.num && _isInputValidR(inputOccurence.Key, rn.resource)) {
+                Debug.Log(inputOccurence.Key + " " + rn.resource);
+                Debug.Log(_isInputValidR(rn.resource, inputOccurence.Key));
+                if (inputOccurence.Value >= rn.num && _isInputValidR(rn.resource, inputOccurence.Key)) {
                     resourceInInput = true;
                     break;
                 }
@@ -38,9 +44,9 @@ public struct Criteria {
     
     public bool _isInputValidR(Resource recipeResource, Resource compareAgainst) {
         // Compare in descending order of specificity
-        if (recipeResource.ResourceName != null) {
+        if (recipeResource.ResourceName == "null") {
             return recipeResource.ResourceName == compareAgainst.ResourceName;
-        } else if (recipeResource.matterState != null) {
+        } else if (recipeResource.matterState == ResourceMatter.None) {
             return recipeResource.matterState == compareAgainst.matterState;
         } else {
             return true;

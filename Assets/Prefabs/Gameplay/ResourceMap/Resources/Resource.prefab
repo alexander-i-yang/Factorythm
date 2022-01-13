@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   price: 0
   ResourceName: 
-  matterState: 0
+  matterState: 2
 --- !u!1001 &5598919656292086383
 PrefabInstance:
   m_ObjectHideFlags: 0
