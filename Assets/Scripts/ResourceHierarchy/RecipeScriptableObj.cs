@@ -14,4 +14,8 @@ public class RecipeScriptableObj : ScriptableObject {
     public bool CheckInputs(List<Resource> actualInputs) {
         return InCriteria.CheckInputs(actualInputs);
     }
+
+    public List<Resource> outToList() {
+        return OutCriteria.toList();
+    }
 }

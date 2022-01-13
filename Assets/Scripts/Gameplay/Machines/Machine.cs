@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Machine : Draggable {
-    [SerializeField] public Recipe recipe;
     [SerializeField] public RecipeScriptableObj recipeObj;
     // private int _maxInputPorts;
     // private int _minInputPorts;
@@ -39,7 +38,6 @@ public class Machine : Draggable {
 
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
-        recipe.Initiate();
     }
     
     void Start() {
@@ -105,7 +103,7 @@ public class Machine : Draggable {
 
     protected virtual void CreateOutput() {
         var position = transform.position;
-        var resourcesToCreate = recipe.outToList();
+        var resourcesToCreate = recipeObj.outToList();
         foreach (Resource r in resourcesToCreate) {
             var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
             var newObj = Instantiate(r, instantiatePos, transform.rotation);
@@ -118,7 +116,7 @@ public class Machine : Draggable {
     
     // Returns true if the machine destroys its input resources after moving them in.
     protected virtual bool _shouldDestroyInputs() {
-        return recipe.CreatesNewOutput;
+        return recipeObj.CreatesNewOutput;
     }
 
     public void MoveAndDestroy() {
@@ -144,7 +142,7 @@ public class Machine : Draggable {
     }
 
     protected virtual void _produce() {
-        if (recipe.CreatesNewOutput) {
+        if (recipeObj.CreatesNewOutput) {
             if (_shouldPrint) {
                 print("moving and destroying");
             }
@@ -163,10 +161,10 @@ public class Machine : Draggable {
             _pokedThisTick = true;
             bool enoughInput = _checkEnoughInput();
             if (_shouldPrint) {
-                print("Enough ticks: " + (_ticksSinceProduced >= recipe.ticks));
+                print("Enough ticks: " + (_ticksSinceProduced >= recipeObj.ticks));
             }
 
-            if (enoughInput && _ticksSinceProduced >= recipe.ticks) {
+            if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
                 _produce();
                 _ticksSinceProduced = 0;
             } else {
