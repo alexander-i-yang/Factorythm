@@ -44,7 +44,8 @@ public struct Criteria {
     
     public bool _isInputValidR(Resource recipeResource, Resource compareAgainst) {
         // Compare in descending order of specificity
-        if (recipeResource.ResourceName == "null") {
+        Debug.Log("rname:"+ recipeResource.ResourceName + "cname:" + compareAgainst.ResourceName);
+        if (recipeResource.ResourceName != "") {
             return recipeResource.ResourceName == compareAgainst.ResourceName;
         } else if (recipeResource.matterState == ResourceMatter.None) {
             return recipeResource.matterState == compareAgainst.matterState;
