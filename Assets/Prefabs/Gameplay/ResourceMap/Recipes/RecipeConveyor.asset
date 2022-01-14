@@ -15,12 +15,12 @@ MonoBehaviour:
   InCriteria:
     resources:
     - resource: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
-      num: 0
+      num: 1
     Cash: 0
   OutCriteria:
     resources:
     - resource: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
-      num: 0
+      num: 1
     Cash: 0
   ticks: 1
   CreatesNewOutput: 0

@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f704d344b244a02a05164ca23c79555, type: 3}
   m_Name: RecipeSteel
   m_EditorClassIdentifier: 
-  InResources:
-  - resource: {fileID: 3180746739474140444, guid: 4e7bfe41ed7c5de4391984a5da11e46a, type: 3}
-    num: 1
-  OutResources:
-  - resource: {fileID: 4260335696561330830, guid: 75c4d2b5ab0c7214fb6a28370db70b61, type: 3}
-    num: 1
+  InCriteria:
+    resources:
+    - resource: {fileID: 3180746739474140444, guid: 4e7bfe41ed7c5de4391984a5da11e46a, type: 3}
+      num: 1
+    Cash: 0
+  OutCriteria:
+    resources:
+    - resource: {fileID: 4260335696561330830, guid: 75c4d2b5ab0c7214fb6a28370db70b61, type: 3}
+      num: 1
+    Cash: 0
   ticks: 4
   CreatesNewOutput: 1
