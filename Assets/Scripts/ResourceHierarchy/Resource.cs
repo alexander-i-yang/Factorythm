@@ -17,4 +17,6 @@ public class Resource : MonoBehaviour {
     void Awake() {
         MySmoothSprite = GetComponentInChildren<SmoothSprite>();
     }
+    
+    
 }

@@ -8,11 +8,9 @@ public class MachineBluePrint : Draggable {
 
     private void Awake() {
         SmoothSprite = GetComponentInChildren<SmoothSprite>();
-        print(SmoothSprite);
     }
 
     public override void OnInteract(PlayerController p) {
-        print("Helo");
         Color c = SmoothSprite.SpriteRenderer.color;
         c.a = 0.8f;
         SmoothSprite.SpriteRenderer.color = c;

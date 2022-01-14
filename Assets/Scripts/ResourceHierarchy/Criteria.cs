@@ -26,8 +26,6 @@ public struct Criteria {
         foreach (ResourceNum rn in resources) {
             bool resourceInInput = false;
             foreach (var inputOccurence in inputOccurences) {
-                Debug.Log(inputOccurence.Key + " " + rn.resource);
-                Debug.Log(_isInputValidR(rn.resource, inputOccurence.Key));
                 if (inputOccurence.Value >= rn.num && _isInputValidR(rn.resource, inputOccurence.Key)) {
                     resourceInInput = true;
                     break;
@@ -44,7 +42,6 @@ public struct Criteria {
     
     public bool _isInputValidR(Resource recipeResource, Resource compareAgainst) {
         // Compare in descending order of specificity
-        Debug.Log("rname:"+ recipeResource.ResourceName + "cname:" + compareAgainst.ResourceName);
         if (recipeResource.ResourceName != "") {
             return recipeResource.ResourceName == compareAgainst.ResourceName;
         } else if (recipeResource.matterState == ResourceMatter.None) {
