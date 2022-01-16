@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SmoothSpritesContoller : MonoBehaviour {
-    public SmoothSpriteLoop[] smoothSprites;
+public class SmoothSpritesController : MonoBehaviour {
+    private SmoothSpriteLoop[] smoothSprites;
 
     void Start() {
         smoothSprites = GetComponentsInChildren<SmoothSpriteLoop>();
     }
 
-    void Move() {
+    public void Move() {
         foreach (var s in smoothSprites) {
+            print("s");
             s.Move();
         }
     }

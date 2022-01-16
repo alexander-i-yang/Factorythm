@@ -8,20 +8,21 @@ public enum positionState {
 
 public class SmoothSpriteLoop : SmoothSprite {
     public Vector3 endPos;
-    public Vector3 startPos;
+    [NonSerialized] public Vector3 StartPos;
 
     [NonSerialized] public positionState pos = positionState.START;
 
     void Start() {
-        startPos = transform.position;
+        StartPos = transform.position;
+        endPos = transform.TransformPoint(endPos);
     }
 
     public void Move() {
         if (pos == positionState.START) {
-            base.Move(endPos);
+            base.Move(endPos, destroyOnComplete:false, isLocalPos:false);
             pos = positionState.END;
         } else if (pos == positionState.END) {
-            base.Move(startPos);
+            base.Move(StartPos, destroyOnComplete:false, isLocalPos:false);
             pos = positionState.START;
         }
     }
