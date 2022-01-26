@@ -609,10 +609,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1427211780606109063, guid: 6b1fd7c3d622c674c9e62ba9c774e06e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 3565014537729330293, guid: f9f5b6fd83fa3654991849b0768dec15, type: 3}
     - target: {fileID: 1427211780606109081, guid: 6b1fd7c3d622c674c9e62ba9c774e06e, type: 3}
       propertyPath: m_Name
       value: Steel Refiner
