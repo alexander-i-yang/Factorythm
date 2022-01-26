@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Pooler))]
@@ -80,6 +81,11 @@ public class Conductor : MonoBehaviour {
     // Called whenever the song hits a new beat
     public void TrueTick() {
         MyUIManager.Tick();
+
+        var cons = FindObjectsOfType<SmoothSpritesController>();
+        foreach (var con in cons) {
+            con.Move();
+        }
     }
 
     public bool AttemptMove() {

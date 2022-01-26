@@ -4374,7 +4374,7 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: CurrentBeatClip
       value: 
-      objectReference: {fileID: 11400000, guid: d6d6b221eef51b14eaa98f0b2c71e3f0, type: 2}
+      objectReference: {fileID: 11400000, guid: b0638847d5046034c8ff09663d40f547, type: 2}
     - target: {fileID: 7784179629010526382, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.5
