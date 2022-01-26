@@ -1115,6 +1115,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3218252727963945205, guid: 375002078404b2146b8e2bc9eb44de61, type: 3}
+      propertyPath: machineBPInstance
+      value: 
+      objectReference: {fileID: 2752823309496082347, guid: 99b313425b5f6fa4bb440831c4705b54, type: 3}
     - target: {fileID: 8114461494178500855, guid: 375002078404b2146b8e2bc9eb44de61, type: 3}
       propertyPath: m_Name
       value: SteelRefiner BluePrintCreator
