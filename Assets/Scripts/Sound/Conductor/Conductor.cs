@@ -7,8 +7,7 @@ public class Conductor : MonoBehaviour {
     public BeatClip currentClip;
     private Pooler _pooler;
 
-    public bool RhythmLock = false;
-    
+    public bool RhythmLock = false; 
     public int TickNum { get; private set; }
 
     [NonSerialized] public AudioSource MusicSource;
