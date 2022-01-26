@@ -46,8 +46,8 @@ public class BeatBar : MonoBehaviour {
     }
 
     public double GetVelocity() {
-        double secPerBeat = Conductor.Instance.currentClip.SecPerBeat;
-        double validMult = Conductor.Instance.currentClip.ValidTime;
+        double secPerBeat = Conductor.Instance.BeatClipHelper.BeatClip.SecPerBeat;
+        double validMult = Conductor.Instance.BeatClipHelper.ValidTime;
 
         // Represents the total time between the moment a beatline crosses the valid threshold and the moment it reaches
         // The center of the endzone

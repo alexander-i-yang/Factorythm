@@ -1,30 +1,29 @@
 using System;
 using UnityEngine;
 
-public class BeatClip : MonoBehaviour
-{
-    public int BPM;
-    public float SecPerBeat { get; private set; }
-    public float BeatOffset;
-    public AudioClip MusicClip;
-
+public class BeatClipHelper {
     [NonSerialized] public double SongPosition = 0;
     [NonSerialized] public double SongPositionInBeats = 0;
     [NonSerialized] public int LastSongPosWholeBeats = 0;
     [NonSerialized] public double DSPSongTime = 0;
-
+    public BeatClipSO BeatClip { get; private set; }
+    
     //Controls time window for a valid input. Multiplied by seconds/beat
     [SerializeField] public double ValidTime { get; private set; } = 0.25;
 
-    public void Init() {
-        SecPerBeat = 60.0f/BPM;
+    public void Reset(BeatClipSO clip) {
+        BeatClip = clip;
+        BeatClip.SecPerBeat = 60.0f/BeatClip.BPM;
         DSPSongTime = AudioSettings.dspTime;
+        SongPosition = 0;
+        SongPositionInBeats = 0;
+        LastSongPosWholeBeats = 0;
     }
     
     public bool UpdateSongPos() {
-        SongPosition = AudioSettings.dspTime-DSPSongTime-BeatOffset*SecPerBeat;
+        SongPosition = AudioSettings.dspTime-DSPSongTime-BeatClip.BeatOffset*BeatClip.SecPerBeat;
         // print(BeatOffset*SecPerBeat);
-        SongPositionInBeats = SongPosition / SecPerBeat;
+        SongPositionInBeats = SongPosition / BeatClip.SecPerBeat;
         bool isNewBeat = IsNewBeat();
         if (isNewBeat) {
             LastSongPosWholeBeats = (int) Math.Floor(SongPositionInBeats);
@@ -37,15 +36,15 @@ public class BeatClip : MonoBehaviour
     }
 
     public double TimeSinceBeat() {
-        return (SongPositionInBeats - LastSongPosWholeBeats)*SecPerBeat;
+        return (SongPositionInBeats - LastSongPosWholeBeats)*BeatClip.SecPerBeat;
         
     }
 
     public double TimeTilNextBeat() {
-        return SecPerBeat - TimeSinceBeat();
+        return BeatClip.SecPerBeat - TimeSinceBeat();
     }
 
     public bool IsOnBeat() {
-        return TimeSinceBeat() < SecPerBeat*ValidTime || TimeTilNextBeat() < SecPerBeat*ValidTime;
+        return TimeSinceBeat() < BeatClip.SecPerBeat*ValidTime || TimeTilNextBeat() < BeatClip.SecPerBeat*ValidTime;
     }
 }
