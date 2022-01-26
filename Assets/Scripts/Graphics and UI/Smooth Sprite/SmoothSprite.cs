@@ -16,19 +16,25 @@ public class SmoothSprite : MonoBehaviour
         SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void Move(Vector3 newPos, bool destroyOnComplete = false) {
-        _beforePosition = transform.position;
+    public void Move(Vector3 newPos, bool destroyOnComplete = false, bool isLocalPos = false) {
+        _beforePosition = isLocalPos ? transform.localPosition : transform.position;
         _afterPosition = new Vector3(newPos.x, newPos.y, transform.position.z);
-        StartCoroutine(_moveCoroutine(destroyOnComplete));
+        StartCoroutine(_moveCoroutine(destroyOnComplete, isLocalPos));
     }
     
-    IEnumerator _moveCoroutine(bool destroyOnComplete) {
+    IEnumerator _moveCoroutine(bool destroyOnComplete, bool isLocalPos) {
         for (float ft = 0; ft <= moveTime; ft += Time.deltaTime) {
-            transform.position = Helper.ActualLerp(
+            Vector3 newPos = Helper.ActualLerp(
                 _beforePosition, 
                 _afterPosition, 
                 movementCurve.Evaluate((float) (ft/moveTime))
-                );
+            );
+            if (isLocalPos) {
+                transform.localPosition = newPos;
+            } else {
+                transform.position = newPos;
+            }
+
             yield return null;
         }
 
