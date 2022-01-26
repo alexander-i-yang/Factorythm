@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Pooler))]
 public class Conductor : MonoBehaviour {
     public static Conductor Instance;
-    public BeatClip currentClip;
+    public BeatClipHelper BeatClipHelper {get;} = new BeatClipHelper();
+    [SerializeField] public BeatClipSO CurrentBeatClip;
     private Pooler _pooler;
 
     public bool RhythmLock = false; 
@@ -28,10 +30,10 @@ public class Conductor : MonoBehaviour {
             Destroy(gameObject);
             return;
         }
-        currentClip.Init();
+        BeatClipHelper.Reset(CurrentBeatClip);
         DontDestroyOnLoad(gameObject);
         MusicSource = gameObject.AddComponent<AudioSource>();
-        MusicSource.clip = currentClip.MusicClip;
+        MusicSource.clip = BeatClipHelper.BeatClip.MusicClip;
 
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
@@ -45,7 +47,7 @@ public class Conductor : MonoBehaviour {
     }
 
     public bool SongIsOnBeat() {
-        return currentClip.IsOnBeat();
+        return BeatClipHelper.IsOnBeat();
     }
 
     // Update is called once per frame
@@ -61,7 +63,7 @@ public class Conductor : MonoBehaviour {
     }
 
     bool UpdateSongPos() {
-        return currentClip.UpdateSongPos();
+        return BeatClipHelper.UpdateSongPos();
     }
     
     //Called whenever you want to update all machines
@@ -79,6 +81,11 @@ public class Conductor : MonoBehaviour {
     // Called whenever the song hits a new beat
     public void TrueTick() {
         MyUIManager.Tick();
+
+        var cons = FindObjectsOfType<SmoothSpritesController>();
+        foreach (var con in cons) {
+            con.Move();
+        }
     }
 
     public bool AttemptMove() {
