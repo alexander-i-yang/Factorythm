@@ -229,7 +229,7 @@ public class Machine : Draggable {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         InputPort newPort = Conductor.GetPooler().InstantiateInputPort(portPos, transform);
         newPort.ConnectedMachine = m;
-        InputPorts = new List<InputPort>();
+        // InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);
     }
 

@@ -41,7 +41,7 @@ public class Conductor : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        //MusicSource.Play();
+        MusicSource.Play();
         FMODUnity.RuntimeManager.PlayOneShot("event:/DysonSphereSong");
         _pooler = GetComponent<Pooler>();
         TickNum = 0;
