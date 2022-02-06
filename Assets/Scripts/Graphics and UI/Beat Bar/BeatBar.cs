@@ -58,6 +58,7 @@ public class BeatBar : MonoBehaviour {
     }
 
     public void Tick() {
+        print("Tick");
         double dTravel = Math.Abs(EndPos.x - StartPos.x);
         InitBeatClipAtStart();
     }
