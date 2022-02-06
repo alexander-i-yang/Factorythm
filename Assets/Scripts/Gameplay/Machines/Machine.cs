@@ -88,6 +88,7 @@ public class Machine : Draggable {
         var position = transform.position;
         var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
         r.MySmoothSprite.Move(instantiatePos, destroyOnComplete);
+        r.transform.position = instantiatePos;
     }
 
     protected void MoveResourcesIn() {
