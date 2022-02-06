@@ -17,12 +17,19 @@ public class InteractableStateMachine : StateMachine<InteractableState, Interact
         CurInput.NewPos = newPos;
         CurState.Move();
     }
+
+    public void SetXPressed(bool xPressed)
+    {
+        CurState.SetXPressed(xPressed);
+    }
 }
 
 public abstract class InteractableState : State<InteractableState, InteractableStateInput> {
     public abstract void SetZPressed(bool zPressed);
 
     public abstract void Move();
+
+    public abstract void SetXPressed(bool xPressed);
 }
 
 public class InteractableStateInput : StateInput {
@@ -30,4 +37,5 @@ public class InteractableStateInput : StateInput {
     public Vector3 NewPos;
     public Interactable CurInteractable;
     public Draggable CurDraggable;
+    public Destructable CurDestructable;
 }
