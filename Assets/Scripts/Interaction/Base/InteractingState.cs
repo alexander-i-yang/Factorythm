@@ -13,6 +13,10 @@
         }
     }
 
+    public override void SetXPressed(bool xPressed)
+    {
+    }
+
     public override void Enter(InteractableStateInput i) {
         MyStateMachine.CurInput.CurInteractable.OnInteract(MyStateMachine.CurInput.PC);
     }

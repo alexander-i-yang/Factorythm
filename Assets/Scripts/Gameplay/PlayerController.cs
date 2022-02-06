@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour {
 
         bool curZ = Input.GetKey(KeyCode.Z);
         _ism.SetZPressed(curZ);
+        bool curX = Input.GetKey(KeyCode.X);
+        _ism.SetXPressed(curX);
         
         // print("Cur: " + _ism.CurInput.CurInteractable);
         // print("Z press: " + curZ);
@@ -113,9 +115,30 @@ public class PlayerController : MonoBehaviour {
             return null;
         }
     }
-    
+
     public Interactable OnInteractable() {
         return OnInteractable(transform.position);
+    }
+
+    public Destructable OnDestructable(Vector3 pos)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(
+            pos,
+            new Vector3(0, 0, 1),
+            10.0f,
+            LayerMask.GetMask("Interactable"));
+        if (hit.transform != null)
+        {
+            return hit.transform.gameObject.GetComponent<Destructable>();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public Destructable OnDestructable()
+    {
+        return OnDestructable(transform.position);
     }
 
     int checkInputH() {
