@@ -997,8 +997,8 @@ GameObject:
   - component: {fileID: 1944043192}
   - component: {fileID: 1944043194}
   - component: {fileID: 1944043191}
-  - component: {fileID: 1944043196}
   - component: {fileID: 1944043195}
+  - component: {fileID: 1944043193}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -1047,6 +1047,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1944043193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944043190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2646e287fd567314d9d3213098086781, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RhythmLocked: 1
 --- !u!50 &1944043194
 Rigidbody2D:
   serializedVersion: 4
@@ -1069,18 +1082,6 @@ Rigidbody2D:
   m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &1944043195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944043190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5685268694410149879801e0fb4a020, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1944043196
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -25251,7 +25252,7 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: CurrentBeatClip
       value: 
-      objectReference: {fileID: 11400000, guid: b0638847d5046034c8ff09663d40f547, type: 2}
+      objectReference: {fileID: 11400000, guid: 77f975e23f4bf204fb703fd68d6f95b7, type: 2}
     - target: {fileID: 7784179629010526382, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.5
