@@ -110,6 +110,11 @@ public class PlayerController : MonoBehaviour {
             10.0f, 
             LayerMask.GetMask("Interactable"));
         if (hit.transform != null) {
+            Interactable[] array = hit.transform.GetComponents<Interactable>();
+            for(int i = 0; i < array.Length; i++)
+            {
+                print(i + " " + array[i]);
+            }
             return hit.transform.GetComponent<Interactable>();
         } else {
             return null;

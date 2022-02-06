@@ -333,22 +333,6 @@ public class Machine : Draggable {
         _dragBluePrints.Clear();
     }
 
-    public Vector3 GetNewInitDragDirection(Vector2 dragInitDirection, Vector2 delta) {
-        //If the player just started dragging, set drag dir to delta
-        if (dragInitDirection == Vector2.zero) {
-            return delta;
-        } else {
-            // If the player crosses a boundary that indicates a new drag direction, set drag dir to the direction of the boundary
-            float deltaAngle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-            float dragDirAngle = Mathf.Atan2(dragInitDirection.y, dragInitDirection.x) * Mathf.Rad2Deg;
-            if (Math.Abs(deltaAngle - dragDirAngle) > 0.00001 && Math.Abs(deltaAngle - dragDirAngle) % 90 < 0.00001) {
-                return delta / delta.magnitude;
-            }
-        }
-        // Just return the old drag init dir
-        return dragInitDirection;
-    }
-
     //Creates n conveyors starting at startPos, going in direction dir
     public List<MachineBluePrint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
         List<MachineBluePrint> ret = new List<MachineBluePrint>();
