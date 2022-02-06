@@ -11,7 +11,7 @@ public class SmoothSpritesController : MonoBehaviour {
 
     public void Move() {
         foreach (var s in smoothSprites) {
-            print("s");
+            //print("s");
             s.Move();
         }
     }
