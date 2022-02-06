@@ -71,10 +71,19 @@ public class Conductor : MonoBehaviour {
     public void MachineTick() {
         TickNum++;
 
-        foreach(Machine m in _pooler.AllMachines) {m.PrepareTick();}
+        foreach(Machine m in _pooler.AllMachines) {
+            if (m.gameObject.activeSelf)
+            {
+                m.PrepareTick();
+            }
+        }
         foreach (Machine machine in _pooler.AllMachines) {
-            if (machine.GetNumOutputMachines() == 0) {
-                machine.Tick();
+            if (machine.gameObject.activeSelf)
+            {
+                if (machine.GetNumOutputMachines() == 0)
+                {
+                    machine.Tick();
+                }
             }
         }
     }
