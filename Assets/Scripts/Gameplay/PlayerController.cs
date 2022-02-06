@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -102,8 +103,41 @@ public class PlayerController : MonoBehaviour {
         );
         return overlapCollider;
     }
-    
+    /// <summary>
+    /// At a given position, casts a vector up and down the z axis to find colliders in the Interactable layer.
+    /// </summary>
+    /// <returns>Interactable with highest z value</returns>
     public Interactable OnInteractable(Vector3 pos) {
+
+        /*
+        RaycastHit2D[] foundColliders = new RaycastHit2D[10];
+        ContactFilter2D filter = new ContactFilter2D();
+        int number = Physics2D.Raycast(pos, new Vector3(0, 0, 1), filter.NoFilter(), foundColliders);
+        for (int i = 0; i < foundColliders.Length; i++)
+        {
+            if(foundColliders[i].transform == null)
+            {
+                continue;
+            }
+            print(foundColliders[i].transform);
+        }
+        */
+
+        RaycastHit2D[] found = Physics2D.RaycastAll(pos, new Vector3(0, 0, 1), LayerMask.GetMask("Interactable"));
+        Interactable highestCollider = null;
+        foreach (RaycastHit2D collider in found)
+        {
+            Interactable interact = collider.transform.GetComponent<Interactable>();
+            print(interact);
+            if (interact != null
+                && (highestCollider == null || interact.transform.position.z > highestCollider.transform.position.z))
+            {
+                highestCollider = interact;
+            }
+        }
+
+        return highestCollider;
+        /*
         RaycastHit2D hit = Physics2D.Raycast(
             pos,
             new Vector3(0, 0, 1),
@@ -114,6 +148,7 @@ public class PlayerController : MonoBehaviour {
         } else {
             return null;
         }
+        */
     }
 
     public Interactable OnInteractable() {
