@@ -8,7 +8,6 @@ public class NotInteractingState : InteractableState {
 
     public override void SetZPressed(bool zPressed) {
         if ((!_zWasPressed && zPressed) && PCOnInteractable()) {
-            Debug.Log("Transferring to Interactable State");
             MyStateMachine.CurInput.CurInteractable = PCOnInteractable();
             MyStateMachine.Transition<InteractingState>();
         }
