@@ -108,17 +108,21 @@ public class PlayerController : MonoBehaviour
         }
         */
 
-        RaycastHit2D[] found = Physics2D.RaycastAll(pos, new Vector3(0, 0, 1), LayerMask.GetMask("Interactable"));
+        RaycastHit2D[] found = Physics2D.RaycastAll(
+        pos, 
+        new Vector3(0, 0, 1), 
+        LayerMask.GetMask("Interactable")
+        );
         Interactable highestCollider = null;
-        foreach (RaycastHit2D collider in found)
+        foreach (RaycastHit2D curCol in found)
         {
-            Interactable interact = collider.transform.GetComponent<Interactable>();
-            print(interact);
-            if (interact != null
-                && (highestCollider == null || interact.transform.position.z > highestCollider.transform.position.z))
-            {
-                highestCollider = interact;
-            }
+            Interactable interact = curCol.transform.GetComponent<Interactable>();
+            if (interact != null) {
+                print(interact + " " + interact.transform.position.z);
+                if(highestCollider == null || interact.transform.position.z < highestCollider.transform.position.z) {
+                    highestCollider = interact;
+                }
+            } 
         }
 
         return highestCollider;
