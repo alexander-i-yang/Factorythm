@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -51,6 +53,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             _mySR.GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape)){
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
         }
     }
 
@@ -109,8 +116,8 @@ public class PlayerController : MonoBehaviour
         */
 
         RaycastHit2D[] found = Physics2D.RaycastAll(
-        pos, 
-        new Vector3(0, 0, 1), 
+        pos,
+        new Vector3(0, 0, 1),
         LayerMask.GetMask("Interactable")
         );
         Interactable highestCollider = null;
@@ -122,7 +129,7 @@ public class PlayerController : MonoBehaviour
                 if(highestCollider == null || interact.transform.position.z < highestCollider.transform.position.z) {
                     highestCollider = interact;
                 }
-            } 
+            }
         }
 
         return highestCollider;
@@ -199,14 +206,16 @@ public class PlayerController : MonoBehaviour
 
         if (onBeat)
         {
-            newPos.x = _myRb.position.x
-            + (inputVector.x > 0 ? 1 : (inputVector.x < 0 ? -1 : 0));
-            newPos.y = _myRb.position.y
-            + (inputVector.y > 0 ? 1 : (inputVector.y < 0 ? -1 : 0));
+          if (this != null) {
+              newPos.x = _myRb.position.x
+              + (inputVector.x > 0 ? 1 : (inputVector.x < 0 ? -1 : 0));
+              newPos.y = _myRb.position.y
+              + (inputVector.y > 0 ? 1 : (inputVector.y < 0 ? -1 : 0));
 
-            _mySR.Move(newPos);
-            _myRb.MovePosition(newPos);
-            _ism.Move(newPos);
+              _mySR.Move(newPos);
+              _myRb.MovePosition(newPos);
+              _ism.Move(newPos);
+          }
         }
     }
 
