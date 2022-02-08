@@ -23,6 +23,7 @@ public class Conductor : MonoBehaviour {
 
     public int Cash = 0;
 
+    private int MaxCombo = 0;
     void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -71,10 +72,19 @@ public class Conductor : MonoBehaviour {
     public void MachineTick() {
         TickNum++;
 
-        foreach(Machine m in _pooler.AllMachines) {m.PrepareTick();}
+        foreach(Machine m in _pooler.AllMachines) {
+            if (m.gameObject.activeSelf)
+            {
+                m.PrepareTick();
+            }
+        }
         foreach (Machine machine in _pooler.AllMachines) {
-            if (machine.GetNumOutputMachines() == 0) {
-                machine.Tick();
+            if (machine.gameObject.activeSelf)
+            {
+                if (machine.GetNumOutputMachines() == 0)
+                {
+                    machine.Tick();
+                }
             }
         }
     }
@@ -101,7 +111,9 @@ public class Conductor : MonoBehaviour {
     public void SetCurCombo(int c) {
         if (ComboEnabled) {
             CurCombo = c;
-            MyUIManager.Label.text = "Combo: " + c;
+            MyUIManager.CurLabel.text = "Combo: " + c;
+            MaxCombo = (CurCombo > MaxCombo) ? CurCombo : MaxCombo;
+            MyUIManager.MaxLabel.text = "Max Combo: " + MaxCombo;
         }
     }
 

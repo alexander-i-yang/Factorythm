@@ -996,9 +996,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1944043192}
   - component: {fileID: 1944043194}
-  - component: {fileID: 1944043193}
   - component: {fileID: 1944043191}
   - component: {fileID: 1944043195}
+  - component: {fileID: 1944043193}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -25235,7 +25235,7 @@ PrefabInstance:
       objectReference: {fileID: 4803320674075562905, guid: 1a8113c61ff11014e802d7f572151df1, type: 3}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: RhythmLock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: secPerBeat
