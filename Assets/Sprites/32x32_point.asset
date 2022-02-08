@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: 32x32_point
   m_EditorClassIdentifier: 
   pixel_per_unit: 32
-  wrap_mode: 0
+  wrap_mode: 1
   filter_mode: 0
   texture_importer_type: 0
