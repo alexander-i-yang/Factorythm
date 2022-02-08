@@ -12,6 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c4e6649e76bba4dab02a966da32e47, type: 3}
   m_Name: sprimp
   m_EditorClassIdentifier: 
-  Settings:
-  - {fileID: 11400000, guid: ca539a7c2629a77459e98895a8abb7ad, type: 2}
-  - {fileID: 11400000, guid: 758d57710d1c9c54a8242ef0b0f2338d, type: 2}
+  Settings: []

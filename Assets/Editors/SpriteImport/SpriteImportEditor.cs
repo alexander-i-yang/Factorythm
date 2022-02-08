@@ -67,7 +67,9 @@ public class SpriteImportEditor : EditorWindow
 
         if (path.Length == 0) return;
 
+        SpriteImportActionAsset.instance.hideFlags = HideFlags.None;
         AssetDatabase.CreateAsset(SpriteImportActionAsset.instance, path);
+        AssetDatabase.OpenAsset(SpriteImportActionAsset.instance);
 
     }
 
@@ -87,12 +89,13 @@ public class SpriteImportEditor : EditorWindow
     [MenuItem("SprImp/Import Sprite")]
     static void ImportSprite()
     {
-        if (SpriteImportActionAsset.instance == null)
+        if (AssetDatabase.FindAssets("t:SpriteImportActionAsset").Length == 0)
         {
-            Debug.LogError("SprImp is not initialized yet");
+            Debug.LogError("SprImp is not saved");
             InstantiateSpriteImportActionSingleton();
             return;
         }
+
         else
         {
             // prune unused
