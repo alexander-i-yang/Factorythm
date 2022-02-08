@@ -22,10 +22,7 @@ public class Conductor : MonoBehaviour {
     private bool _wasOnBeat;
 
     public int Cash = 0;
-
     FMOD.Studio.Bus MasterBus;
-
-
 
     void Awake() {
         if (Instance == null) {
@@ -38,7 +35,6 @@ public class Conductor : MonoBehaviour {
         //DontDestroyOnLoad(gameObject);
         MusicSource = gameObject.AddComponent<AudioSource>();
         MusicSource.clip = BeatClipHelper.BeatClip.MusicClip;
-        //MusicSource.clip = Resources.Load<AudioClip>("Assets/Audio/BeatClips/Dyson Sphere.asset");
 
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
