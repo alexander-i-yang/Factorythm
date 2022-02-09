@@ -19,19 +19,20 @@ public class Conductor : MonoBehaviour {
 
     private Pooler _pooler;
 
-    public bool RhythmLock = false; 
+    public bool RhythmLock = false;
     public int TickNum { get; private set; }
 
     [NonSerialized] public AudioSource MusicSource;
     [NonSerialized] public UIManager MyUIManager;
 
     private BeatStateMachine _stateMachine;
-    
+
     public int CurCombo { get; private set; }
     public bool ComboEnabled { get; private set; }
     private bool _wasOnBeat;
 
     public int Cash = 0;
+    FMOD.Studio.Bus MasterBus;
 
     public bool Paused
     {
@@ -75,18 +76,22 @@ public class Conductor : MonoBehaviour {
             return;
         }
         BeatClipHelper.Reset(CurrentBeatClip);
-        DontDestroyOnLoad(gameObject);
+        
+        // DontDestroyOnLoad(gameObject);
         // MusicSource = gameObject.AddComponent<AudioSource>();
         // MusicSource.clip = BeatClipHelper.BeatClip.MusicClip;
 
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
+
+        MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
     }
 
     FMOD.Studio.EventInstance currentSong;
     // Start is called before the first frame update
     void Start() {
         // MusicSource.Play();
+        MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         _pooler = GetComponent<Pooler>();
         StartCurrentClip();
     }
@@ -159,19 +164,28 @@ public class Conductor : MonoBehaviour {
         }
         return false;
     }
-    
+
     //Called whenever you want to update all machines
     public void MachineTick() {
         TickNum++;
 
-        foreach(Machine m in _pooler.AllMachines) {m.PrepareTick();}
+        foreach(Machine m in _pooler.AllMachines) {
+            if (m.gameObject.activeSelf)
+            {
+                m.PrepareTick();
+            }
+        }
         foreach (Machine machine in _pooler.AllMachines) {
-            if (machine.GetNumOutputMachines() == 0) {
-                machine.Tick();
+            if (machine.gameObject.activeSelf)
+            {
+                if (machine.GetNumOutputMachines() == 0)
+                {
+                    machine.Tick();
+                }
             }
         }
     }
-    
+
     // Called whenever the song hits a new beat
     public void TrueTick() {
         MyUIManager.Tick();
@@ -201,7 +215,7 @@ public class Conductor : MonoBehaviour {
     public void DisableCombo() {
         ComboEnabled = false;
     }
-    
+
     public void EnableCombo() {
         ComboEnabled = true;
     }
