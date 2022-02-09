@@ -25253,6 +25253,18 @@ PrefabInstance:
       propertyPath: CurrentBeatClip
       value: 
       objectReference: {fileID: 11400000, guid: 77f975e23f4bf204fb703fd68d6f95b7, type: 2}
+    - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
+      propertyPath: _currentBeatClip
+      value: 
+      objectReference: {fileID: 11400000, guid: 77f975e23f4bf204fb703fd68d6f95b7, type: 2}
+    - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
+      propertyPath: PlayList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
+      propertyPath: PlayList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 77f975e23f4bf204fb703fd68d6f95b7, type: 2}
     - target: {fileID: 7784179629010526382, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.5
