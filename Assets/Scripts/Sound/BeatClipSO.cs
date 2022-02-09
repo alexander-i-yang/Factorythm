@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using FMODUnity;
 
 [CreateAssetMenu(fileName = "BeatClip", menuName = "ScriptableObjects/BeatClip")]
 public class BeatClipSO : ScriptableObject {
@@ -7,4 +8,6 @@ public class BeatClipSO : ScriptableObject {
     [NonSerialized] public float SecPerBeat;
     public float BeatOffset;
     public AudioClip MusicClip;
+
+    public EventReference fmodSongReference;
 }
