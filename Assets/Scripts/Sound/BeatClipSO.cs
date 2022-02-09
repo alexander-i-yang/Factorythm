@@ -7,7 +7,6 @@ public class BeatClipSO : ScriptableObject {
     public int BPM;
     [NonSerialized] public float SecPerBeat;
     public float BeatOffset;
-    public AudioClip MusicClip;
-
+    // public AudioClip MusicClip;
     public EventReference fmodSongReference;
 }
