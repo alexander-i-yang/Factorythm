@@ -15,3 +15,10 @@ MonoBehaviour:
   BPM: 145
   BeatOffset: 0
   MusicClip: {fileID: 8300000, guid: bec2950395af5ed44be6cceb1f812b6d, type: 3}
+  fmodSongReference:
+    Guid:
+      Data1: 1185101776
+      Data2: 1211887294
+      Data3: 1651500957
+      Data4: -119781965
+    Path: event:/DysonSphereSong
