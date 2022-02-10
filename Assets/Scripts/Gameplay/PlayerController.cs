@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
         {
             Interactable interact = curCol.transform.GetComponent<Interactable>();
             if (interact != null) {
-                print(interact + " " + interact.transform.position.z);
+                // print(interact + " " + interact.transform.position.z);
                 if(highestCollider == null || interact.transform.position.z < highestCollider.transform.position.z) {
                     highestCollider = interact;
                 }
