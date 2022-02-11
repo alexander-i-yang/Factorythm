@@ -28,15 +28,14 @@ public class Conductor : MonoBehaviour {
     private BeatStateMachine _stateMachine;
 
     public int CurCombo { get; private set; }
+    private int MaxCombo = 0;
     public bool ComboEnabled { get; private set; }
     private bool _wasOnBeat;
 
     public int Cash = 0;
     FMOD.Studio.Bus MasterBus;
 
-<<<<<<< HEAD
-    private int MaxCombo = 0;
-=======
+    private bool _paused;
     public bool Paused
     {
         get { return _paused; }
@@ -56,8 +55,6 @@ public class Conductor : MonoBehaviour {
         }
     }
 
-    private bool _paused;
-
     public float currentSongProgress
     {
         get
@@ -70,8 +67,7 @@ public class Conductor : MonoBehaviour {
             return (float) tMs / tTMs;
         }
     }
-
->>>>>>> 62c5c1cc39e1be86486929e6251104e9c2443dc7
+    
     void Awake() {
         if (Instance == null) {
             Instance = this;
