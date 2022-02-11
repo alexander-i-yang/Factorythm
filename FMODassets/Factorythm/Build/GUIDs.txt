@@ -1,0 +1,6 @@
+{e7f98986-ec25-4e63-9233-270131a9d892} bank:/Master
+{7fe4a952-9d5e-0221-147a-adffc05ade0a} bank:/Master.strings
+{56403be5-9223-498a-b1d2-dfe0363b0f1e} bus:/
+{31b3467d-2a68-43b0-add3-22dca6254597} bus:/Reverb
+{8ba69d65-2b5f-4e7c-a247-1e1ce1478435} event:/Alternate_Factorythm_Track_Entended
+{46a337d0-eebe-483b-9de7-6f62b345dcf8} event:/DysonSphereSong

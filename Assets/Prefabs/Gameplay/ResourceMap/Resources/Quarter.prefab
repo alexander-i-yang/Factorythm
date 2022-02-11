@@ -52,9 +52,17 @@ PrefabInstance:
       value: Quarter
       objectReference: {fileID: 0}
     - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_Size.x
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_Size.y
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5b68446c649d29c44b16e0066f80b1a4, type: 3}
+      objectReference: {fileID: 21300000, guid: 15d653346e7c97442b26abb8a1de9951, type: 3}
     - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
       propertyPath: m_Color.b
       value: 1
