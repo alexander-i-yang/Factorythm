@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &5465686901901341035
+--- !u!1001 &9066874687515936270
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -34,7 +34,7 @@ PrefabInstance:
     - target: {fileID: 1153409524235048879, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: machineBPInstance
       value: 
-      objectReference: {fileID: 9088366545940193167, guid: 51eb3c4958037c34781819f6c2053701, type: 3}
+      objectReference: {fileID: 9082449104506964474, guid: 193bf77dfa1d7ed4eaa521ab2c3b730b, type: 3}
     - target: {fileID: 3145978848633660500, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -57,19 +57,19 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 57089b8fabc54794b8f256bef839d10b, type: 3}
     - target: {fileID: 3631104310742194136, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: m_Color.b
-      value: 0.44225556
+      value: 0.6132076
       objectReference: {fileID: 0}
     - target: {fileID: 3631104310742194136, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: m_Color.g
-      value: 0.6415094
+      value: 0.2572354
       objectReference: {fileID: 0}
     - target: {fileID: 3631104310742194136, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: m_Color.r
-      value: 0.2687077
+      value: 0.10644356
       objectReference: {fileID: 0}
     - target: {fileID: 5491127831472918445, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: m_Name
-      value: SteelSeller BluePrintCreator
+      value: QuarterRefinerBPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
