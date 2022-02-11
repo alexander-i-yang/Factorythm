@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Alternate_Factorythm_Track_Extended
   m_EditorClassIdentifier: 
   BPM: 150
-  BeatOffset: 0
+  BeatOffset: 0.5
   fmodSongReference:
     Guid:
       Data1: -1952015003
