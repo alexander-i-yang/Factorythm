@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,3 +11,4 @@ public class SpriteImportSettingsAsset : ScriptableObject
     public FilterMode filter_mode;
     public TextureImporterType texture_importer_type;
 }
+#endif

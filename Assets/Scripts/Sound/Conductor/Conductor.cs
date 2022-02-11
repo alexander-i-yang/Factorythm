@@ -230,6 +230,7 @@ public class Conductor : MonoBehaviour {
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(Conductor))]
 public class ConductorEditor : Editor
 {
@@ -252,3 +253,4 @@ public class ConductorEditor : Editor
         }
     }
 }
+#endif
