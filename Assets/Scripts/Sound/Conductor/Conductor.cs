@@ -34,6 +34,9 @@ public class Conductor : MonoBehaviour {
     public int Cash = 0;
     FMOD.Studio.Bus MasterBus;
 
+<<<<<<< HEAD
+    private int MaxCombo = 0;
+=======
     public bool Paused
     {
         get { return _paused; }
@@ -68,6 +71,7 @@ public class Conductor : MonoBehaviour {
         }
     }
 
+>>>>>>> 62c5c1cc39e1be86486929e6251104e9c2443dc7
     void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -209,7 +213,9 @@ public class Conductor : MonoBehaviour {
     public void SetCurCombo(int c) {
         if (ComboEnabled) {
             CurCombo = c;
-            MyUIManager.Label.text = "Combo: " + c;
+            MyUIManager.CurLabel.text = "Combo: " + c;
+            MaxCombo = (CurCombo > MaxCombo) ? CurCombo : MaxCombo;
+            MyUIManager.MaxLabel.text = "Max Combo: " + MaxCombo;
         }
     }
 
