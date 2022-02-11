@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class SpriteImportActionAsset : ScriptableSingleton<SpriteImportActionAss
 [CustomEditor(typeof(SpriteImportActionAsset))]
 public class SpriteImportActionAssetEditor : Editor
 {
+    
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -33,3 +35,4 @@ public class SpriteImportActionAssetEditor : Editor
         }
     }
 }
+#endif
