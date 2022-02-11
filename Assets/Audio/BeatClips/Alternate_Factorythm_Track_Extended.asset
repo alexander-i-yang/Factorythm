@@ -16,8 +16,8 @@ MonoBehaviour:
   BeatOffset: 0
   fmodSongReference:
     Guid:
-      Data1: 1185101776
-      Data2: 1211887294
-      Data3: 1651500957
-      Data4: -119781965
-    Path: event:/DysonSphereSong
+      Data1: -1952015003
+      Data2: 1316760415
+      Data3: 471746466
+      Data4: 897861601
+    Path: event:/Alternate_Factorythm_Track_Entended
