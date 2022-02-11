@@ -9,8 +9,8 @@ public class BeatClipHelper {
     public BeatClipSO BeatClip { get; private set; }
     
     //Controls time window for a valid input. Multiplied by seconds/beat
-    [SerializeField] public double ValidTime { get; private set; } = 0.25;
-
+    [SerializeField] public double ValidTime { get; private set; } = 0.35;
+    
     public void Reset(BeatClipSO clip) {
         BeatClip = clip;
         BeatClip.SecPerBeat = 60.0f/BeatClip.BPM;
