@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b54270ef9ca87414ebd535c178527632, type: 3}
+  m_Script: {fileID: 11500000, guid: 36c4e6649e76bba4dab02a966da32e47, type: 3}
   m_Name: 32 ppu
   m_EditorClassIdentifier: 
-  pixel_per_unit: 32
-  wrap_mode: 0
-  filter_mode: 0
-  texture_importer_type: 0
+  Settings:
+  - {fileID: 11400000, guid: 0676e2bf314a4ba4a97ae1a0ca1db9aa, type: 2}
+  - {fileID: 11400000, guid: 4b2b53aadadf5064f84fc07df6f4a90a, type: 2}
