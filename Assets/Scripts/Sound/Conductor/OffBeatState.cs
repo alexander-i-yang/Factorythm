@@ -14,7 +14,7 @@
 
     public override bool AttemptMove(BeatStateInput input) {
         Conductor.Instance.SetCurCombo(0);
-        return false;
-        // return true;
+        // return false;
+        return true;
     }
 }
