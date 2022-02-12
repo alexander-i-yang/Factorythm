@@ -19,7 +19,7 @@ public class NotInteractingState : InteractableState {
     }
 
     public override void SetXPressed(bool xPressed) {
-        if (MyStateMachine.CurInput.PC.OnDestructable() && xPressed)
+        if (MyStateMachine.CurInput.PC.OnDestructable() != null && xPressed)
         {
             MyStateMachine.CurInput.PC.OnDestructable().OnDestruct();
         }
