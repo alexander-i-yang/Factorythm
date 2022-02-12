@@ -84,7 +84,7 @@ public class Conductor : MonoBehaviour {
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
 
-        MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
+        // MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
     }
 
     FMOD.Studio.EventInstance currentSong;
