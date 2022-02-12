@@ -3,14 +3,15 @@ using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour {
-    [NonSerialized] public TextMeshProUGUI Label;
+    [NonSerialized] public TextMeshProUGUI CurLabel;
     [NonSerialized] public BeatBar BeatBar;
-
+    [NonSerialized] public TextMeshProUGUI MaxLabel;
     void Start() {
-        Label = GetComponentInChildren<TextMeshProUGUI>();
+        CurLabel = transform.Find("Cur Combo").GetComponent<TextMeshProUGUI>();
         BeatBar = FindObjectOfType<BeatBar>();
+        MaxLabel = transform.Find("Max Combo").GetComponent<TextMeshProUGUI>();
     }
-
+    
     public void Tick() {
         BeatBar.Tick();
     }

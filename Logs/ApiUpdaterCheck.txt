@@ -654,4 +654,3 @@ candidates parse time : 1ms
 C# parse time         : 260ms
 candidates check time : 38ms
 console write time    : 0ms
-
