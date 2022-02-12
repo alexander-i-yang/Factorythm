@@ -1,4 +1,7 @@
-﻿public class OffBeatState : BeatState {
+﻿/// <summary>
+/// Handles all logic for when the song is offbeat.
+/// </summary>
+public class OffBeatState : BeatState {
     public override void Enter(BeatStateInput i) {
         
     }
