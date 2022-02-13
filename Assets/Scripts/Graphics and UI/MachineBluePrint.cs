@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// A semi-transparent draggable object that instantiates a new machine where it's dropped.
+/// </summary>
 public class MachineBluePrint : Draggable {
     public GameObject MachineCopy;
 

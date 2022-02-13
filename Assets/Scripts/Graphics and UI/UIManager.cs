@@ -2,6 +2,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Controls all traditional UI for the game.
+/// </summary>
 public class UIManager : MonoBehaviour {
     [NonSerialized] public TextMeshProUGUI CurLabel;
     [NonSerialized] public BeatBar BeatBar;

@@ -6,6 +6,9 @@ public enum positionState {
     END,
 }
 
+/// <summary>
+/// <b>Legacy.</b> Alternates smoothly between two positions.
+/// </summary>
 public class SmoothSpriteLoop : SmoothSprite {
     public Vector3 endPos;
     [NonSerialized] public Vector3 StartPos;

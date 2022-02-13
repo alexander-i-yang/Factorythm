@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using UnityEngine;
-// Not rigorously tested. Proceed with caution.
+
+/// <summary>
+/// The bar at the bottom with lines that move to the beat.
+/// Not rigorously tested. Proceed with caution.
+/// </summary>
 public class BeatLine : MonoBehaviour {
     private float _moveStartTime;
     public BeatBar beatBar;
