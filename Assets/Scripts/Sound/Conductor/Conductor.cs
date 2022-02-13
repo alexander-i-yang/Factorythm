@@ -1,8 +1,11 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+/// <summary>
+/// A singleton class that controls the state of the entire game. Kind of like the "main" function of the game.
+/// If you need a global property (the current song, the player's combo, etc.) it's probably in here.
+/// </summary>
 [RequireComponent(typeof(Pooler))]
 public class Conductor : MonoBehaviour {
     public static Conductor Instance;
@@ -16,7 +19,7 @@ public class Conductor : MonoBehaviour {
     }
 
     private int _index = 0;
-
+    
     private Pooler _pooler;
 
     public bool RhythmLock = false;

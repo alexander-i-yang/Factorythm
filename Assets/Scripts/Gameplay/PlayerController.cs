@@ -3,7 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-
+/// <summary>
+/// Controls all the player's logic.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
 
@@ -41,11 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         _ism.SetZPressed(_isHoldingZ);
         _ism.SetXPressed(_isHoldingX);
-
-        // print("Cur: " + _ism.CurInput.CurInteractable);
-        // print("Z press: " + curZ);
-        // print("On top of: " + (OnInteractable(newPos) != null));
-
+        
         if (Conductor.Instance.SongIsOnBeat())
         {
             _mySR.GetComponent<SpriteRenderer>().color = Color.red;
@@ -82,7 +80,11 @@ public class PlayerController : MonoBehaviour
             _curRoom = null;
         }
     }
-
+    
+    /// <summary>
+    /// Checks what rooms the player is in, if any
+    /// </summary>
+    /// <returns>The collider of the room the player is in</returns>
     private Collider2D CheckRoomOverlap()
     {
         Vector3 alpha = new Vector3(0.05f, 0.05f); //So the player touching the edge of the collider isn't counted as an overlap
@@ -100,20 +102,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <returns>Interactable with highest z value</returns>
     public Interactable OnInteractable(Vector3 pos) {
-
-        /*
-        RaycastHit2D[] foundColliders = new RaycastHit2D[10];
-        ContactFilter2D filter = new ContactFilter2D();
-        int number = Physics2D.Raycast(pos, new Vector3(0, 0, 1), filter.NoFilter(), foundColliders);
-        for (int i = 0; i < foundColliders.Length; i++)
-        {
-            if(foundColliders[i].transform == null)
-            {
-                continue;
-            }
-            print(foundColliders[i].transform);
-        }
-        */
 
         RaycastHit2D[] found = Physics2D.RaycastAll(
         pos,
@@ -133,21 +121,6 @@ public class PlayerController : MonoBehaviour
         }
 
         return highestCollider;
-        /*
-        RaycastHit2D hit = Physics2D.Raycast(
-            pos,
-            new Vector3(0, 0, 1),
-            10.0f,
-            LayerMask.GetMask("Interactable"));
-        if (hit.transform != null)
-        {
-            return hit.transform.GetComponent<Interactable>();
-        }
-        else
-        {
-            return null;
-        }
-        */
     }
 
     public Interactable OnInteractable()
@@ -230,18 +203,4 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-
-    int checkInputH()
-    {
-        bool leftPress = Input.GetKeyDown("left");
-        bool rightPress = Input.GetKeyDown("right");
-        return leftPress ? -1 : (rightPress ? 1 : 0);
-    }
-
-    int checkInputV()
-    {
-        bool upPress = Input.GetKeyDown("up");
-        bool downPress = Input.GetKeyDown("down");
-        return upPress ? 1 : (downPress ? -1 : 0);
-    }
 }

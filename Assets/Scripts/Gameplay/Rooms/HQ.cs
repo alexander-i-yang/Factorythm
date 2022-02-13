@@ -1,6 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// The player's headquarters/base. Combo functionality is disabled while inside.
+/// </summary>
 public class HQ : Room {
     public override void OnPlayerEnter(PlayerController pc) {
         Conductor.Instance.DisableCombo();

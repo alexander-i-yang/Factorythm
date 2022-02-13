@@ -1,6 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Makes a sprite move smoothly to a location.
+/// You can define the animation curve in the inspector.
+/// </summary>
 public class SmoothSprite : MonoBehaviour
 {
     

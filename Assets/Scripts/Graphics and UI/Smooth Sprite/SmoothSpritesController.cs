@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// <b>Legacy.</b> Controls multiple smoothSpriteLoops.
+/// </summary>
 public class SmoothSpritesController : MonoBehaviour {
     private SmoothSpriteLoop[] smoothSprites;
 

@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// A room that the player can enter.
+/// </summary>
 public abstract class Room : MonoBehaviour, Area {
     private BoxCollider2D _myCollider;
 

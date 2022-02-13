@@ -1,6 +1,10 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Controls the time of the song. Can tell you whether it's on or offbeat.
+/// <b>Do not use this.</b> Check <see cref="Conductor">Conductor</see> instead.
+/// </summary>
 public class BeatClipHelper {
     [NonSerialized] public double SongPosition = 0;
     [NonSerialized] public double SongPositionInBeats = 0;

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
+/// <summary>
+/// Handles all object instantiation and deletion.
+/// </summary>
 public class Pooler : MonoBehaviour {
     public GameObject ConveyorBelt;
     public GameObject OutputPort;
