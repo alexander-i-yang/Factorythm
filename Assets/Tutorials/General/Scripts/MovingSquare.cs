@@ -13,7 +13,7 @@ public class MovingSquare : MonoBehaviour {
         mySS = GetComponentInChildren<SmoothSprite>();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame 
     /*void Update() {
         if (move) {
             transform.position += (Vector3) direction;
