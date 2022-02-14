@@ -192,6 +192,12 @@ public class Conductor : MonoBehaviour {
 
     // Called whenever the song hits a new beat
     public void TrueTick() {
+        //Add this
+        var squares = FindObjectsOfType<MovingSquare>();
+        foreach (var square in squares) {
+            square.Tick();
+        }
+    
         //Other stuff
         MyUIManager.Tick();
 
