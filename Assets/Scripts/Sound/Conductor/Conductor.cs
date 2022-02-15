@@ -196,6 +196,7 @@ public class Conductor : MonoBehaviour {
         var squares = FindObjectsOfType<InteractableSquare>();
         foreach (var square in squares) {
             square.Tick();
+            print(square);
         }
     
         //Other stuff
