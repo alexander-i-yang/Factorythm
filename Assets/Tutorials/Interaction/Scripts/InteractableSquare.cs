@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class InteractableSquare : Draggable {
+public class InteractableSquare : MonoBehaviour {
     public bool move;
     public Vector2 velocity;
     private SmoothSprite _mySS;
@@ -16,17 +16,5 @@ public class InteractableSquare : Draggable {
             _mySS.Move(newPos);
             transform.position = newPos;
         }
-    }
-
-    public override void OnInteract(PlayerController p) {
-        print("Interact");
-    }
-
-    public override void OnDeInteract(PlayerController p) {
-        print("De Interact");
-    }
-
-    public override void OnDrag(PlayerController p, Vector3 newPos) {
-        print("Drag");
     }
 }
