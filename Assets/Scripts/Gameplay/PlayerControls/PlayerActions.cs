@@ -47,15 +47,19 @@ public class PlayerActions : MonoBehaviour
             if (onBeat)
             {
                 Vector3 newPos = Vector3.zero;
+                
+                int offsetX = (inputVector.x > 0 ? 1 : 0) + (inputVector.x < 0 ? -1 : 0);
+                int offsetY = (inputVector.y > 0 ? 1 : 0) + (inputVector.y < 0 ? -1 : 0);
+                Vector2 offset = new Vector2(offsetX, offsetY);
 
-                newPos.x = _myRb.position.x
-                + (inputVector.x > 0 ? 1 : 0)
-                + (inputVector.x < 0 ? -1 : 0);
-
-                newPos.y = _myRb.position.y
-                + (inputVector.y > 0 ? 1 : 0)
-                + (inputVector.y < 0 ? -1 : 0);
-
+                newPos = _myRb.position + offset;
+                
+                //TODO: if you end up using this method, you're going to need to implement this function
+                Debug.LogError("if you end up using this method, you're going to" +
+                               "need to implement CanMove in this class or have a reference to PlayerController." +
+                               "Otherwise, the player won't be able to tell whether they can move to a spot or not.");
+                // bool canMove = CanMoveTo(offset);
+                
                 _mySR.Move(newPos);
                 _myRb.MovePosition(newPos);
                 _ism.Move(newPos);
