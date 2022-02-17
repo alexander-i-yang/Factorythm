@@ -10,8 +10,8 @@ public abstract class Room : MonoBehaviour {
         _myCollider = GetComponent<BoxCollider2D>();
     }
 
-    public abstract void CanPlayerEnter(PlayerController pc);
-    public abstract void OnPlayerEnter(PlayerController pc);
-    public abstract void OnPlayerExit(PlayerController pc);
+    public abstract bool CanPlayerEnter(PlayerController pc);
+    public virtual void OnPlayerEnter(PlayerController pc) { }
+    public virtual void OnPlayerExit(PlayerController pc) { }
     public abstract bool CanPlaceHere(Machine m);
 }

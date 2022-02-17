@@ -82,14 +82,16 @@ public class PlayerController : MonoBehaviour
     }
     
     /// <summary>
-    /// Checks what rooms the player is in, if any
+    /// Checks what rooms the player is in. Used for calling <see cref="Room.OnPlayerEnter(PlayerController)"/> and
+    /// for seeing whether the player can enter a room.
     /// </summary>
+    /// <param name="offset">Offset from player's position.</param>
     /// <returns>The collider of the room the player is in</returns>
-    private Collider2D CheckRoomOverlap()
+    private Collider2D CheckRoomOverlap(Vector3 offset)
     {
         Vector3 alpha = new Vector3(0.05f, 0.05f); //So the player touching the edge of the collider isn't counted as an overlap
-        Vector2 topLeftCorner = _myCollider.bounds.min + alpha;
-        Vector2 topRightCorner = _myCollider.bounds.max - alpha;
+        Vector2 topLeftCorner = _myCollider.bounds.min + offset + alpha;
+        Vector2 topRightCorner = _myCollider.bounds.max + offset - alpha;
         Collider2D overlapCollider = Physics2D.OverlapArea(
             topLeftCorner,
             topRightCorner,
@@ -97,6 +99,28 @@ public class PlayerController : MonoBehaviour
         );
         return overlapCollider;
     }
+
+    /// <summary>
+    /// Overload of <see cref="CheckRoomOverlap(UnityEngine.Vector3)"/>
+    /// </summary>
+    private Collider2D CheckRoomOverlap() {
+        return CheckRoomOverlap(new Vector3(0,0,0));
+    }
+
+    /// <summary>
+    /// Checks whether there is a room at the position defined by [position]+[<paramref name="offset"/>].
+    /// Used to check whether there's an un-enterable room.
+    /// </summary>
+    /// <returns>True if can move there, false if not</returns>
+    private bool CanMoveTo(Vector2 offset) {
+        Collider2D roomCollider = CheckRoomOverlap(offset);
+        if (roomCollider) {
+            Room room = roomCollider.GetComponent<Room>();
+            return room.CanPlayerEnter(this);
+        }
+        return true;
+    }
+
     /// <summary>
     /// At a given position, casts a vector up and down the z axis to find colliders in the Interactable layer.
     /// </summary>
@@ -153,6 +177,7 @@ public class PlayerController : MonoBehaviour
     #region Actions
     private void Movement(InputAction.CallbackContext context)
     {
+
         Vector2 inputVector = _pia.Player.Movement.ReadValue<Vector2>();
         Vector3 newPos = Vector3.zero;
         // bool moved = false;
@@ -180,14 +205,17 @@ public class PlayerController : MonoBehaviour
         if (onBeat)
         {
           if (this != null) {
-              newPos.x = _myRb.position.x
-              + (inputVector.x > 0 ? 1 : (inputVector.x < 0 ? -1 : 0));
-              newPos.y = _myRb.position.y
-              + (inputVector.y > 0 ? 1 : (inputVector.y < 0 ? -1 : 0));
+              
+              int offsetX = (inputVector.x > 0 ? 1 : (inputVector.x < 0 ? -1 : 0));
+              int offsetY = (inputVector.y > 0 ? 1 : (inputVector.y < 0 ? -1 : 0));
+              Vector2 offset = new Vector2(offsetX, offsetY);
+              newPos = _myRb.position + offset;
 
-              _mySR.Move(newPos);
-              _myRb.MovePosition(newPos);
-              _ism.Move(newPos);
+              if (CanMoveTo(offset)) {
+                  _mySR.Move(newPos);
+                  _myRb.MovePosition(newPos);
+                  _ism.Move(newPos);
+              }
           }
         }
     }
