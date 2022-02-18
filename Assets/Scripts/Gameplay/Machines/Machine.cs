@@ -283,6 +283,9 @@ public class Machine : Draggable {
                 bluePrintTransform.position,
                 bluePrintTransform.rotation
             );
+            //TODO: make more efficient
+            instMachine.GetComponentInChildren<SpriteRenderer>().sprite =
+                bluePrint.GetComponentInChildren<SpriteRenderer>().sprite;
             ret.Add(instMachine);
         }
         return ret;
@@ -322,15 +325,17 @@ public class Machine : Draggable {
         // Get the component of delta in the direction of dir
         // Then draw blueprints in that direction
         int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
-        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection));
         
-        // Get the component of delta orthogonal to the direction of dir
-        // Then draw blueprints in that direction
         Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
         Vector2 orthoDir = delta - n1*_dragDirection;
         int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
+        orthoDir.Normalize();
+
+        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection, orthoDir));
+        
+        // Get the component of delta orthogonal to the direction of dir
+        // Then draw blueprints in that direction
         if (n2 != 0) {
-            orthoDir = orthoDir / n2;
             _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
         }
     }
@@ -347,17 +352,26 @@ public class Machine : Draggable {
     /// going in direction <paramref name="dir"/>
     /// </summary>
     /// <returns>List of the conveyor belt blueprints to draw</returns>
-    public List<MachineBluePrint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
-        List<MachineBluePrint> ret = new List<MachineBluePrint>();
-        float angleRot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+    public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir, Vector2 orthoDir) {
+        List<ConveyorBlueprint> ret = new List<ConveyorBlueprint>();
         // Account for dir.x being 0 which causes a div by 0 error
-
-        Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
+        print(dir + " " + orthoDir);
         for (int i = 1; i < n+1; ++i) {
-            ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), rotation));
+            ConveyorBlueprint add = Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3) (dir * i));
+            if (i < n) {
+                add.SetEdgeSprite(dir);
+            } else if(orthoDir != Vector2.zero) {
+                add.SetCornerSprite(dir, orthoDir);
+            } else {
+                add.SetEdgeSprite(dir);
+            }
+
+            ret.Add(add);
         }
         return ret;
     }
     
-    //Test change
+    public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
+        return RenderConveyorBluePrintLine(n, startPos, dir, Vector2.zero);
+    }
 }

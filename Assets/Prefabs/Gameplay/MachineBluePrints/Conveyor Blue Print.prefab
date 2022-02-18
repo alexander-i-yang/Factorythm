@@ -59,10 +59,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Conveyor Blue Print
       objectReference: {fileID: 0}
-    - target: {fileID: 3243557835273114965, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
-      propertyPath: m_Layer
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3288924237238521729, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -91,5 +87,33 @@ PrefabInstance:
       propertyPath: MachineCopy
       value: 
       objectReference: {fileID: 1414417743092410389, guid: eb894222aba72884aa9d97040fe065a2, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+--- !u!1 &469990877387571975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3243557835273114965, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+  m_PrefabInstance: {fileID: 3136423563200812626}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5422292514794504620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469990877387571975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5de2ebef904075bacbbdc7e004229a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MachineCopy: {fileID: 1414417743092410389, guid: eb894222aba72884aa9d97040fe065a2, type: 3}
+  Sprites:
+  - {fileID: 6588283335923157485, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8216710035026873855, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8073556761677482203, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8199771426994200264, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: -6756607066556995429, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 4678259398471549702, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 1992827507389386230, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: -6424201123812103037, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
