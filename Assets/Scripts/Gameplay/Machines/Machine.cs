@@ -12,6 +12,7 @@ public class Machine : Draggable {
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
+    public bool _isActive;
 
     /// <summary>
     /// A list of resources that this machine just produced this tick.
@@ -170,6 +171,11 @@ public class Machine : Draggable {
     /// Produces output if needed.
     /// </summary>
     public void Tick() {
+        if (!_isActive)
+        {
+            OnDestruction();
+        }
+
         if (!_pokedThisTick) {
             _pokedThisTick = true;
             bool enoughInput = _checkEnoughInput();
