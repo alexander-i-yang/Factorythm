@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
+/// <summary>
+/// Handles all object instantiation and deletion.
+/// </summary>
 public class Pooler : MonoBehaviour {
     public GameObject ConveyorBelt;
     public GameObject OutputPort;
     public GameObject InputPort;
     
-    public MachineBluePrint ConveyorBluePrint;
+    public ConveyorBlueprint ConveyorBluePrint;
     
     public List<Machine> AllMachines { get; private set; }
 
@@ -43,8 +45,8 @@ public class Pooler : MonoBehaviour {
         return Instantiate(InputPort, newPos, transform.rotation, parent).GetComponent<InputPort>();
     }
 
-    public MachineBluePrint CreateConveyorBluePrint(Vector3 pos, Quaternion rot) {
-        return Instantiate(ConveyorBluePrint, pos, rot);
+    public ConveyorBlueprint CreateConveyorBluePrint(Vector3 pos) {
+        return Instantiate(ConveyorBluePrint, pos, Quaternion.identity);
     }
 
     public MachineBluePrint CreateMachineBluePrint(GameObject m, Vector2 pos) {

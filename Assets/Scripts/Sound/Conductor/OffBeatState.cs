@@ -1,4 +1,7 @@
-﻿public class OffBeatState : BeatState {
+﻿/// <summary>
+/// Handles all logic for when the song is offbeat.
+/// </summary>
+public class OffBeatState : BeatState {
     public override void Enter(BeatStateInput i) {
         
     }
@@ -14,7 +17,6 @@
 
     public override bool AttemptMove(BeatStateInput input) {
         Conductor.Instance.SetCurCombo(0);
-        return false;
-        // return true;
+        return !Conductor.Instance.RhythmLock;
     }
 }

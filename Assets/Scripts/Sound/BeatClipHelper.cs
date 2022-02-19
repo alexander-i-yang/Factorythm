@@ -1,28 +1,35 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Controls the time of the song. Can tell you whether it's on or offbeat.
+/// <b>Do not use this.</b> Check <see cref="Conductor">Conductor</see> instead.
+/// </summary>
 public class BeatClipHelper {
     [NonSerialized] public double SongPosition = 0;
     [NonSerialized] public double SongPositionInBeats = 0;
     [NonSerialized] public int LastSongPosWholeBeats = 0;
-    [NonSerialized] public double PlayStartTime = 0;
+    // [NonSerialized] public double PlayStartTime = 0;
     public BeatClipSO BeatClip { get; private set; }
     
     //Controls time window for a valid input. Multiplied by seconds/beat
-    [SerializeField] public double ValidTime { get; private set; } = 0.25;
-
+    [SerializeField] public double ValidTime { get; private set; } = 0.35;
+    
     public void Reset(BeatClipSO clip) {
         BeatClip = clip;
         BeatClip.SecPerBeat = 60.0f/BeatClip.BPM;
-        PlayStartTime = Time.time;
+        // PlayStartTime = Time.time;
         SongPosition = 0;
         SongPositionInBeats = 0;
         LastSongPosWholeBeats = 0;
     }
     
-    public bool UpdateSongPos() {
+    public bool UpdateSongPos(float audioTime) {
         // SongPosition = AudioSettings.dspTime-PlayStartTime-BeatClip.BeatOffset*BeatClip.SecPerBeat;
-        SongPosition = Time.time-PlayStartTime-BeatClip.BeatOffset*BeatClip.SecPerBeat;
+        SongPosition = 
+            audioTime
+            // TimeTime.time - PlayStartTime
+            -BeatClip.BeatOffset*BeatClip.SecPerBeat;
         // print(BeatOffset*SecPerBeat);
         SongPositionInBeats = SongPosition / BeatClip.SecPerBeat;
         bool isNewBeat = IsNewBeat();

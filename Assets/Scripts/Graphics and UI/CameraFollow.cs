@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Script on the camera that makes it pan smoothly to its next position.
+/// </summary>
 public class CameraFollow : MonoBehaviour {
     public Transform Follow;
     public AnimationCurve SmoothCurve;

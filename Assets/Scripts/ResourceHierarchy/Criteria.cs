@@ -7,6 +7,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Input or Output criteria for a recipe. Can specify cash, specific resources, or types of resources.
+/// </summary>
 [Serializable]
 public struct Criteria {
     [SerializeField] public ResourceNum[] resources;

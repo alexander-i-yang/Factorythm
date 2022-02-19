@@ -1,4 +1,9 @@
-﻿public class SellMachine : Machine {
+﻿//TODO: Delete this class and implement the selling of items through Recipes.
+
+/// <summary>
+/// <b>Legacy.</b> A machine that sells resources instead of chaning them/producing output.
+/// </summary>
+public class SellMachine : Machine {
     //Shouldn't destroy bc we need to read resoruces in in order to sell them
     protected override bool _shouldDestroyInputs() {
         return false;
@@ -10,7 +15,6 @@
         }
     }
     
-    //TODO: figure out a better way to do this. Rn it completely overrides the produce method. Very spaghetti.
     protected override void _produce() {
         MoveResourcesIn();
         CreateOutput();
