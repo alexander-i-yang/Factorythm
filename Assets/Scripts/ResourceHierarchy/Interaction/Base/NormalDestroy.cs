@@ -8,6 +8,7 @@ public class NormalDestroy : Destructable
     //Called when the object is destroyed
     public override void OnDestruct()
     {
+        gameObject.GetComponent<Machine>().OnDestruction();
         gameObject.SetActive(false);
     }
 }

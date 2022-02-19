@@ -12,6 +12,7 @@ public class Machine : Draggable {
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
+    public bool _isActive = true;
 
     /// <summary>
     /// A list of resources that this machine just produced this tick.
@@ -170,6 +171,11 @@ public class Machine : Draggable {
     /// Produces output if needed.
     /// </summary>
     public void Tick() {
+        if (!_isActive)
+        {
+            OnDestruction();
+        }
+
         if (!_pokedThisTick) {
             _pokedThisTick = true;
             bool enoughInput = _checkEnoughInput();
@@ -369,6 +375,40 @@ public class Machine : Draggable {
             ret.Add(add);
         }
         return ret;
+    }
+
+    public void OnDestruction()
+    {
+        foreach (OutputPort port in OutputPorts) {
+            port.ConnectedMachine.RemoveInput(this);
+        }
+        foreach (InputPort port in InputPorts) {
+            port.ConnectedMachine.RemoveOutput(this);
+        }
+        OutputPorts.Clear();
+        InputPorts.Clear();
+    }
+
+    public void RemoveOutput(Machine m)
+    {
+        foreach (OutputPort port in OutputPorts) {
+            if (port.ConnectedMachine.Equals(m))
+            {
+                OutputPorts.Remove(port);
+                break;
+            }
+        }
+    }
+
+    public void RemoveInput(Machine m)
+    {
+        foreach (InputPort port in InputPorts) {
+            if (port.ConnectedMachine.Equals(m))
+            {
+                InputPorts.Remove(port);
+                break;
+            }
+        }
     }
     
     public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
