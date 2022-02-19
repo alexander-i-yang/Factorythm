@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39de52e115447004a98abd058937604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentClip: {fileID: 0}
+  PlayList: []
+  RhythmLock: 0
   Cash: 0
 --- !u!114 &2881497489547828656
 MonoBehaviour:
@@ -61,4 +62,4 @@ MonoBehaviour:
   ConveyorBelt: {fileID: 1414417743092410389, guid: eb894222aba72884aa9d97040fe065a2, type: 3}
   OutputPort: {fileID: 4803320674075562905, guid: 1a8113c61ff11014e802d7f572151df1, type: 3}
   InputPort: {fileID: 4803320674075562905, guid: 836db582dc173a34aab5a944e3a1e486, type: 3}
-  ConveyorBluePrint: {fileID: 4615271944934100926, guid: 70b34a53007f2834e9242a41ac506d35, type: 3}
+  ConveyorBluePrint: {fileID: 5422292514794504620, guid: 0104a02edda664645a95198246dd63b4, type: 3}

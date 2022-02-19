@@ -5,7 +5,13 @@ using System.Reflection;
 using UnityEngine;
 
 //The following code is heavily influenced from a state machine used in Side By Side (Producer: Yoon Lee)
-//Note: Controller is the component that contains this component.
+
+/// <summary>
+/// Defines a Finite State Machine that can be extended for more functionality.
+/// Don't mess with this code; if you're confused about how to implement an FSM, @me in the discord.
+/// </summary>
+/// <typeparam name="MyState">An abstract class that defines what kind of state you want</typeparam>
+/// <typeparam name="MyStateInput">A class that carries values between states</typeparam>
 public abstract class StateMachine<MyState, MyStateInput> : MonoBehaviour
     where MyState : State<MyState, MyStateInput>
     where MyStateInput : StateInput

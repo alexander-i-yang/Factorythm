@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// All machine logic is contained within here.
+/// </summary>
 public class Machine : Draggable {
     [SerializeField] public RecipeScriptableObj recipeObj;
-    // private int _maxInputPorts;
-    // private int _minInputPorts;
-    // private int _maxOutputPorts;
-    // private int _minOutputPorts;
-    // public int Perimeter;
-    // public int MaxStorage = 1;
 
     [NonSerialized] public List<OutputPort> OutputPorts = new List<OutputPort>();
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
 
+    /// <summary>
+    /// A list of resources that this machine just produced this tick.
+    /// Currently, it just includes all resources stored in this machine.
+    /// </summary>
     public List<Resource> OutputBuffer { get; private set; }
     public List<Resource> storage { get; private set; }
 
@@ -26,16 +27,6 @@ public class Machine : Draggable {
     [SerializeField] private bool _shouldBreak;
     
     protected void Awake() {
-        /*if (recipeObj.InCriteria.Length == 0) {
-            _maxInputPorts = 0;
-            _minInputPorts = 0;
-        }
-        
-        if (recipeObj.OutCriteria.Length == 0) {
-            _maxOutputPorts = 0;
-            _minOutputPorts = 0;
-        }*/
-
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
     }
@@ -44,6 +35,12 @@ public class Machine : Draggable {
         _dragBluePrints = new List<MachineBluePrint>();
     }
 
+
+    /// <summary>
+    /// Performs <paramref name="func"/> on all machines in <typeparamref name="portlist"/>.
+    /// </summary>
+    /// <param name="portList">The list of ports to iterate over</param>
+    /// <param name="func">The function to perform on each machine in <paramref name="portList"/></param>
     private static void foreachMachine(List<MachinePort> portList, Action<Machine> func) {
         foreach (MachinePort i in portList) {
             var inputMachine = i.ConnectedMachine;
@@ -52,20 +49,11 @@ public class Machine : Draggable {
             }
         }
     }
-
-    /*protected bool _checkEnoughInput() {
-        var actualInputs = new List<Resource>();
-        foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
-        bool ret = recipe.CheckInputs(actualInputs);
-        if (_shouldPrint) {
-            print("Input resources: ");
-            foreach (Resource i in actualInputs) { print(i);}
-            print("Enough input: "  +ret);
-        }
-
-        return ret;
-    }*/
     
+    /// <summary>
+    /// Returns true if the connected input machines have enough resources for this machine to produce an output.
+    /// </summary>
+    /// <returns></returns>
     protected bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
         foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
@@ -80,17 +68,28 @@ public class Machine : Draggable {
         return ret;
     }
     
+    /// <summary>
+    /// Removes all resources from OutputBuffer.
+    /// </summary>
     public void ClearOutput() {
         OutputBuffer.Clear();
     }
-
+    
+    /// <summary>
+    /// Moves <paramref name="r"/> to this machine's position.
+    /// </summary>
+    /// <param name="r">The resource to move</param>
+    /// <param name="destroyOnComplete">Whether <paramref name="r"/> should self-destruct after moving here</param>
     public void MoveHere(Resource r, bool destroyOnComplete) {
         var position = transform.position;
         var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
         r.MySmoothSprite.Move(instantiatePos, destroyOnComplete);
         r.transform.position = instantiatePos;
     }
-
+    
+    /// <summary>
+    /// Creates output resources according to the recipe and adds them to the outputBuffer.
+    /// </summary>
     protected void MoveResourcesIn() {
         foreachMachine(new List<MachinePort>(InputPorts), m => {
             OutputBuffer.AddRange(m.OutputBuffer);
@@ -101,7 +100,10 @@ public class Machine : Draggable {
             MoveHere(r, _shouldDestroyInputs());
         }
     }
-
+    
+    /// <summary>
+    /// Instantiates new resources to feed into the output machine.
+    /// </summary>
     protected virtual void CreateOutput() {
         var position = transform.position;
         var resourcesToCreate = recipeObj.outToList();
@@ -115,11 +117,17 @@ public class Machine : Draggable {
         }
     }
     
-    // Returns true if the machine destroys its input resources after moving them in.
+    /// <summary>
+    /// Returns true if the machine destroys its input resources after moving them in.
+    /// </summary>
+    /// <returns></returns>
     protected virtual bool _shouldDestroyInputs() {
         return recipeObj.CreatesNewOutput;
     }
-
+    
+    /// <summary>
+    /// Moves all resources from each input machine into this machine, removing them from the input machine's storage.
+    /// </summary>
     public void MoveAndDestroy() {
         //Foreach resource in each port's input buffer, move to this machine
         foreachMachine(new List<MachinePort>(InputPorts), m => {
@@ -141,7 +149,7 @@ public class Machine : Draggable {
         }
         CreateOutput();
     }
-
+    
     protected virtual void _produce() {
         if (recipeObj.CreatesNewOutput) {
             if (_shouldPrint) {
@@ -152,11 +160,15 @@ public class Machine : Draggable {
             MoveResourcesIn();
         }
     }
-
+    
     public void PrepareTick() {
         _pokedThisTick = false;
     }
-
+    
+    /// <summary>
+    /// Completes one cycle of logic.
+    /// Produces output if needed.
+    /// </summary>
     public void Tick() {
         if (!_pokedThisTick) {
             _pokedThisTick = true;
@@ -178,19 +190,11 @@ public class Machine : Draggable {
             Debug.Break();
         }
     }
-
+    
+    /// <summary>
+    /// Unity Specific function. Defines how debug arrows are drawn.
+    /// </summary>
     public void OnDrawGizmos() {
-        // if (storage != null && OutputBuffer != null) {
-        //     Handles.Label(
-        //         transform.position,
-        //         "" + OutputBuffer.Count
-        //     );
-        // }
-
-        // Handles.Label(
-        //     transform.position + new Vector3(0, -0.2f, 0),
-        //     "" + _ticksSinceProduced
-        // );
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
         foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
@@ -207,15 +211,14 @@ public class Machine : Draggable {
         foreach (OutputPort p in OutputPorts) {
             if (p.ConnectedMachine != null) ret++;
         }
-
         return ret;
     }
     
-    /**
-     * <summary>
-     *      Creates a new output port for [m]. Also creates new input port on [m] for this
-     * </summary>
-     */
+    /// <summary>
+    /// Creates a new output port that feeds into <paramref name="m"/>.
+    /// Also creates new input port on <paramref name="m"/> that feeds from this machine.
+    /// </summary>
+    /// <param name="m">The machine to connect to</param>
     public void AddOutputMachine(Machine m) {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
@@ -226,11 +229,14 @@ public class Machine : Draggable {
         m.AddInputMachine(this);
     }
     
+    /// <summary>
+    /// Creates a new input port that feeds from <paramref name="m"/>.
+    /// </summary>
+    /// <param name="m">The machine to connect to</param>
     public void AddInputMachine(Machine m) {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         InputPort newPort = Conductor.GetPooler().InstantiateInputPort(portPos, transform);
         newPort.ConnectedMachine = m;
-        // InputPorts = new List<InputPort>();
         InputPorts.Add(newPort);
     }
 
@@ -277,6 +283,9 @@ public class Machine : Draggable {
                 bluePrintTransform.position,
                 bluePrintTransform.rotation
             );
+            //TODO: make more efficient
+            instMachine.GetComponentInChildren<SpriteRenderer>().sprite =
+                bluePrint.GetComponentInChildren<SpriteRenderer>().sprite;
             ret.Add(instMachine);
         }
         return ret;
@@ -314,15 +323,19 @@ public class Machine : Draggable {
         _dragDirection = GetNewInitDragDirection(_dragDirection, delta);
         
         // Get the component of delta in the direction of dir
+        // Then draw blueprints in that direction
         int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
-        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection));
         
-        // Get the component of delta orthogonal to the direction of dir
         Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
         Vector2 orthoDir = delta - n1*_dragDirection;
         int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
+        orthoDir.Normalize();
+
+        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection, orthoDir));
+        
+        // Get the component of delta orthogonal to the direction of dir
+        // Then draw blueprints in that direction
         if (n2 != 0) {
-            orthoDir = orthoDir / n2;
             _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
         }
     }
@@ -334,18 +347,31 @@ public class Machine : Draggable {
         _dragBluePrints.Clear();
     }
 
-    //Creates n conveyors starting at startPos, going in direction dir
-    public List<MachineBluePrint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
-        List<MachineBluePrint> ret = new List<MachineBluePrint>();
-        float angleRot = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+    /// <summary>
+    /// Draws <paramref name="n"/> conveyors starting at <paramref name="startPos"/>,
+    /// going in direction <paramref name="dir"/>
+    /// </summary>
+    /// <returns>List of the conveyor belt blueprints to draw</returns>
+    public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir, Vector2 orthoDir) {
+        List<ConveyorBlueprint> ret = new List<ConveyorBlueprint>();
         // Account for dir.x being 0 which causes a div by 0 error
-
-        Quaternion rotation = Quaternion.Euler(0, 0, angleRot);
+        print(dir + " " + orthoDir);
         for (int i = 1; i < n+1; ++i) {
-            ret.Add(Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3)(dir*i), rotation));
+            ConveyorBlueprint add = Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3) (dir * i));
+            if (i < n) {
+                add.SetEdgeSprite(dir);
+            } else if(orthoDir != Vector2.zero) {
+                add.SetCornerSprite(dir, orthoDir);
+            } else {
+                add.SetEdgeSprite(dir);
+            }
+
+            ret.Add(add);
         }
         return ret;
     }
     
-    //Test change
+    public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
+        return RenderConveyorBluePrintLine(n, startPos, dir, Vector2.zero);
+    }
 }

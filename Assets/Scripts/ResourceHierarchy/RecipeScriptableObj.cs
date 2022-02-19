@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a recipe for a machine. Contains its input criteria and output parameters.
+/// </summary>
 [CreateAssetMenu(fileName = "Recipe", menuName = "ScriptableObjects/Recipe")]
 public class RecipeScriptableObj : ScriptableObject {
     // public ResourceNum[] InCriteria;
