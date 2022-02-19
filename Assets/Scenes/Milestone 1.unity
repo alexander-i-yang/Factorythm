@@ -54927,10 +54927,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2881497489547828656, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
-      propertyPath: ConveyorBluePrint
-      value: 
-      objectReference: {fileID: 7032912479303700419, guid: 0104a02edda664645a95198246dd63b4, type: 3}
     - target: {fileID: 7631533364823168572, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: m_RootOrder
       value: 0
