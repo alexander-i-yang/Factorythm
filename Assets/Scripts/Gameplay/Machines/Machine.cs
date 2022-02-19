@@ -370,6 +370,40 @@ public class Machine : Draggable {
         }
         return ret;
     }
+
+    public void OnDestruction()
+    {
+        foreach (OutputPort port in OutputPorts) {
+            port.ConnectedMachine.RemoveInput(this);
+        }
+        foreach (InputPort port in InputPorts) {
+            port.ConnectedMachine.RemoveOutput(this);
+        }
+        OutputPorts.Clear();
+        InputPorts.Clear();
+    }
+
+    public void RemoveOutput(Machine m)
+    {
+        foreach (OutputPort port in OutputPorts) {
+            if (port.ConnectedMachine.Equals(m))
+            {
+                OutputPorts.Remove(port);
+                break;
+            }
+        }
+    }
+
+    public void RemoveInput(Machine m)
+    {
+        foreach (InputPort port in InputPorts) {
+            if (port.ConnectedMachine.Equals(m))
+            {
+                InputPorts.Remove(port);
+                break;
+            }
+        }
+    }
     
     public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
         return RenderConveyorBluePrintLine(n, startPos, dir, Vector2.zero);
