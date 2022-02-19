@@ -12,7 +12,7 @@ public class Machine : Draggable {
     [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
-    public bool _isActive;
+    public bool _isActive = true;
 
     /// <summary>
     /// A list of resources that this machine just produced this tick.
