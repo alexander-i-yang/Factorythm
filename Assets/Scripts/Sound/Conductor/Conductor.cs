@@ -196,6 +196,10 @@ public class Conductor : MonoBehaviour {
         MyUIManager.Tick();
 
         var cons = FindObjectsOfType<SmoothSpritesController>();
+        var squares = FindObjectsOfType<MovingSquare>();
+        foreach (var square in squares) {
+            square.Tick();
+        }
         foreach (var con in cons) {
             con.Move();
         }
