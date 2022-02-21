@@ -27,12 +27,12 @@ public class Machine : Draggable {
     [SerializeField] private bool _shouldPrint;
     [SerializeField] private bool _shouldBreak;
     
-    protected void Awake() {
+    protected virtual void Awake() {
         OutputBuffer = new List<Resource>();
         storage = new List<Resource>();
     }
     
-    void Start() {
+    protected void Start() {
         _dragBluePrints = new List<MachineBluePrint>();
     }
 
@@ -57,7 +57,11 @@ public class Machine : Draggable {
     /// <returns></returns>
     protected bool _checkEnoughInput() {
         var actualInputs = new List<Resource>();
-        foreachMachine(new List<MachinePort>(InputPorts), m => actualInputs.AddRange(m.OutputBuffer));
+        foreachMachine(new List<MachinePort>(InputPorts), m => {
+            if (m.OutputBuffer != null) {
+                actualInputs.AddRange(m.OutputBuffer);
+            }
+        });
         
         bool ret = recipeObj.CheckInputs(actualInputs);
         if (_shouldPrint) {
@@ -225,7 +229,7 @@ public class Machine : Draggable {
     /// Also creates new input port on <paramref name="m"/> that feeds from this machine.
     /// </summary>
     /// <param name="m">The machine to connect to</param>
-    public void AddOutputMachine(Machine m) {
+    public virtual void AddOutputMachine(Machine m) {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
@@ -239,7 +243,7 @@ public class Machine : Draggable {
     /// Creates a new input port that feeds from <paramref name="m"/>.
     /// </summary>
     /// <param name="m">The machine to connect to</param>
-    public void AddInputMachine(Machine m) {
+    public virtual void AddInputMachine(Machine m) {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         InputPort newPort = Conductor.GetPooler().InstantiateInputPort(portPos, transform);
         newPort.ConnectedMachine = m;
@@ -364,6 +368,7 @@ public class Machine : Draggable {
         print(dir + " " + orthoDir);
         for (int i = 1; i < n+1; ++i) {
             ConveyorBlueprint add = Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3) (dir * i));
+
             if (i < n) {
                 add.SetEdgeSprite(dir);
             } else if(orthoDir != Vector2.zero) {
