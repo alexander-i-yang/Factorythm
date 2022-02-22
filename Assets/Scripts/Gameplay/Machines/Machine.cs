@@ -247,9 +247,7 @@ public class Machine : Draggable {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
-        OutputPorts = new List<OutputPort>();
         OutputPorts.Add(newPort);
-        
         m.AddInputMachine(this);
     }
     
@@ -396,15 +394,22 @@ public class Machine : Draggable {
         return ret;
     }
 
-    public void OnDestruction()
-    {
+    public void OnDestruction() {
+        ClearOutputPorts();
+        ClearInputPorts();
+    }
+
+    public void ClearOutputPorts() {
         foreach (OutputPort port in OutputPorts) {
             port.ConnectedMachine.RemoveInput(this);
         }
+        OutputPorts.Clear();
+    }
+
+    public void ClearInputPorts() {
         foreach (InputPort port in InputPorts) {
             port.ConnectedMachine.RemoveOutput(this);
         }
-        OutputPorts.Clear();
         InputPorts.Clear();
     }
 
