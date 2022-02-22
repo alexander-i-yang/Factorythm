@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         _pia.Player.Interact.canceled += Interact;
         _pia.Player.Delete.performed += Delete;
         _pia.Player.Delete.canceled += Delete;
-        _pia.Player.Movement.performed += Movement;
+        _pia.Player.Movement.started += Movement;
     }
 
     void Update()
