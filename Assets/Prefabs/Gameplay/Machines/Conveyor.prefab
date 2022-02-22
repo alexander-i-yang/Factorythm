@@ -91,5 +91,36 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.75
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+--- !u!1 &1414417743092410389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4590213518212070728, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+  m_PrefabInstance: {fileID: 3175798249054377309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3551052996580312483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414417743092410389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c01d1b3139d475bacaedbf506e1eade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipeObj: {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
+  _isActive: 1
+  _shouldPrint: 0
+  _shouldBreak: 0
+  Sprites:
+  - {fileID: 6588283335923157485, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 4678259398471549702, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8199771426994200264, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: -6756607066556995429, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8073556761677482203, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 1992827507389386230, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8216710035026873855, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: -6424201123812103037, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
