@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         _pia.Player.Interact.canceled += Interact;
         _pia.Player.Delete.performed += Delete;
         _pia.Player.Delete.canceled += Delete;
-        _pia.Player.Movement.performed += Movement;
+        _pia.Player.Movement.started += Movement;
     }
 
     void Update()
@@ -177,7 +177,7 @@ public class PlayerController : MonoBehaviour
     #region Actions
     private void Movement(InputAction.CallbackContext context)
     {
-
+        Debug.Log("Called Movement");
         Vector2 inputVector = _pia.Player.Movement.ReadValue<Vector2>();
         Vector3 newPos = Vector3.zero;
         // bool moved = false;
