@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -19,7 +20,7 @@ public class Machine : Draggable {
     /// Currently, it just includes all resources stored in this machine.
     /// </summary>
     public List<Resource> OutputBuffer { get; private set; }
-    public List<Resource> storage { get; private set; }
+    public Queue<Resource> storage { get; private set; }
 
     private Vector2 _dragDirection;
     private List<MachineBluePrint> _dragBluePrints;
@@ -29,7 +30,7 @@ public class Machine : Draggable {
     
     protected void Awake() {
         OutputBuffer = new List<Resource>();
-        storage = new List<Resource>();
+        storage = new Queue<Resource>();
     }
     
     void Start() {
@@ -93,12 +94,25 @@ public class Machine : Draggable {
     /// </summary>
     protected void MoveResourcesIn() {
         foreachMachine(new List<MachinePort>(InputPorts), m => {
-            OutputBuffer.AddRange(m.OutputBuffer);
+            StoreResources(m.OutputBuffer[0], true);
+            MoveHere(m.OutputBuffer[0], _shouldDestroyInputs());
             m.OutputBuffer.Clear();
         });
-        
-        foreach (Resource r in OutputBuffer) {
-            MoveHere(r, _shouldDestroyInputs());
+    }
+
+    /// <summary>
+    /// Puts stuff in either the output buffer or storage as needs be.
+    /// </summary>
+    /// <param name= "r">The resource to store</param>
+    /// <param name="isStoring">Whether or not something needs to be stored in storage</param>
+    protected void StoreResources(Resource r, bool isStoring) {
+
+        if (isStoring) {
+            storage.Enqueue(r);
+        }
+
+        if (!OutputBuffer.Any()) {
+            OutputBuffer.Add(storage.Dequeue());
         }
     }
     
@@ -114,7 +128,7 @@ public class Machine : Draggable {
             if (_shouldPrint) {
                 print("Adding new resource: " + r);
             }
-            OutputBuffer.Add(newObj.GetComponent<Resource>());
+            StoreResources(newObj.GetComponent<Resource>(), true);
         }
     }
     
