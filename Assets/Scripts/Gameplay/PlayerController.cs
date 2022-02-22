@@ -102,57 +102,43 @@ public class PlayerController : MonoBehaviour
         );
         return overlapCollider;
     }
+    
     /// <summary>
-    /// At a given position, casts a vector up and down the z axis to find colliders in the Interactable layer.
+    /// At a given position, casts a vector up and down the z axis to find Components of type <typeparamref name="T"/>
     /// </summary>
-    /// <returns>Interactable with highest z value</returns>
-    public Interactable OnInteractable(Vector3 pos) {
+    /// <param name="pos">Position</param>
+    /// <typeparam name="T">Component</typeparam>
+    /// <returns>Component to find</returns>
+    public T OnComponent<T>(Vector3 pos) where T : MonoBehaviour {
 
         RaycastHit2D[] found = Physics2D.RaycastAll(
         pos,
         new Vector3(0, 0, 1),
         LayerMask.GetMask("Interactable")
         );
-        Interactable highestCollider = null;
+        T highestComponent = default(T);
         foreach (RaycastHit2D curCol in found)
         {
-            Interactable interact = curCol.transform.GetComponent<Interactable>();
+            T interact = curCol.transform.GetComponent<T>();
             if (interact != null) {
                 // print(interact + " " + interact.transform.position.z);
-                if(highestCollider == null || interact.transform.position.z < highestCollider.transform.position.z) {
-                    highestCollider = interact;
+                if(highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z) {
+                    highestComponent = interact;
                 }
             }
         }
 
-        return highestCollider;
+        return highestComponent;
     }
 
     public Interactable OnInteractable()
     {
-        return OnInteractable(transform.position);
-    }
-
-    public Destructable OnDestructable(Vector3 pos)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(
-            pos,
-            new Vector3(0, 0, 1),
-            10.0f,
-            LayerMask.GetMask("Interactable"));
-        if (hit.transform != null)
-        {
-            return hit.transform.gameObject.GetComponent<Destructable>();
-        }
-        else
-        {
-            return null;
-        }
+        return OnComponent<Interactable>(transform.position);
     }
 
     public Destructable OnDestructable()
     {
-        return OnDestructable(transform.position);
+        return OnComponent<Destructable>(transform.position);
     }
 
     #region Actions
