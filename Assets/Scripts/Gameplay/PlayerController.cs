@@ -59,9 +59,14 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)){
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.name);
+            RestartGame();
         }
+    }
+
+    public void RestartGame(){
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+        StopCoroutine("SmoothSprite._moveCoroutine");
     }
 
     private void FixedUpdate()
@@ -85,7 +90,7 @@ public class PlayerController : MonoBehaviour
             _curRoom = null;
         }
     }
-    
+
     /// <summary>
     /// Checks what rooms the player is in, if any
     /// </summary>
@@ -102,7 +107,7 @@ public class PlayerController : MonoBehaviour
         );
         return overlapCollider;
     }
-    
+
     /// <summary>
     /// At a given position, casts a vector up and down the z axis to find Components of type <typeparamref name="T"/>
     /// </summary>
@@ -206,7 +211,7 @@ public class PlayerController : MonoBehaviour
             {
                 CanPlaceStemMine = true;
                 CanPlaceHeadMine = false;
-            } 
+            }
             else if (hit.transform.gameObject.CompareTag("HeadTiles"))
             {
                 CanPlaceStemMine = false;

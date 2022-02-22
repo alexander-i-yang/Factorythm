@@ -19,7 +19,7 @@ public class Conductor : MonoBehaviour {
     }
 
     private int _index = 0;
-    
+
     private Pooler _pooler;
 
     public bool RhythmLock = false;
@@ -36,7 +36,7 @@ public class Conductor : MonoBehaviour {
     private bool _wasOnBeat;
 
     public int Cash = 0;
-    FMOD.Studio.Bus MasterBus;
+    public FMOD.Studio.Bus MasterBus;
 
     private bool _paused;
     public bool Paused
@@ -70,7 +70,7 @@ public class Conductor : MonoBehaviour {
             return (float) tMs / tTMs;
         }
     }
-    
+
     void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -79,7 +79,7 @@ public class Conductor : MonoBehaviour {
             return;
         }
         BeatClipHelper.Reset(CurrentBeatClip);
-        
+
         // DontDestroyOnLoad(gameObject);
         // MusicSource = gameObject.AddComponent<AudioSource>();
         // MusicSource.clip = BeatClipHelper.BeatClip.MusicClip;
@@ -87,13 +87,14 @@ public class Conductor : MonoBehaviour {
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
 
-        // MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
     }
 
     FMOD.Studio.EventInstance currentSong;
     // Start is called before the first frame update
     void Start() {
         // MusicSource.Play();
+        MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
+
         MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //FMODUnity.RuntimeManager.PlayOneShot("event:/DysonSphereSong");
         _pooler = GetComponent<Pooler>();
