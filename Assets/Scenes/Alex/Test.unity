@@ -564,22 +564,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8430193978895550132, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
-      propertyPath: recipeObj
-      value: 
-      objectReference: {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
-    - target: {fileID: 8430193978895550132, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
-      propertyPath: UnlockCriteria.resources.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8430193978895550132, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
-      propertyPath: UnlockCriteria.resources.Array.data[0].num
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8430193978895550132, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
-      propertyPath: UnlockCriteria.resources.Array.data[0].resource
-      value: 
-      objectReference: {fileID: 3180746739474140444, guid: 4e7bfe41ed7c5de4391984a5da11e46a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
 --- !u!1001 &752221934
@@ -944,10 +928,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8430193978895550132, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
-      propertyPath: recipeObj
-      value: 
-      objectReference: {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b16ab2abc597bd54f9cf36b5619fbd97, type: 3}
 --- !u!1 &1944043190
