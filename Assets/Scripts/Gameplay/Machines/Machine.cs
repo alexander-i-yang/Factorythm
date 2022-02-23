@@ -66,7 +66,7 @@ public class Machine : Draggable {
         
         bool ret = recipeObj.CheckInputs(actualInputs);
         if (_shouldPrint) {
-            // print("Input resources: ");
+            print("Actual input port size: " + InputPorts.Count());
             foreach (Resource i in actualInputs) { print(i);}
             print("Enough input: "  +ret);
         }
@@ -150,10 +150,8 @@ public class Machine : Draggable {
     public void MoveAndDestroy() {
         //Foreach resource in each port's input buffer, move to this machine
         foreachMachine(new List<MachinePort>(InputPorts), m => {
+            
             foreach (Resource resource in m.OutputBuffer) {
-                if (_shouldPrint) {
-                    print("moving resource: " + m + resource);
-                }
                 MoveHere(resource, _shouldDestroyInputs());
             }
         });
@@ -168,7 +166,7 @@ public class Machine : Draggable {
         }
         CreateOutput();
     }
-    
+
     protected virtual void _produce() {
         if (recipeObj.CreatesNewOutput) {
             if (_shouldPrint) {
@@ -269,10 +267,17 @@ public class Machine : Draggable {
     public override void OnDeInteract(PlayerController p) {
         _dragDirection = Vector2.zero;
         Interactable onInteractable = p.OnInteractable();
+        print(onInteractable);
         Machine onMachine = null;
         if (onInteractable != null) {
             onMachine = onInteractable.gameObject.GetComponent<Machine>();
+
+            //Ugh why
+            if (onMachine == null) {
+                onMachine = onInteractable.gameObject.GetComponent<UnlockPortMachine>();
+            }
         }
+        print(onMachine);
         List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
         ClearDragBluePrints();
         ConfigureDragPorts(conveyors, onMachine);
@@ -437,5 +442,18 @@ public class Machine : Draggable {
     
     public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
         return RenderConveyorBluePrintLine(n, startPos, dir, Vector2.zero);
+    }
+
+    public T GetPortToPoke<T>(List<T> ports) {
+        ports.Sort();
+        return ports[0];
+    }
+
+    public OutputPort GetOutputPortToPoke() {
+        return GetPortToPoke<OutputPort>(OutputPorts);
+    }
+    
+    public InputPort GetInputPortToPoke() {
+        return GetPortToPoke<InputPort>(InputPorts);
     }
 }
