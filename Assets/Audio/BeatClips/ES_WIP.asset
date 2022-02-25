@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ES_WIP
   m_EditorClassIdentifier: 
   BPM: 122
-  BeatOffset: 0.5
+  BeatOffset: 0
   fmodSongReference:
     Guid:
       Data1: -1154821712

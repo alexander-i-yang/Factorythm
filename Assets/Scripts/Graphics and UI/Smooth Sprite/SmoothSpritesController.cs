@@ -6,7 +6,7 @@
 public class SmoothSpritesController : MonoBehaviour {
     private SmoothSpriteLoop[] smoothSprites;
 
-    void Start() {
+    void Awake() {
         smoothSprites = GetComponentsInChildren<SmoothSpriteLoop>();
     }
 

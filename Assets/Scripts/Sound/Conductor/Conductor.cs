@@ -191,13 +191,27 @@ public class Conductor : MonoBehaviour {
         }
     }
 
+    [SerializeField] public GameObject FactController;
+
+    [SerializeField] public int TicksToAppear;
+
+    private int _tickCount;
     // Called whenever the song hits a new beat
     public void TrueTick() {
-        MyUIManager.Tick();
+        // MyUIManager.Tick();
+
+        if (TicksToAppear <= _tickCount) {
+            FactController.SetActive(true);
+        }
+        _tickCount++;
 
         var cons = FindObjectsOfType<SmoothSpritesController>();
         foreach (var con in cons) {
             con.Move();
+        }
+        var ss = FindObjectsOfType<SmoothRotate>();
+        foreach (SmoothRotate r in ss) {
+            r.Rotate();
         }
     }
 
