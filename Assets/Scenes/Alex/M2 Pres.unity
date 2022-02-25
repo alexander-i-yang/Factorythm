@@ -461,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &513447527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3024,6 +3024,14 @@ PrefabInstance:
       propertyPath: ConveyorBelt
       value: 
       objectReference: {fileID: 1414417743092410389, guid: eb894222aba72884aa9d97040fe065a2, type: 3}
+    - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
+      propertyPath: TicksToAppear
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
+      propertyPath: FactController
+      value: 
+      objectReference: {fileID: 513447526}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: CurrentBeatClip
       value: 
