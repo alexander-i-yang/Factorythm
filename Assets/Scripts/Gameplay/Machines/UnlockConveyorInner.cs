@@ -20,18 +20,21 @@ public class UnlockConveyorInner : Conveyor {
         base.MoveHere(r, destroyOnComplete);
         if (!Done) {
             bool isDone = true;
-            for (var i = 0; i < UnlockCriteria.resources.Length; i++) {
-                ResourceNum rn = UnlockCriteria.resources[i];
-                if (rn.num > 0) {
-                    isDone = false;
+            ResourceNum[] rns = UnlockCriteria.resources;
+            for (var i = 0; i < rns.Length; i++) {
+                if (rns[i].resource.ResourceName == r.ResourceName) {
+                    rns[i].num--;
                 }
-
-                if (rn.resource.ResourceName == r.ResourceName) {
-                    UnlockCriteria.resources[i].num--;
+                if (rns[i].num > 0) {
+                    isDone = false;
                 }
             }
 
             Done = isDone;
         }
+    }
+
+    public void Unlock() {
+        recipeObj = Conductor.GetPooler().ConveyorRecipe;
     }
 }

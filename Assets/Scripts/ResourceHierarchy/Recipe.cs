@@ -5,7 +5,7 @@ using UnityEngine;
 /// Represents a recipe for a machine. Contains its input criteria and output parameters.
 /// </summary>
 [CreateAssetMenu(fileName = "Recipe", menuName = "ScriptableObjects/Recipe")]
-public class RecipeScriptableObj : ScriptableObject {
+public class Recipe : ScriptableObject {
     // public ResourceNum[] InCriteria;
     // public ResourceNum[] OutCriteria;
     public Criteria InCriteria;

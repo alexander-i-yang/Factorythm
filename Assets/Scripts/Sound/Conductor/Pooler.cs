@@ -8,6 +8,7 @@ public class Pooler : MonoBehaviour {
     public GameObject ConveyorBelt;
     public GameObject OutputPort;
     public GameObject InputPort;
+    public Recipe ConveyorRecipe;
     
     public ConveyorBlueprint ConveyorBluePrint;
     

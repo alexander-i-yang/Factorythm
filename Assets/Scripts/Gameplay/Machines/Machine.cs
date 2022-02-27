@@ -7,7 +7,7 @@ using UnityEngine;
 /// All machine logic is contained within here.
 /// </summary>
 public class Machine : Draggable {
-    [SerializeField] public RecipeScriptableObj recipeObj;
+    [SerializeField] public Recipe recipeObj;
 
     public List<OutputPort> OutputPorts = new List<OutputPort>();
     public List<InputPort> InputPorts = new List<InputPort>();
