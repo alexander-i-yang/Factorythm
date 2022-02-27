@@ -41,7 +41,7 @@ public class UnlockableSquares : MonoBehaviour
         if (done) {
             _lockedRoom.enabled = false;
             _mySR.enabled = false;
-            
+            isActive = false;
             foreach (var c in ConveyorInners) {
                 c.Unlock();
             }
