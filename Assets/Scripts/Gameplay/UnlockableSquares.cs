@@ -9,7 +9,7 @@ public class UnlockableSquares : MonoBehaviour
     private SpriteRenderer renderer;
     private BoxCollider2D _myCollider;
 
-    public List<UnlockPortMachine> machines;
+    public List<UnlockConveyorInner> machines;
 
     void Awake() 
     {
