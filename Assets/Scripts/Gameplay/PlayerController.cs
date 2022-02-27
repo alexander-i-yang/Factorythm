@@ -149,10 +149,7 @@ public class PlayerController : MonoBehaviour
         {
             T interact = curCol.transform.GetComponent<T>();
             if (interact != null) {
-                print(interact + " " + interact.transform.position.z);
-                if (highestComponent != null) print(interact.transform.position.z < highestComponent.transform.position.z);
                 if(highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z) {
-                    print("resetting highest component to " + interact);
                     highestComponent = interact;
                 }
             }

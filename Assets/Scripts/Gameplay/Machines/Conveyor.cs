@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -10,11 +12,16 @@ public class Conveyor : Machine {
 
     private int _spriteIndex = 0;
     private Vector2 _betweenMachines;
-    
+    private Vector3 _inputLoc;
+    private Vector3 _outputLoc;
+
+    public float Angle;
+
     protected override void Awake() {
         base.Awake();
         base.Start();
         _mySR = GetComponent<SpriteRenderer>();
+        ResetSprite();
     }
 
     public override void AddOutputMachine(Machine m) {
@@ -49,24 +56,33 @@ public class Conveyor : Machine {
             outputLoc = OutputPorts[0].transform.localPosition;
         }
 
+        _inputLoc = inputLoc;
+        _outputLoc = outputLoc;
         Vector2 betweenMachines =  inputLoc-outputLoc;
-        float angleBtwn = Vector2.SignedAngle(betweenMachines, Vector2.right)+180;
+        _betweenMachines = betweenMachines;
+        //The vector is rounded to avoid floating point math errors.
+        int angleBtwn = (int) Vector2.SignedAngle(Helper.RoundVector(_betweenMachines), Vector2.right)+180;
+        Angle = angleBtwn;
         int index = (int) (angleBtwn / 45);
         index = index >= 8 ? 0 : index;
 
         if (index % 2 == 1) {
             betweenMachines = inputLoc + outputLoc;
-            angleBtwn = Vector2.SignedAngle(betweenMachines, Vector2.right) + 180;
+            angleBtwn = (int) Vector2.SignedAngle(betweenMachines, Vector2.right) + 180;
             index = (int) (angleBtwn / 45);
             index = index >= 8 ? 0 : index;
         }
-        
-        _betweenMachines = betweenMachines;
+
+        print(Vector2.SignedAngle(new Vector2(0, -1), Vector2.right)+180);
         _spriteIndex = index;
         _mySR.sprite = Sprites[index];
     }
 
     public void OnDrawGizmos() {
         base.OnDrawGizmos();
+        Handles.Label(transform.position + new Vector3(0.1f, 0.1f, -3), "I " + _inputLoc);
+        Handles.Label(transform.position + new Vector3(0.1f, 0.3f, -3), "O " + _outputLoc);
+        Handles.Label(transform.position + new Vector3(0.1f, 0.5f, -3), "S" + _spriteIndex);
+        Handles.Label(transform.position + new Vector3(0.1f, 0.7f, -3), "B" + _betweenMachines);
     }
 }

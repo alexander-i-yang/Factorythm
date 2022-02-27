@@ -31,4 +31,8 @@ class Helper {
     public static String DictToString<Key, Val>(Dictionary<Key, Val> d) {
         return "{" + string.Join(",", d.Select(kv => kv.Key + "=" + kv.Value).ToArray()) + "}";
     }
+
+    public static Vector2 RoundVector(Vector2 v) {
+        return new Vector2((float) Math.Round(v.x), (float) Math.Round(v.y));
+    }
 }

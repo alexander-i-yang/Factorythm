@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-public class ConveyorBlueprint : MachineBluePrint {
+public class ConveyorBlueprint : MonoBehaviour {
     [SerializeField] public Sprite[] Sprites;
 
     private SpriteRenderer _mySR;
