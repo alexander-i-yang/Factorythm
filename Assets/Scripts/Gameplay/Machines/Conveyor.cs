@@ -16,6 +16,7 @@ public class Conveyor : Machine {
     private Vector3 _outputLoc;
 
     public float Angle;
+    public Vector2 BetweenMachines;
 
     protected override void Awake() {
         base.Awake();
@@ -59,9 +60,10 @@ public class Conveyor : Machine {
         _inputLoc = inputLoc;
         _outputLoc = outputLoc;
         Vector2 betweenMachines =  inputLoc-outputLoc;
-        _betweenMachines = betweenMachines;
+        BetweenMachines = betweenMachines;
+        _betweenMachines = Helper.RoundVectorHalf(_betweenMachines);
         //The vector is rounded to avoid floating point math errors.
-        int angleBtwn = (int) Vector2.SignedAngle(Helper.RoundVector(_betweenMachines), Vector2.right)+180;
+        int angleBtwn = (int) Vector2.SignedAngle(Helper.RoundVectorHalf(betweenMachines), Vector2.right)+180;
         Angle = angleBtwn;
         int index = (int) (angleBtwn / 45);
         index = index >= 8 ? 0 : index;
@@ -73,7 +75,6 @@ public class Conveyor : Machine {
             index = index >= 8 ? 0 : index;
         }
 
-        print(Vector2.SignedAngle(new Vector2(0, -1), Vector2.right)+180);
         _spriteIndex = index;
         _mySR.sprite = Sprites[index];
     }
@@ -82,7 +83,7 @@ public class Conveyor : Machine {
         base.OnDrawGizmos();
         Handles.Label(transform.position + new Vector3(0.1f, 0.1f, -3), "I " + _inputLoc);
         Handles.Label(transform.position + new Vector3(0.1f, 0.3f, -3), "O " + _outputLoc);
-        Handles.Label(transform.position + new Vector3(0.1f, 0.5f, -3), "S" + _spriteIndex);
-        Handles.Label(transform.position + new Vector3(0.1f, 0.7f, -3), "B" + _betweenMachines);
+        Handles.Label(transform.position + new Vector3(0.1f, 0.5f, -3), "S " + _spriteIndex + " A " + Angle);
+        Handles.Label(transform.position + new Vector3(0.1f, 0.7f, -3), "BH" + _betweenMachines + " B" + BetweenMachines);  
     }
 }
