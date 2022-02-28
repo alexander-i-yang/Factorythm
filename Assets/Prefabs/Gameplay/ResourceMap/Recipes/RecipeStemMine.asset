@@ -10,18 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9f704d344b244a02a05164ca23c79555, type: 3}
-  m_Name: RecipeEighth
+  m_Name: RecipeStemMine
   m_EditorClassIdentifier: 
   InCriteria:
-    resources:
-    - resource: {fileID: 7796586414147078100, guid: 4e173a4fbb7007b43ba46130f9984a9a, type: 3}
-      num: 1
-    - resource: {fileID: 8898906047096598653, guid: 13eef7ce646dde04cbb6724112f9c423, type: 3}
-      num: 1
+    resources: []
     Cash: 0
   OutCriteria:
     resources:
-    - resource: {fileID: 4260335696561330830, guid: 2d01800266f44114bab5c2d185e4d115, type: 3}
+    - resource: {fileID: 8898906047096598653, guid: 13eef7ce646dde04cbb6724112f9c423, type: 3}
       num: 1
     Cash: 0
   ticks: 4
