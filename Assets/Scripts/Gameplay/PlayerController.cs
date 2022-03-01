@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
-    private SmoothSprite _mySR;
+    private SmoothSprite _mySS;
+    private SmoothRotate _mySRot;
 
     private Room _curRoom;
 
@@ -30,7 +31,8 @@ public class PlayerController : MonoBehaviour
     {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
-        _mySR = GetComponentInChildren<SmoothSprite>();
+        _mySS = GetComponentInChildren<SmoothSprite>();
+        _mySRot = GetComponentInChildren<SmoothRotate>();
         _ism = GetComponent<InteractableStateMachine>();
         _pia = new PlayerInputActions();
 
@@ -48,15 +50,6 @@ public class PlayerController : MonoBehaviour
         _ism.SetXPressed(_isHoldingX);
 
         this.CheckTileOn();
-
-        if (Conductor.Instance.SongIsOnBeat())
-        {
-            _mySR.GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else
-        {
-            _mySR.GetComponent<SpriteRenderer>().color = Color.blue;
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape)){
             RestartGame();
@@ -157,6 +150,10 @@ public class PlayerController : MonoBehaviour
 
         return highestComponent;
     }
+    
+    public void Tick() {
+        // _mySRot.Alternate();
+    }
 
     public Interactable OnInteractable() {
         return OnComponent<Interactable>(transform.position);
@@ -203,7 +200,7 @@ public class PlayerController : MonoBehaviour
               newPos = _myRb.position + offset;
 
               if (CanMoveTo(offset)) {
-                  _mySR.Move(newPos);
+                  _mySS.Move(newPos);
                   _myRb.MovePosition(newPos);
                   _ism.Move(newPos);
               }
@@ -220,6 +217,8 @@ public class PlayerController : MonoBehaviour
     {
         _isHoldingX = context.performed;
     }
+
+    #endregion
 
     public void CheckTileOn()
     {
@@ -253,5 +252,4 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    #endregion
 }
