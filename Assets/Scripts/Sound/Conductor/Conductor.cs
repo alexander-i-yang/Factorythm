@@ -4,7 +4,7 @@ using UnityEditor;
 
 /// <summary>
 /// A singleton class that controls the state of the entire game. Kind of like the "main" function of the game.
-/// If you need a global property (the current song, the player's combo, etc.) it's probably in here.
+/// If you need a global property (the current song, the _player's combo, etc.) it's probably in here.
 /// </summary>
 [RequireComponent(typeof(Pooler))]
 public class Conductor : MonoBehaviour {
@@ -13,6 +13,8 @@ public class Conductor : MonoBehaviour {
 
     public BeatClipSO[] PlayList;
 
+    private PlayerController _player;
+    
     private BeatClipSO CurrentBeatClip
     {
         get { return PlayList[_index]; }
@@ -98,6 +100,7 @@ public class Conductor : MonoBehaviour {
         MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //FMODUnity.RuntimeManager.PlayOneShot("event:/DysonSphereSong");
         _pooler = GetComponent<Pooler>();
+        _player = FindObjectOfType<PlayerController>();
         StartCurrentClip();
     }
 
@@ -199,6 +202,8 @@ public class Conductor : MonoBehaviour {
         foreach (var con in cons) {
             con.Move();
         }
+
+        _player.Tick();
     }
 
     public bool AttemptMove() {

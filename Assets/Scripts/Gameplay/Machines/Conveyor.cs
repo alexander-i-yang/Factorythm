@@ -9,7 +9,8 @@ using UnityEngine;
 public class Conveyor : Machine {
     [SerializeField] public Sprite[] Sprites;
     private SpriteRenderer _mySR;
-
+    private Animator _myAnimator;
+    
     private int _spriteIndex = 0;
     private Vector2 _betweenMachines;
     private Vector3 _inputLoc;
@@ -22,6 +23,7 @@ public class Conveyor : Machine {
         base.Awake();
         base.Start();
         _mySR = GetComponent<SpriteRenderer>();
+        _myAnimator = GetComponent<Animator>();
         ResetSprite();
     }
 
@@ -76,7 +78,12 @@ public class Conveyor : Machine {
         }
 
         _spriteIndex = index;
-        _mySR.sprite = Sprites[index];
+        // _mySR.sprite = Sprites[index];
+        _myAnimator.SetInteger("Index", index);
+    }
+
+    public void Update() {
+        // ResetSprite();
     }
 
     public void OnDrawGizmos() {
