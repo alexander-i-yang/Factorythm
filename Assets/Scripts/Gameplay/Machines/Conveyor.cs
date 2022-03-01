@@ -18,6 +18,7 @@ public class Conveyor : Machine {
 
     public float Angle;
     public Vector2 BetweenMachines;
+    public static readonly string[] ANIMATIONS = {"ConveyorRLB", "ConveyorDL", "ConveyorUPL", "ConveyorLU", "ConveyorRLT", "ConveyorUR", "ConveyorUDR", "ConveyorRD"};
 
     protected override void Awake() {
         base.Awake();
@@ -79,7 +80,10 @@ public class Conveyor : Machine {
 
         _spriteIndex = index;
         // _mySR.sprite = Sprites[index];
-        _myAnimator.SetInteger("Index", index);
+        //_myAnimator.SetInteger("Index", index);
+
+        String animationName = ANIMATIONS[index];
+        _myAnimator.Play("Base Layer." + animationName);
     }
 
     public void Update() {
