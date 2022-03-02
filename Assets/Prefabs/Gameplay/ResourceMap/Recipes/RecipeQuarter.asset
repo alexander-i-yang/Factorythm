@@ -15,7 +15,7 @@ MonoBehaviour:
   InCriteria:
     resources:
     - resource: {fileID: 4260335696561330830, guid: 2d01800266f44114bab5c2d185e4d115, type: 3}
-      num: 1
+      num: 2
     Cash: 0
   OutCriteria:
     resources:

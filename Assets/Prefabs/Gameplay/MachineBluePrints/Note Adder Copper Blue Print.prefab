@@ -41,7 +41,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3243557835273114965, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: m_Name
-      value: Eighth Buyer Blue Print
+      value: Note Adder Copper Blue Print
       objectReference: {fileID: 0}
     - target: {fileID: 3288924237238521731, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: m_Size.x
@@ -54,7 +54,7 @@ PrefabInstance:
     - target: {fileID: 3288924237238521731, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 761215162782458764, guid: 0c68b13b898115f4c8323fd98c67be80, type: 3}
+      objectReference: {fileID: -3640534841163079676, guid: ce01fa2f2b412fa45b215f282485e310, type: 3}
     - target: {fileID: 3288924237238521731, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: m_Color.a
       value: 0.5019608
@@ -78,6 +78,6 @@ PrefabInstance:
     - target: {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: MachineCopy
       value: 
-      objectReference: {fileID: 4196126780359366089, guid: 94604cefe4ebe364280dd19d4e1c3ea5, type: 3}
+      objectReference: {fileID: 7117618622287913240, guid: 46c7d593b71545b47bf70198bc64f85d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
