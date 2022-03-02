@@ -44,7 +44,6 @@ public class UnlockableSquares : MonoBehaviour
                     break;
                 }
             }
-
             if (done) {
                 _lockedRoom.enabled = false;
                 _mySR.enabled = false;
