@@ -37,7 +37,7 @@ public class Resource : MonoBehaviour {
         MySmoothSprite.SpriteRenderer.color = c;
     }*/
 
-    void Awake() {
+    public void Awake() {
         MySmoothSprite = GetComponentInChildren<SmoothSprite>();
     }
     

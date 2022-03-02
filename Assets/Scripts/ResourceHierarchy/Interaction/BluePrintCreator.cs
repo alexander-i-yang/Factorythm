@@ -27,4 +27,8 @@ public class BluePrintCreator : Button {
         var origColor = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = new Color(origColor.r + 0.1f, origColor.g + 0.1f, origColor.b + 0.1f);
     }
+
+    public void Unlock() {
+        gameObject.SetActive(true);
+    }
 }
