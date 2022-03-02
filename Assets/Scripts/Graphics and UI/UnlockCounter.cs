@@ -19,7 +19,6 @@ public class UnlockCounter : MonoBehaviour {
         if (_myText == null) {
             Awake();
         }
-        print(GetComponent<TextMeshProUGUI>());
         _myText.SetText("x" + i);
     }
 }

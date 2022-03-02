@@ -10,6 +10,7 @@ public class BluePrintCreator : Button {
 
     private void Start() {
         _spawnPoint = transform.Find("SpawnPoint").position;
+        base.Start();
     }
 
     public override void OnInteract(PlayerController p) {
@@ -17,15 +18,8 @@ public class BluePrintCreator : Button {
             _myMachineBluePrint = Conductor.GetPooler().CreateMachineBluePrint(machineBPInstance, _spawnPoint);
             _myMachineBluePrint.SmoothSprite.transform.position = transform.position;
             _myMachineBluePrint.SmoothSprite.Move(_spawnPoint);
-
-            var origColor = GetComponent<SpriteRenderer>().color;
-            GetComponent<SpriteRenderer>().color = new Color(origColor.r - 0.1f, origColor.g - 0.1f, origColor.b - 0.1f);
         }
-    }
-
-    public override void OnDeInteract(PlayerController p) {
-        var origColor = GetComponent<SpriteRenderer>().color;
-        GetComponent<SpriteRenderer>().color = new Color(origColor.r + 0.1f, origColor.g + 0.1f, origColor.b + 0.1f);
+        base.OnInteract(p);
     }
 
     public void Unlock() {
