@@ -51,5 +51,24 @@ PrefabInstance:
       propertyPath: MachineCopy
       value: 
       objectReference: {fileID: 4459458567936107020, guid: a0d875f1fb7dac54782b75643eede25c, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+--- !u!1 &3209483221131802990 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3243557835273114965, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+  m_PrefabInstance: {fileID: 110673914232876091}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7161910520858019637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3209483221131802990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2629940f1a34448b731ad9335a0bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MachineCopy: {fileID: 4459458567936107020, guid: a0d875f1fb7dac54782b75643eede25c, type: 3}
