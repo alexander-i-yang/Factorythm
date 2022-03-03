@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TMPro;
+using System.Collections;
 using UnityEngine;
 
 public class SmoothRotate : MonoBehaviour {
@@ -11,9 +10,12 @@ public class SmoothRotate : MonoBehaviour {
     private Quaternion _afterRot;
 
     public void Rotate() {
-        print("AAA");
+        Rotate(degrees);
+    }
+
+    public void Rotate(double deg) {
         _beforeRot = transform.rotation;
-        transform.Rotate(new Vector3(0, 0, (float) degrees));
+        transform.Rotate(new Vector3(0, 0, (float) deg));
         _afterRot = transform.rotation;
         transform.rotation = _beforeRot;
         StartCoroutine(_rotateCoroutine());
@@ -27,7 +29,5 @@ public class SmoothRotate : MonoBehaviour {
 
             yield return null;
         }
-
-        // transform.rotation = _afterRot;
     }
 }

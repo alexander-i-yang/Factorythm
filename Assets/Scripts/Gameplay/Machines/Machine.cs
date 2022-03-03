@@ -7,10 +7,10 @@ using UnityEngine;
 /// All machine logic is contained within here.
 /// </summary>
 public class Machine : Draggable {
-    [SerializeField] public RecipeScriptableObj recipeObj;
+    [SerializeField] public Recipe recipeObj;
 
-    [NonSerialized] public List<OutputPort> OutputPorts = new List<OutputPort>();
-    [NonSerialized] public List<InputPort> InputPorts = new List<InputPort>();
+    public List<OutputPort> OutputPorts = new List<OutputPort>();
+    public List<InputPort> InputPorts = new List<InputPort>();
     private int _ticksSinceProduced;
     private bool _pokedThisTick;
     public bool _isActive = true;
@@ -23,7 +23,7 @@ public class Machine : Draggable {
     public Queue<Resource> storage { get; private set; }
 
     private Vector2 _dragDirection;
-    private List<MachineBluePrint> _dragBluePrints;
+    private List<ConveyorBlueprint> _dragBluePrints;
     
     [SerializeField] private bool _shouldPrint;
     [SerializeField] private bool _shouldBreak;
@@ -34,7 +34,7 @@ public class Machine : Draggable {
     }
     
     protected void Start() {
-        _dragBluePrints = new List<MachineBluePrint>();
+        _dragBluePrints = new List<ConveyorBlueprint>();
     }
 
 
@@ -86,7 +86,7 @@ public class Machine : Draggable {
     /// </summary>
     /// <param name="r">The resource to move</param>
     /// <param name="destroyOnComplete">Whether <paramref name="r"/> should self-destruct after moving here</param>
-    public void MoveHere(Resource r, bool destroyOnComplete) {
+    protected virtual void MoveHere(Resource r, bool destroyOnComplete) {
         var position = transform.position;
         var instantiatePos = new Vector3(position.x, position.y, r.gameObject.transform.position.z);
         r.MySmoothSprite.Move(instantiatePos, destroyOnComplete);
@@ -150,7 +150,6 @@ public class Machine : Draggable {
     public void MoveAndDestroy() {
         //Foreach resource in each port's input buffer, move to this machine
         foreachMachine(new List<MachinePort>(InputPorts), m => {
-            
             foreach (Resource resource in m.OutputBuffer) {
                 MoveHere(resource, _shouldDestroyInputs());
             }
@@ -267,17 +266,19 @@ public class Machine : Draggable {
     public override void OnDeInteract(PlayerController p) {
         _dragDirection = Vector2.zero;
         Interactable onInteractable = p.OnInteractable();
-        print(onInteractable);
         Machine onMachine = null;
         if (onInteractable != null) {
             onMachine = onInteractable.gameObject.GetComponent<Machine>();
-
-            //Ugh why
+            
+            /*//Ugh why
             if (onMachine == null) {
-                onMachine = onInteractable.gameObject.GetComponent<UnlockPortMachine>();
+                onMachine = onInteractable.gameObject.GetComponent<Conveyor>();
             }
+
+            if (onMachine == null) {
+                onMachine = onInteractable.gameObject.GetComponent<UnlockConveyorInner>();
+            }*/
         }
-        print(onMachine);
         List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
         ClearDragBluePrints();
         ConfigureDragPorts(conveyors, onMachine);
@@ -289,10 +290,10 @@ public class Machine : Draggable {
      *      Assumes the blueprint list is ordered by distance from this machine
      * </summary>
      **/
-    public List<Machine> InstantiateFromBluePrints(List<MachineBluePrint> dragBluePrints, Machine onMachine) {
+    public List<Machine> InstantiateFromBluePrints(List<ConveyorBlueprint> dragBluePrints, Machine onMachine) {
         List<Machine> ret = new List<Machine>();
         for (int i = 0; i < dragBluePrints.Count; i++) {
-            MachineBluePrint bluePrint = dragBluePrints[i];
+            ConveyorBlueprint bluePrint = dragBluePrints[i];
             Transform bluePrintTransform = bluePrint.transform;
 
             // If this is the last conveyor and the player is on a machine,
@@ -368,7 +369,7 @@ public class Machine : Draggable {
     }
 
     public void ClearDragBluePrints() {
-        foreach (MachineBluePrint m in _dragBluePrints) {
+        foreach (ConveyorBlueprint m in _dragBluePrints) {
             Destroy(m.gameObject);
         }
         _dragBluePrints.Clear();
@@ -382,10 +383,8 @@ public class Machine : Draggable {
     public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir, Vector2 orthoDir) {
         List<ConveyorBlueprint> ret = new List<ConveyorBlueprint>();
         // Account for dir.x being 0 which causes a div by 0 error
-        print(dir + " " + orthoDir);
         for (int i = 1; i < n+1; ++i) {
             ConveyorBlueprint add = Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3) (dir * i));
-
             if (i < n) {
                 add.SetEdgeSprite(dir);
             } else if(orthoDir != Vector2.zero) {
