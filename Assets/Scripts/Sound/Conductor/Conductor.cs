@@ -206,10 +206,6 @@ public class Conductor : MonoBehaviour {
         }
     }
 
-    [SerializeField] public GameObject FactController;
-
-    [SerializeField] public int TicksToAppear;
-
     [SerializeField] public int TickCount;
 
     // Called whenever the song hits a new beat
