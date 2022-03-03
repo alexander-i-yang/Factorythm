@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -20,10 +20,13 @@ public class MachineBluePrint : Draggable {
     }
 
     public override void OnDeInteract(PlayerController p) {
-        if (CanPlace(transform.position)) {
+        if (CanPlace(SmoothSprite.transform.position)) {
+            Destroy(gameObject);
+            Conductor.GetPooler().InstantiateMachine(MachineCopy, p.transform.position);
+        }
+        else {
             Destroy(gameObject);
         }
-        Conductor.GetPooler().InstantiateMachine(MachineCopy, p.transform.position);
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
@@ -31,8 +34,7 @@ public class MachineBluePrint : Draggable {
         // throw new System.NotImplementedException();
     }
 
-    public bool CanPlace(Vector3 pos) {
-        
+    public virtual bool CanPlace(Vector3 pos) {
         return true;
     }
 }
