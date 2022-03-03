@@ -4,7 +4,7 @@ using UnityEditor;
 
 /// <summary>
 /// A singleton class that controls the state of the entire game. Kind of like the "main" function of the game.
-/// If you need a global property (the current song, the player's combo, etc.) it's probably in here.
+/// If you need a global property (the current song, the _player's combo, etc.) it's probably in here.
 /// </summary>
 [RequireComponent(typeof(Pooler))]
 public class Conductor : MonoBehaviour {
@@ -13,6 +13,8 @@ public class Conductor : MonoBehaviour {
 
     public BeatClipSO[] PlayList;
 
+    private PlayerController _player;
+    
     private BeatClipSO CurrentBeatClip
     {
         get { return PlayList[_index]; }
@@ -39,6 +41,8 @@ public class Conductor : MonoBehaviour {
     public FMOD.Studio.Bus MasterBus;
 
     private bool _paused;
+
+    private AppearAfterNTicks[] _appearAfterNTicksArray;
     public bool Paused
     {
         get { return _paused; }
@@ -94,10 +98,15 @@ public class Conductor : MonoBehaviour {
     void Start() {
         // MusicSource.Play();
         MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
-
+        _appearAfterNTicksArray = FindObjectsOfType<AppearAfterNTicks>();
+        foreach (var a in _appearAfterNTicksArray) {
+            a.gameObject.SetActive(false);
+        }
+        
         MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //FMODUnity.RuntimeManager.PlayOneShot("event:/DysonSphereSong");
         _pooler = GetComponent<Pooler>();
+        _player = FindObjectOfType<PlayerController>();
         StartCurrentClip();
     }
 
@@ -156,6 +165,12 @@ public class Conductor : MonoBehaviour {
                 NextSong();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            
+        } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+            
+        }
     }
 
     bool UpdateSongPos() {
@@ -195,15 +210,20 @@ public class Conductor : MonoBehaviour {
 
     [SerializeField] public int TicksToAppear;
 
-    private int _tickCount;
+    [SerializeField] public int TickCount;
+
     // Called whenever the song hits a new beat
     public void TrueTick() {
         // MyUIManager.Tick();
 
-        if (TicksToAppear <= _tickCount) {
-            FactController.SetActive(true);
+        foreach (var a in _appearAfterNTicksArray) {
+            a.Evaluate(TickCount);
         }
-        _tickCount++;
+        
+        /*if (TicksToAppear <= TickCount) {
+            FactController.SetActive(true);
+        }*/
+        TickCount++;
 
         var cons = FindObjectsOfType<SmoothSpritesController>();
         foreach (var con in cons) {
