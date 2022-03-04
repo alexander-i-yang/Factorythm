@@ -95,7 +95,6 @@ public class Conductor : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // MusicSource.Play();
-        FMODUnity.RuntimeManager.LoadBank("Master");
         MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
 
         MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
