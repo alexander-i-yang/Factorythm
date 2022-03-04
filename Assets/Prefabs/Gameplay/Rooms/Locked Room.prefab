@@ -826,6 +826,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Locked Room
       objectReference: {fileID: 0}
+    - target: {fileID: 3357972016705485603, guid: 8a25cbfdf1c1cd848b68f05edafff12a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a25cbfdf1c1cd848b68f05edafff12a, type: 3}
 --- !u!1 &5951824276090157557 stripped
@@ -851,6 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
+  MachineBluePrintCreator: {fileID: 0}
 --- !u!114 &5959382310195728418
 MonoBehaviour:
   m_ObjectHideFlags: 0
