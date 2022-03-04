@@ -212,6 +212,7 @@ public class Machine : Draggable {
         }
     }
     
+    #if UNITY_EDITOR
     /// <summary>
     /// Unity Specific function. Defines how debug arrows are drawn.
     /// </summary>
@@ -226,6 +227,7 @@ public class Machine : Draggable {
             Helper.DrawArrow(m.transform.position, direction, Color.blue);
         });
     }
+    #endif
 
     public int GetNumOutputMachines() {
         int ret = 0;

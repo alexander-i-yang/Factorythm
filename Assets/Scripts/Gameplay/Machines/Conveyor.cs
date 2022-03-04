@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 /// <summary>
@@ -86,10 +88,7 @@ public class Conveyor : Machine {
         _myAnimator.Play("Base Layer." + animationName);
     }
 
-    public void Update() {
-        // ResetSprite();
-    }
-
+    #if UNITY_EDITOR
     public void OnDrawGizmos() {
         base.OnDrawGizmos();
         Handles.Label(transform.position + new Vector3(0.1f, 0.1f, -3), "I " + _inputLoc);
@@ -97,4 +96,5 @@ public class Conveyor : Machine {
         Handles.Label(transform.position + new Vector3(0.1f, 0.5f, -3), "S " + _spriteIndex + " A " + Angle);
         Handles.Label(transform.position + new Vector3(0.1f, 0.7f, -3), "BH" + _betweenMachines + " B" + BetweenMachines);  
     }
+    #endif
 }

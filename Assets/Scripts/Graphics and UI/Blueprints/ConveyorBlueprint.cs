@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
-using System.Collections;
+#endif
 
 public class ConveyorBlueprint : MonoBehaviour {
     [SerializeField] public Sprite[] Sprites;
@@ -43,8 +44,10 @@ public class ConveyorBlueprint : MonoBehaviour {
         Sprite s = Sprites[4+(int) angleBetween / 90];
         _mySR.sprite = s;
     }
-
+    
+    #if UNITY_EDITOR
     public void OnDrawGizmos() {
         Handles.Label(transform.position, ""+cornerAngle);
     }
+    #endif
 }
