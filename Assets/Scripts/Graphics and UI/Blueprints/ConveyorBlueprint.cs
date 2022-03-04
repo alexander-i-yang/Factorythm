@@ -43,8 +43,10 @@ public class ConveyorBlueprint : MonoBehaviour {
         Sprite s = Sprites[4+(int) angleBetween / 90];
         _mySR.sprite = s;
     }
-
+    
+    #if UNITY_EDITOR
     public void OnDrawGizmos() {
         Handles.Label(transform.position, ""+cornerAngle);
     }
+    #endif
 }

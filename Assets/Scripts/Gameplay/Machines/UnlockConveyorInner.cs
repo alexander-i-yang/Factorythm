@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using UnityEditorInternal;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnlockConveyorInner : Conveyor {
     public Criteria UnlockCriteria;

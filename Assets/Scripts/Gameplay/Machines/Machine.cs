@@ -211,7 +211,8 @@ public class Machine : Draggable {
             Debug.Break();
         }
     }
-
+    
+    #if UNITY_EDITOR
     /// <summary>
     /// Unity Specific function. Defines how debug arrows are drawn.
     /// </summary>
@@ -226,6 +227,7 @@ public class Machine : Draggable {
             Helper.DrawArrow(m.transform.position, direction, Color.blue);
         });
     }
+    #endif
 
     public int GetNumOutputMachines() {
         int ret = 0;
@@ -355,6 +357,7 @@ public class Machine : Draggable {
         int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
 
         Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
+        print(transform.position);
         Vector2 orthoDir = delta - n1*_dragDirection;
         int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
         orthoDir.Normalize();
