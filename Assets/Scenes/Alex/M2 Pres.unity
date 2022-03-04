@@ -624,7 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TickEvents:
-  - Ticks: 22
+  - Ticks: 16
     Trigger:
       m_PersistentCalls:
         m_Calls:
@@ -640,7 +640,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
-  - Ticks: 29
+  - Ticks: 24
     Trigger:
       m_PersistentCalls:
         m_Calls:
@@ -1004,7 +1004,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TickEvents:
-  - Ticks: 38
+  - Ticks: 32
     Trigger:
       m_PersistentCalls:
         m_Calls:
@@ -5921,11 +5921,11 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
+      objectReference: {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
+      objectReference: {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
     - target: {fileID: 7784179629010526382, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.5

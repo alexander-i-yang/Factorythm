@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
@@ -104,6 +105,7 @@ public class Conductor : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         // MusicSource.Play();
+        FMODUnity.RuntimeManager.LoadBank("Master");
         MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
         _appearAfterNTicksArray = FindObjectsOfType<AppearAfterNTicks>();
         foreach (var a in _appearAfterNTicksArray) {

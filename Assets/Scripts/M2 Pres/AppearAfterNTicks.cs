@@ -6,10 +6,12 @@ using UnityEngine.Events;
 public class TickEvent {
     public int Ticks;
     public UnityEvent Trigger;
-
+    private bool _hasTriggered;
+    
     public void Evaluate(int ticks) {
-        if (ticks == Ticks) {
+        if (ticks == Ticks && !_hasTriggered) {
             Trigger.Invoke();
+            _hasTriggered = true;
         }
     }
 }

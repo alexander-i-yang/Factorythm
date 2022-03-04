@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ef918c0e61bf543a0f833e4f25d678, type: 3}
   m_Name: SwingyThingy
   m_EditorClassIdentifier: 
-  BPM: 0
+  BPM: 128
   BeatOffset: 0
   fmodSongReference:
     Guid:
-      Data1: 997338986
-      Data2: 1272191579
-      Data3: 28709774
-      Data4: 2023452217
-    Path: event:/Swingythingy - 128bpm - Trenton
+      Data1: 338091073
+      Data2: 1129153041
+      Data3: -378390081
+      Data4: 1869672945
+    Path: event:/swingythingyextended
