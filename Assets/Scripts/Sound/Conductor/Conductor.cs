@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// A singleton class that controls the state of the entire game. Kind of like the "main" function of the game.
@@ -25,8 +27,6 @@ public class Conductor : MonoBehaviour {
     private Pooler _pooler;
 
     public bool RhythmLock = false;
-    public int TickNum { get; private set; }
-
     [NonSerialized] public AudioSource MusicSource;
     [NonSerialized] public UIManager MyUIManager;
 
@@ -43,6 +43,13 @@ public class Conductor : MonoBehaviour {
     private bool _paused;
 
     private AppearAfterNTicks[] _appearAfterNTicksArray;
+
+    public Slide[] Slides { get; private set; }
+    public int SlideIndex;
+    public Slide CurSlide;
+
+    public int TickCounter;
+
     public bool Paused
     {
         get { return _paused; }
@@ -102,6 +109,12 @@ public class Conductor : MonoBehaviour {
         foreach (var a in _appearAfterNTicksArray) {
             a.gameObject.SetActive(false);
         }
+
+        Slides = FindObjectsOfType<Slide>();
+        Slides = Slides.OrderBy(o => o.name).ToArray();
+        foreach (var s in Slides) {
+            s.gameObject.SetActive(false);
+        }
         
         MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         //FMODUnity.RuntimeManager.PlayOneShot("event:/DysonSphereSong");
@@ -118,7 +131,6 @@ public class Conductor : MonoBehaviour {
             currentSong.release();
         }
 
-        TickNum = 0;
         BeatClipHelper.Reset(CurrentBeatClip);
         currentSong = FMODUnity.RuntimeManager.CreateInstance(bcs.fmodSongReference);
         currentSong.start();
@@ -156,6 +168,8 @@ public class Conductor : MonoBehaviour {
             }
         }
 
+        TickCounter = (int) BeatClipHelper.SongPositionInBeats;
+
         FMOD.Studio.PLAYBACK_STATE playback;
         if (currentSong.isValid() && currentSong.getPlaybackState(out playback) == FMOD.RESULT.OK)
         {
@@ -166,10 +180,25 @@ public class Conductor : MonoBehaviour {
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            
-        } else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            
+        if (Input.GetMouseButtonDown(0)) {
+            if (SlideIndex > Slides.Length-2) {
+                // SceneManager.LoadScene("Milestone 2");
+            } else {
+                SlideIndex++;
+                SetSlide(SlideIndex);
+            }
+        } else if (Input.GetMouseButtonDown(1)) {
+            if (SlideIndex > 0) {
+                SlideIndex--;
+                SetSlide(SlideIndex);
+            }
+        }
+    }
+
+    void SetSlide(int ind) {
+        CurSlide = Slides[ind];
+        foreach (var s in Slides) {
+            s.gameObject.SetActive(s == CurSlide);
         }
     }
 
@@ -187,8 +216,6 @@ public class Conductor : MonoBehaviour {
 
     //Called whenever you want to update all machines
     public void MachineTick() {
-        TickNum++;
-
         foreach(Machine m in _pooler.AllMachines) {
             if (m.gameObject.activeSelf)
             {
@@ -205,21 +232,14 @@ public class Conductor : MonoBehaviour {
             }
         }
     }
-
-    [SerializeField] public int TickCount;
-
+    
     // Called whenever the song hits a new beat
     public void TrueTick() {
         // MyUIManager.Tick();
 
         foreach (var a in _appearAfterNTicksArray) {
-            a.Evaluate(TickCount);
+            a.Evaluate((int)BeatClipHelper.SongPositionInBeats);
         }
-        
-        /*if (TicksToAppear <= TickCount) {
-            FactController.SetActive(true);
-        }*/
-        TickCount++;
 
         var cons = FindObjectsOfType<SmoothSpritesController>();
         foreach (var con in cons) {
