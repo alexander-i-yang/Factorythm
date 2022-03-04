@@ -355,6 +355,7 @@ public class Machine : Draggable {
         int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
 
         Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
+        print(transform.position);
         Vector2 orthoDir = delta - n1*_dragDirection;
         int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
         orthoDir.Normalize();
