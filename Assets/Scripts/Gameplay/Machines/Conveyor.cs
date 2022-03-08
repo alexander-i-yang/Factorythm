@@ -90,7 +90,7 @@ public class Conveyor : Machine {
         // ResetSprite();
     }
     
-    #if UNITY_EDITOR
+    /*#if UNITY_EDITOR
     public void OnDrawGizmos() {
         base.OnDrawGizmos();
         Handles.Label(transform.position + new Vector3(0.1f, 0.1f, -3), "I " + _inputLoc);
@@ -98,5 +98,5 @@ public class Conveyor : Machine {
         Handles.Label(transform.position + new Vector3(0.1f, 0.5f, -3), "S " + _spriteIndex + " A " + Angle);
         Handles.Label(transform.position + new Vector3(0.1f, 0.7f, -3), "BH" + _betweenMachines + " B" + BetweenMachines);  
     }
-    #endif
+    #endif*/
 }
