@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Controls all the player's logic.
 /// </summary>
-public class PlayerController : MonoBehaviour
-{
-
+public class PlayerController : MonoBehaviour {
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
     private SmoothSprite _mySS;
@@ -27,8 +25,7 @@ public class PlayerController : MonoBehaviour
     public bool CanPlaceStemMine;
 
 
-    void Start()
-    {
+    void Start() {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
         _mySS = GetComponentInChildren<SmoothSprite>();
@@ -44,46 +41,40 @@ public class PlayerController : MonoBehaviour
         _pia.Player.Movement.started += Movement;
     }
 
-    void Update()
-    {
+    void Update() {
         _ism.SetZPressed(_isHoldingZ);
         _ism.SetXPressed(_isHoldingX);
 
         this.CheckTileOn();
 
-        if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetKeyDown(KeyCode.Escape)) {
             RestartGame();
         }
     }
 
-    public void RestartGame(){
+    public void RestartGame() {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
         StopCoroutine("SmoothSprite._moveCoroutine");
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         Collider2D roomCollider = CheckRoomOverlap();
-        if (roomCollider)
-        {
-            if (!_curRoom)
-            {
+        if (roomCollider) {
+            if (!_curRoom) {
                 _curRoom = roomCollider.GetComponent<Room>();
                 _curRoom.OnPlayerEnter(this);
             }
         }
-        else
-        {
-            if (_curRoom)
-            {
+        else {
+            if (_curRoom) {
                 _curRoom.OnPlayerExit(this);
             }
 
             _curRoom = null;
         }
     }
-    
+
     /// <summary>
     /// Checks whether there is a room at the position defined by [position]+[<paramref name="offset"/>].
     /// Used to check whether there's an un-enterable room.
@@ -95,18 +86,20 @@ public class PlayerController : MonoBehaviour
             Room room = roomCollider.GetComponent<Room>();
             return room.CanPlayerEnter(this);
         }
+
         return true;
     }
-    
+
     /// <summary>
     /// Checks what rooms the player is in. Used for calling <see cref="Room.OnPlayerEnter(PlayerController)"/> and
     /// for seeing whether the player can enter a room.
     /// </summary>
     /// <param name="offset">Offset from player's position.</param>
     /// <returns>The collider of the room the player is in</returns>
-    private Collider2D CheckRoomOverlap(Vector3 offset)
-    {
-        Vector3 alpha = new Vector3(0.05f, 0.05f); //So the player touching the edge of the collider isn't counted as an overlap
+    private Collider2D CheckRoomOverlap(Vector3 offset) {
+        Vector3
+            alpha = new Vector3(0.05f,
+                0.05f); //So the player touching the edge of the collider isn't counted as an overlap
         Vector2 topLeftCorner = _myCollider.bounds.min + offset + alpha;
         Vector2 topRightCorner = _myCollider.bounds.max + offset - alpha;
         Collider2D overlapCollider = Physics2D.OverlapArea(
@@ -121,7 +114,7 @@ public class PlayerController : MonoBehaviour
     /// Overload of <see cref="CheckRoomOverlap(UnityEngine.Vector3)"/>
     /// </summary>
     private Collider2D CheckRoomOverlap() {
-        return CheckRoomOverlap(new Vector3(0,0,0));
+        return CheckRoomOverlap(new Vector3(0, 0, 0));
     }
 
     /// <summary>
@@ -131,18 +124,16 @@ public class PlayerController : MonoBehaviour
     /// <typeparam name="T">Component</typeparam>
     /// <returns>Component to find</returns>
     public T OnComponent<T>(Vector3 pos) where T : MonoBehaviour {
-
         RaycastHit2D[] found = Physics2D.RaycastAll(
-        pos,
-        new Vector3(0, 0, 1),
-        LayerMask.GetMask("Interactable")
+            pos,
+            new Vector3(0, 0, 1),
+            LayerMask.GetMask("Interactable")
         );
         T highestComponent = default(T);
-        foreach (RaycastHit2D curCol in found)
-        {
+        foreach (RaycastHit2D curCol in found) {
             T interact = curCol.transform.GetComponent<T>();
             if (interact != null) {
-                if(highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z) {
+                if (highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z) {
                     highestComponent = interact;
                 }
             }
@@ -150,7 +141,7 @@ public class PlayerController : MonoBehaviour
 
         return highestComponent;
     }
-    
+
     public void Tick() {
         // _mySRot.Alternate();
     }
@@ -159,14 +150,13 @@ public class PlayerController : MonoBehaviour
         return OnComponent<Interactable>(transform.position);
     }
 
-    public Destructable OnDestructable()
-    {
+    public Destructable OnDestructable() {
         return OnComponent<Destructable>(transform.position);
     }
 
     #region Actions
-    private void Movement(InputAction.CallbackContext context)
-    {
+
+    private void Movement(InputAction.CallbackContext context) {
         Vector2 inputVector = _pia.Player.Movement.ReadValue<Vector2>();
         Vector3 newPos = Vector3.zero;
         // bool moved = false;
@@ -174,87 +164,73 @@ public class PlayerController : MonoBehaviour
 
         bool onBeat;
 
-        if (!Conductor.Instance.RhythmLock)
-        {
+        if (!Conductor.Instance.RhythmLock) {
             onBeat = true;
             // Conductor.Instance.MachineTick();
         }
-        else
-        {
-            if (this.RhythmLocked)
-            {
+        else {
+            if (this.RhythmLocked) {
                 onBeat = Conductor.Instance.AttemptMove();
             }
-            else
-            {
+            else {
                 onBeat = true;
             }
         }
 
-        if (onBeat)
-        {
-          if (this != null) {
-              int offsetX = (inputVector.x > 0 ? 1 : (inputVector.x < 0 ? -1 : 0));
-              int offsetY = (inputVector.y > 0 ? 1 : (inputVector.y < 0 ? -1 : 0));
-              Vector2 offset = new Vector2(offsetX, offsetY);
-              newPos = _myRb.position + offset;
+        if (onBeat) {
+            if (this != null) {
+                int offsetX = (inputVector.x > 0 ? 1 : (inputVector.x < 0 ? -1 : 0));
+                int offsetY = (inputVector.y > 0 ? 1 : (inputVector.y < 0 ? -1 : 0));
+                Vector2 offset = new Vector2(offsetX, offsetY);
+                newPos = _myRb.position + offset;
 
-              if (CanMoveTo(offset)) {
-                  _mySS.Move(newPos);
-                  _myRb.MovePosition(newPos);
-                  _ism.Move(newPos);
-              } else {
-                  
-                  Vector2 delta = newPos - transform.position;
-                  newPos = transform.position + (Vector3)delta * 0.2f;
-                  _mySS.BounceAnimate(transform.position, newPos);
-              }
-          }
+                if (CanMoveTo(offset)) {
+                    _mySS.Move(newPos);
+                    _myRb.MovePosition(newPos);
+                    _ism.Move(newPos);
+                }
+                else {
+                    Vector2 delta = newPos - transform.position;
+                    newPos = transform.position + (Vector3) delta * 0.2f;
+                    _mySS.BounceAnimate(transform.position, newPos);
+                }
+            }
         }
     }
 
-    private void Interact(InputAction.CallbackContext context)
-    {
+    private void Interact(InputAction.CallbackContext context) {
         _isHoldingZ = context.performed;
     }
 
-    private void Delete(InputAction.CallbackContext context)
-    {
+    private void Delete(InputAction.CallbackContext context) {
         _isHoldingX = context.performed;
     }
 
     #endregion
 
-    public void CheckTileOn()
-    {
+    public void CheckTileOn() {
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
             new Vector3(0, 0, 1),
             10.0f,
             LayerMask.GetMask("Default"));
-        if (hit.transform != null)
-        {
-            if (hit.transform.gameObject.CompareTag("StemTiles"))
-            {
+        if (hit.transform != null) {
+            if (hit.transform.gameObject.CompareTag("StemTiles")) {
                 CanPlaceStemMine = true;
                 CanPlaceHeadMine = false;
             }
-            else if (hit.transform.gameObject.CompareTag("HeadTiles"))
-            {
+            else if (hit.transform.gameObject.CompareTag("HeadTiles")) {
                 CanPlaceStemMine = false;
                 CanPlaceHeadMine = true;
             }
-            else
-            {
+            else {
                 CanPlaceStemMine = false;
                 CanPlaceHeadMine = false;
             }
         }
-        else
-        {
+        else {
             CanPlaceStemMine = false;
             CanPlaceHeadMine = false;
         }
-
     }
 }
