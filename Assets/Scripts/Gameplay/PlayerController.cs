@@ -203,6 +203,11 @@ public class PlayerController : MonoBehaviour
                   _mySS.Move(newPos);
                   _myRb.MovePosition(newPos);
                   _ism.Move(newPos);
+              } else {
+                  
+                  Vector2 delta = newPos - transform.position;
+                  newPos = transform.position + (Vector3)delta * 0.2f;
+                  _mySS.BounceAnimate(transform.position, newPos);
               }
           }
         }
