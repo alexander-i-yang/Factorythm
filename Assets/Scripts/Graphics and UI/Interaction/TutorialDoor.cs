@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialDoor : MonoBehaviour
+public class TutorialDoor : Interactable
 {
     public GameObject TutorialLock;
     public GameObject _myGameObject;
@@ -21,15 +21,13 @@ public class TutorialDoor : MonoBehaviour
           //_myGameObject.SetActive(false);
           Destroy(_myGameObject);
         }
-        CheckPlayerOn();
     }
-    public void CheckPlayerOn()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector3(0, 0, -1), 10.0f, LayerMask.GetMask("Player"));
-        if (hit.transform != null) {
-          TutorialLock.SetActive(false);
-          //Destroy(TutorialLock);
-          Destroy(_myGameObject);
-        }
+
+    public override void OnInteract(PlayerController p) {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnDeInteract(PlayerController p) {
+        throw new System.NotImplementedException();
     }
 }

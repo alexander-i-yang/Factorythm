@@ -17,11 +17,15 @@ public class TutorialButton : Machine {
     public Sprite Interact;
     [SerializeField] private SpriteRenderer _mySR;
 
+    public GameObject LockedRoomObj;
+    private LockedRoom _lockedRoom;
+
     private void Start() {
         _spawnPoint = transform.Find("SpawnPoint").position;
         _icon = transform.Find("Icon").GetComponent<SpriteRenderer>();
         base.Start();
         _iconUp = _icon.transform.localPosition;
+        _lockedRoom = LockedRoomObj.GetComponent<LockedRoom>();
     }
 
     public override void OnInteract(PlayerController p) {
@@ -37,6 +41,11 @@ public class TutorialButton : Machine {
         base.OnDeInteract(p);
         _icon.transform.localPosition = _iconUp;
         _mySR.sprite = DeInteract;
+
+        TutorialDoor d = p.OnComponent<TutorialDoor>(p.transform.position);
+        if (d != null) {
+            _lockedRoom.gameObject.SetActive(false);
+        }
     }
 
     public void Unlock() {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -216,16 +217,16 @@ public class Machine : Draggable {
     /// <summary>
     /// Unity Specific function. Defines how debug arrows are drawn.
     /// </summary>
-    public void OnDrawGizmos() {
+    public void OnDrawGizmosSelected() {
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
-        foreachMachine(new List<MachinePort>(OutputPorts), m => {
+        /*foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             Helper.DrawArrow(curPos, direction, Color.green);
         });
         foreachMachine(new List<MachinePort>(InputPorts), m => {
             Vector3 direction = curPos-m.transform.position - new Vector3(0.1f, 0.1f, 0);
             Helper.DrawArrow(m.transform.position, direction, Color.blue);
-        });
+        });*/
     }
     #endif
 
@@ -354,14 +355,13 @@ public class Machine : Draggable {
 
         // Get the component of delta in the direction of dir
         // Then draw blueprints in that direction
-        int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
+        int n1 = (int) Math.Round(Math.Abs(Vector2.Dot(delta, _dragDirection)));
 
         Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
-        print(transform.position);
         Vector2 orthoDir = delta - n1*_dragDirection;
-        int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
+        int n2 = (int) Math.Round(orthoDir.magnitude);
         orthoDir.Normalize();
-
+        
         _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection, orthoDir));
 
         // Get the component of delta orthogonal to the direction of dir
@@ -370,7 +370,9 @@ public class Machine : Draggable {
             _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
         }
     }
-
+    
+    
+    
     public void ClearDragBluePrints() {
         foreach (ConveyorBlueprint m in _dragBluePrints) {
             Destroy(m.gameObject);
