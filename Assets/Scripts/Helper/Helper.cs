@@ -42,4 +42,33 @@ class Helper {
     public static Vector2 RoundVectorHalf(Vector2 v) {
         return new Vector2(RoundHalf(v.x), RoundHalf(v.y));
     }
+
+    /// <summary>
+    /// At a given position, casts a vector up and down the z axis to find Components of type <typeparamref name="T"/>
+    /// </summary>
+    /// <param name="pos">Position</param>
+    /// <typeparam name="T">Component</typeparam>
+    /// <returns>Component to find</returns>
+    public static T OnComponent<T>(Vector3 pos) where T : MonoBehaviour
+    {
+        RaycastHit2D[] found = Physics2D.RaycastAll(
+        pos,
+        new Vector3(0, 0, 1),
+        LayerMask.GetMask("Interactable")
+        );
+        T highestComponent = default(T);
+        foreach (RaycastHit2D curCol in found)
+        {
+            T interact = curCol.transform.GetComponent<T>();
+            if (interact != null)
+            {
+                if (highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z)
+                {
+                    highestComponent = interact;
+                }
+            }
+        }
+
+        return highestComponent;
+    }
 }

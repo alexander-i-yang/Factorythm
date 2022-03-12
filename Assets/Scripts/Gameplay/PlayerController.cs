@@ -123,45 +123,18 @@ public class PlayerController : MonoBehaviour
     private Collider2D CheckRoomOverlap() {
         return CheckRoomOverlap(new Vector3(0,0,0));
     }
-
-    /// <summary>
-    /// At a given position, casts a vector up and down the z axis to find Components of type <typeparamref name="T"/>
-    /// </summary>
-    /// <param name="pos">Position</param>
-    /// <typeparam name="T">Component</typeparam>
-    /// <returns>Component to find</returns>
-    public T OnComponent<T>(Vector3 pos) where T : MonoBehaviour {
-
-        RaycastHit2D[] found = Physics2D.RaycastAll(
-        pos,
-        new Vector3(0, 0, 1),
-        LayerMask.GetMask("Interactable")
-        );
-        T highestComponent = default(T);
-        foreach (RaycastHit2D curCol in found)
-        {
-            T interact = curCol.transform.GetComponent<T>();
-            if (interact != null) {
-                if(highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z) {
-                    highestComponent = interact;
-                }
-            }
-        }
-
-        return highestComponent;
-    }
     
     public void Tick() {
         // _mySRot.Alternate();
     }
 
     public Interactable OnInteractable() {
-        return OnComponent<Interactable>(transform.position);
+        return Helper.OnComponent<Interactable>(transform.position);
     }
 
     public Destructable OnDestructable()
     {
-        return OnComponent<Destructable>(transform.position);
+        return Helper.OnComponent<Destructable>(transform.position);
     }
 
     #region Actions
@@ -220,7 +193,7 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    public void CheckTileOn()
+    public RaycastHit2D CheckTileOn()
     {
         RaycastHit2D hit = Physics2D.Raycast(
             transform.position,
@@ -251,5 +224,6 @@ public class PlayerController : MonoBehaviour
             CanPlaceHeadMine = false;
         }
 
+        return hit;
     }
 }
