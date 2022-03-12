@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 /// <summary>
 /// A singleton class that controls the state of the entire game. Kind of like the "main" function of the game.
@@ -238,6 +239,24 @@ public class Conductor : MonoBehaviour {
 
     public static Pooler GetPooler() {
         return Conductor.Instance._pooler;
+    }
+
+    public static void checkForOverlappingMachines(Vector3 pos)
+    {
+        List<Machine> overlappingMachines = Helper.OnComponents<Machine>(pos);
+        foreach (Machine machine in overlappingMachines)
+        {
+            try
+            {
+                machine.GetComponent<NormalDestroy>().OnDestruct();
+                checkForOverlappingMachines(pos);
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.Log("Why this no have Normal Destroy?????");
+            }
+            
+        }
     }
 }
 

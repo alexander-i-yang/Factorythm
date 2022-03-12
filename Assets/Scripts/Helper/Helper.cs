@@ -75,4 +75,20 @@ class Helper {
 
         return highestComponent;
     }
+
+    public static List<T> OnComponents<T>(Vector3 pos) where T : MonoBehaviour
+    {
+        RaycastHit2D[] found = Physics2D.RaycastAll(
+        pos,
+        new Vector3(0, 0, 1),
+        LayerMask.GetMask("Interactable")
+        );
+        List<T> components = new List<T>();
+        foreach (RaycastHit2D curCol in found)
+        {
+            components.Add(curCol.transform.GetComponent<T>());
+        }
+
+        return components;
+    }
 }

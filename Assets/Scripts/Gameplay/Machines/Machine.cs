@@ -315,6 +315,7 @@ public class Machine : Draggable {
             // RaycastHit
 
             // Instantiate a new conveyor
+            Conductor.checkForOverlappingMachines(bluePrintTransform.position);
             Machine instMachine = Conductor.GetPooler().InstantiateConveyor(
                 bluePrintTransform.position,
                 bluePrintTransform.rotation
