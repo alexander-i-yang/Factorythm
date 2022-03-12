@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -24,15 +25,15 @@ public class Machine : Draggable {
 
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
-    
+
     [SerializeField] private bool _shouldPrint;
     [SerializeField] private bool _shouldBreak;
-    
+
     protected virtual void Awake() {
         OutputBuffer = new List<Resource>();
         storage = new Queue<Resource>();
     }
-    
+
     protected void Start() {
         _dragBluePrints = new List<ConveyorBlueprint>();
     }
@@ -56,7 +57,7 @@ public class Machine : Draggable {
             }
         }
     }
-    
+
     /// <summary>
     /// Returns true if the connected input machines have enough resources for this machine to produce an output.
     /// </summary>
@@ -68,7 +69,7 @@ public class Machine : Draggable {
                 actualInputs.AddRange(m.OutputBuffer);
             }
         });
-        
+
         bool ret = recipeObj.CheckInputs(actualInputs);
         if (_shouldPrint) {
             print("Actual input port size: " + InputPorts.Count());
@@ -78,14 +79,14 @@ public class Machine : Draggable {
 
         return ret;
     }
-    
+
     /// <summary>
     /// Removes all resources from OutputBuffer.
     /// </summary>
     public void ClearOutput() {
         OutputBuffer.Clear();
     }
-    
+
     /// <summary>
     /// Moves <paramref name="r"/> to this machine's position.
     /// </summary>
@@ -97,7 +98,7 @@ public class Machine : Draggable {
         r.MySmoothSprite.Move(instantiatePos, destroyOnComplete);
         r.transform.position = instantiatePos;
     }
-    
+
     /// <summary>
     /// Creates output resources according to the recipe and adds them to the outputBuffer.
     /// </summary>
@@ -124,7 +125,7 @@ public class Machine : Draggable {
             OutputBuffer.Add(storage.Dequeue());
         }
     }
-    
+
     /// <summary>
     /// Instantiates new resources to feed into the output machine.
     /// </summary>
@@ -140,7 +141,7 @@ public class Machine : Draggable {
             StoreResources(newObj.GetComponent<Resource>(), true);
         }
     }
-    
+
     /// <summary>
     /// Returns true if the machine destroys its input resources after moving them in.
     /// </summary>
@@ -148,7 +149,7 @@ public class Machine : Draggable {
     protected virtual bool _shouldDestroyInputs() {
         return recipeObj.CreatesNewOutput;
     }
-    
+
     /// <summary>
     /// Moves all resources from each input machine into this machine, removing them from the input machine's storage.
     /// </summary>
@@ -181,11 +182,11 @@ public class Machine : Draggable {
             MoveResourcesIn();
         }
     }
-    
+
     public void PrepareTick() {
         _pokedThisTick = false;
     }
-    
+
     /// <summary>
     /// Completes one cycle of logic.
     /// Produces output if needed.
@@ -217,20 +218,22 @@ public class Machine : Draggable {
         }
     }
     
+    #if UNITY_EDITOR
     /// <summary>
     /// Unity Specific function. Defines how debug arrows are drawn.
     /// </summary>
-    public void OnDrawGizmos() {
+    public void OnDrawGizmosSelected() {
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
-        foreachMachine(new List<MachinePort>(OutputPorts), m => {
+        /*foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             Helper.DrawArrow(curPos, direction, Color.green);
         });
         foreachMachine(new List<MachinePort>(InputPorts), m => {
             Vector3 direction = curPos-m.transform.position - new Vector3(0.1f, 0.1f, 0);
             Helper.DrawArrow(m.transform.position, direction, Color.blue);
-        });
+        });*/
     }
+    #endif
 
     public int GetNumOutputMachines() {
         int ret = 0;
@@ -239,7 +242,7 @@ public class Machine : Draggable {
         }
         return ret;
     }
-    
+
     /// <summary>
     /// Creates a new output port that feeds into <paramref name="m"/>.
     /// Also creates new input port on <paramref name="m"/> that feeds from this machine.
@@ -252,7 +255,7 @@ public class Machine : Draggable {
         OutputPorts.Add(newPort);
         m.AddInputMachine(this);
     }
-    
+
     /// <summary>
     /// Creates a new input port that feeds from <paramref name="m"/>.
     /// </summary>
@@ -274,7 +277,7 @@ public class Machine : Draggable {
         Machine onMachine = null;
         if (onInteractable != null) {
             onMachine = onInteractable.gameObject.GetComponent<Machine>();
-            
+
             /*//Ugh why
             if (onMachine == null) {
                 onMachine = onInteractable.gameObject.GetComponent<Conveyor>();
@@ -288,8 +291,8 @@ public class Machine : Draggable {
         ClearDragBluePrints();
         ConfigureDragPorts(conveyors, onMachine);
     }
-    
-    
+
+
     /** <summary>
      *      For each blueprint in [dragBluePrints], instantiate a new machine
      *      Assumes the blueprint list is ordered by distance from this machine
@@ -307,7 +310,7 @@ public class Machine : Draggable {
                 ret.Add(onMachine);
                 break;
             }
-            
+
             // if (bluePrintTransform.position)
             // RaycastHit
 
@@ -349,30 +352,32 @@ public class Machine : Draggable {
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
-        
+
         ClearDragBluePrints();
-        
+
         Vector2 delta = newPos - transform.position;
         _dragDirection = GetNewInitDragDirection(_dragDirection, delta);
-        
+
         // Get the component of delta in the direction of dir
         // Then draw blueprints in that direction
-        int n1 = (int)Math.Abs(Vector2.Dot(delta, _dragDirection));
-        
+        int n1 = (int) Math.Round(Math.Abs(Vector2.Dot(delta, _dragDirection)));
+
         Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
         Vector2 orthoDir = delta - n1*_dragDirection;
-        int n2 = (int) Math.Abs(orthoDir.x + orthoDir.y);
+        int n2 = (int) Math.Round(orthoDir.magnitude);
         orthoDir.Normalize();
-
-        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection, orthoDir));
         
+        _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection, orthoDir));
+
         // Get the component of delta orthogonal to the direction of dir
         // Then draw blueprints in that direction
         if (n2 != 0) {
             _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
         }
     }
-
+    
+    
+    
     public void ClearDragBluePrints() {
         foreach (ConveyorBlueprint m in _dragBluePrints) {
             Destroy(m.gameObject);
@@ -466,7 +471,7 @@ public class Machine : Draggable {
             }
         }
     }
-    
+
     public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir) {
         return RenderConveyorBluePrintLine(n, startPos, dir, Vector2.zero);
     }
@@ -479,7 +484,7 @@ public class Machine : Draggable {
     public OutputPort GetOutputPortToPoke() {
         return GetPortToPoke<OutputPort>(OutputPorts);
     }
-    
+
     public InputPort GetInputPortToPoke() {
         return GetPortToPoke<InputPort>(InputPorts);
     }

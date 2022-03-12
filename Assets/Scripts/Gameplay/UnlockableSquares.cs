@@ -17,8 +17,9 @@ public class UnlockableSquares : MonoBehaviour
 
     private LockedRoom _lockedRoom;
 
-    public GameObject MachineBluePrintCreator;
-    private BluePrintCreator _bluePrintCreator;
+    public GameObject[] MachineBluePrintCreators;
+    private List<BluePrintCreator> _bluePrintCreators;
+    private Canvas _canvas;
 
     void Awake() {
         _mySR = gameObject.GetComponent<SpriteRenderer>();
@@ -26,9 +27,14 @@ public class UnlockableSquares : MonoBehaviour
         Machines = GetComponentsInChildren<Machine>();
         ConveyorInners = GetComponentsInChildren<UnlockConveyorInner>();
         _lockedRoom = GetComponent<LockedRoom>();
-        if (MachineBluePrintCreator != null) {
-            _bluePrintCreator = MachineBluePrintCreator.GetComponent<BluePrintCreator>();
+        _bluePrintCreators = new List<BluePrintCreator>();
+        if (MachineBluePrintCreators != null) {
+            foreach (var bpc in MachineBluePrintCreators) {
+                _bluePrintCreators.Add(bpc.GetComponent<BluePrintCreator>());
+            }
         }
+
+        _canvas = GetComponentInChildren<Canvas>();
     }
     
     void Update() {
@@ -36,28 +42,43 @@ public class UnlockableSquares : MonoBehaviour
         _myCollider.enabled = isActive;
 
         if (isActive) {
-            bool done = true;
-
-            foreach (var c in ConveyorInners) {
-                if (!c.Done) {
-                    done = false;
-                    break;
-                }
-            }
+            bool done = CheckIfDone();
             if (done) {
-                _lockedRoom.enabled = false;
-                _mySR.enabled = false;
-            
-                foreach (var c in ConveyorInners) {
-                    c.Unlock();
-                }
-
-                isActive = false;
-                GetComponentInChildren<Canvas>().gameObject.SetActive(false);
-                if (_bluePrintCreator != null) {
-                    _bluePrintCreator.Unlock();
-                }
+                Unlock();
             }
         }
+    }
+
+    protected virtual void Unlock() {
+        _lockedRoom.enabled = false;
+        _mySR.enabled = false;
+            
+        foreach (var c in ConveyorInners) {
+            c.Unlock();
+        }
+
+        isActive = false;
+        if (_canvas != null) { 
+            _canvas.gameObject.SetActive(false);
+        }
+
+        if (_bluePrintCreators != null) {
+            foreach (var bpc in _bluePrintCreators) {
+                bpc.Unlock();
+            }
+        }
+    }
+
+    protected virtual bool CheckIfDone() {
+        bool done = true;
+            
+        foreach (var c in ConveyorInners) {
+            if (!c.Done) {
+                done = false;
+                break;
+            }
+        }
+
+        return done;
     }
 }

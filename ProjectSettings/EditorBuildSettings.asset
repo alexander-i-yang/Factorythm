@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Pitch Demo.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Milestone 1.unity
     guid: d33087c4473f89a4bad29144e1a01c91
+  - enabled: 1
+    path: Assets/Scenes/Alex/Test.unity
+    guid: 5efbcd8d4adc19c4797878fdfd98d59b
   m_configObjects: {}

@@ -46,8 +46,10 @@ public class SmoothRotate : MonoBehaviour {
         }
     }
 
+    #if UNITY_EDITOR
     public void OnDrawGizmos() {
         Handles.Label(transform.position, "" + position);
         Handles.Label(transform.position + new Vector3(0, 0.2f, 0), "" + (int)transform.rotation.z);
     }
+    #endif
 }

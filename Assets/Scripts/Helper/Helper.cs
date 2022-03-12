@@ -20,6 +20,10 @@ class Helper {
     //https://forum.unity.com/threads/debug-drawarrow.85980/
     public static void DrawArrow(Vector3 pos, Vector3 direction, Color color, float arrowHeadLength = 0.25f,
         float arrowHeadAngle = 20.0f) {
+        if (direction.Equals(Vector2.zero)) {
+            return;
+        }
+
         Gizmos.color = color;
         Gizmos.DrawRay(pos, direction);
 
