@@ -734,3 +734,23 @@ C# parse time         : 230ms
 candidates check time : 61ms
 console write time    : 0ms
 
+[api-updater (non-obsolete-error-filter)] 3/12/2022 6:08:52 PM : Starting D:/Unity/Game Programms/2020.3.26f1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 273.1205ms
+moved types parse time: 104ms
+candidates parse time : 4ms
+C# parse time         : 422ms
+candidates check time : 79ms
+console write time    : 1ms
+
+[api-updater (non-obsolete-error-filter)] 3/12/2022 6:21:36 PM : Starting D:/Unity/Game Programms/2020.3.26f1/Editor/Data/Tools/ScriptUpdater/APIUpdater.NonObsoleteApiUpdaterDetector.exe
+[api-updater (non-obsolete-error-filter)] 
+----------------------------------
+jit/startup time      : 88.7632ms
+moved types parse time: 64ms
+candidates parse time : 2ms
+C# parse time         : 330ms
+candidates check time : 53ms
+console write time    : 1ms
+

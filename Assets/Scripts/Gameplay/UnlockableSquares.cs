@@ -44,6 +44,7 @@ public class UnlockableSquares : MonoBehaviour
         if (isActive) {
             bool done = CheckIfDone();
             if (done) {
+                FindObjectOfType<CameraFollow>().TempFollow(transform, 5f);
                 Unlock();
             }
         }
