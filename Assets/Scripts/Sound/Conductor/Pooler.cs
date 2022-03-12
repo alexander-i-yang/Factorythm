@@ -19,6 +19,7 @@ public class Pooler : MonoBehaviour {
     }
 
     public Machine InstantiateMachine(GameObject copy, Vector2 newPos, Quaternion rotation) {
+        checkForOverlappingMachines(new Vector3(newPos.x, newPos.y, copy.transform.position.z));
         Machine newMachine = Instantiate(
             copy, 
             new Vector3(newPos.x, newPos.y, copy.transform.position.z),
@@ -53,5 +54,15 @@ public class Pooler : MonoBehaviour {
     public MachineBluePrint CreateMachineBluePrint(GameObject m, Vector2 pos) {
         Vector3 instantiatePos = new Vector3(pos.x, pos.y, m.transform.position.z);
         return Instantiate(m, instantiatePos, Quaternion.identity).GetComponent<MachineBluePrint>();
+    }
+
+    private void checkForOverlappingMachines(Vector3 pos)
+    {
+        var machine = Helper.OnComponent<Machine>(pos);
+        if (machine != null)
+        {
+            machine.GetComponent<NormalDestroy>().OnDestruct();
+            checkForOverlappingMachines(pos);
+        }
     }
 }
