@@ -21,6 +21,7 @@ public class MachineBluePrint : Draggable {
 
     public override void OnDeInteract(PlayerController p) {
         if (CanPlace(SmoothSprite.transform.position)) {
+            Conductor.checkForOverlappingMachines(transform.position);
             Destroy(gameObject);
             Conductor.GetPooler().InstantiateMachine(MachineCopy, p.transform.position);
         }

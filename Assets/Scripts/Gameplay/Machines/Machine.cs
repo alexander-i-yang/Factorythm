@@ -40,6 +40,11 @@ public class Machine : Draggable {
 
 
     /// <summary>
+    /// Destroys any machines that are already on the tile so the current machine can be placed on top of it.
+    /// </summary>
+    
+
+    /// <summary>
     /// Performs <paramref name="func"/> on all machines in <typeparamref name="portlist"/>.
     /// </summary>
     /// <param name="portList">The list of ports to iterate over</param>
@@ -368,6 +373,7 @@ public class Machine : Draggable {
             // RaycastHit
 
             // Instantiate a new conveyor
+            Conductor.checkForOverlappingMachines(bluePrintTransform.position);
             Machine instMachine = Conductor.GetPooler().InstantiateConveyor(
                 bluePrintTransform.position,
                 bluePrintTransform.rotation
@@ -464,11 +470,19 @@ public class Machine : Draggable {
     public void OnDestruction() {
         ClearOutputPorts();
         ClearInputPorts();
+        ClearResources();
     }
 
     public void ClearOutputPorts() {
         foreach (OutputPort port in OutputPorts) {
             port.ConnectedMachine.RemoveInput(this);
+
+            //The following destroys all conveyors that were attached with this machine
+            //if (typeof(Conveyor).IsInstanceOfType(port.ConnectedMachine))
+            //{
+            //    port.ConnectedMachine
+            //        .GetComponent<NormalDestroy>().OnDestruct();
+            //}
         }
         OutputPorts.Clear();
     }
@@ -478,6 +492,21 @@ public class Machine : Draggable {
             port.ConnectedMachine.RemoveOutput(this);
         }
         InputPorts.Clear();
+    }
+
+    public void ClearResources()
+    {
+        foreach (Resource r in storage)
+        {
+            Destroy(r.gameObject);
+        }
+
+        foreach (Resource r in OutputBuffer)
+        {
+            Destroy(r.gameObject);
+        }
+
+        OutputBuffer.Clear();
     }
 
     public void RemoveOutput(Machine m)

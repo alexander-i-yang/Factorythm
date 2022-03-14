@@ -42,7 +42,7 @@ public class TutorialButton : Machine {
         _icon.transform.localPosition = _iconUp;
         _mySR.sprite = DeInteract;
 
-        TutorialDoor d = p.OnComponent<TutorialDoor>(p.transform.position);
+        TutorialDoor d = Helper.OnComponent<TutorialDoor>(p.transform.position);
         if (d != null) {
             _lockedRoom.gameObject.SetActive(false);
         }
