@@ -48,7 +48,7 @@ public class UnlockableSquares : MonoBehaviour
             }
         }
     }
-
+    
     protected virtual void Unlock() {
         _lockedRoom.enabled = false;
         _mySR.enabled = false;

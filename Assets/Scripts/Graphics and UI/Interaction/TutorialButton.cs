@@ -18,14 +18,14 @@ public class TutorialButton : Machine {
     [SerializeField] private SpriteRenderer _mySR;
 
     public GameObject LockedRoomObj;
-    private LockedRoom _lockedRoom;
+    private UnlockableSquares _lockedRoom;
 
     private void Start() {
         _spawnPoint = transform.Find("SpawnPoint").position;
         _icon = transform.Find("Icon").GetComponent<SpriteRenderer>();
         base.Start();
         _iconUp = _icon.transform.localPosition;
-        _lockedRoom = LockedRoomObj.GetComponent<LockedRoom>();
+        _lockedRoom = LockedRoomObj.GetComponent<UnlockableSquares>();
     }
 
     public override void OnInteract(PlayerController p) {
