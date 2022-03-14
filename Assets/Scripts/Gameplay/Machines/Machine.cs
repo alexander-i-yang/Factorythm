@@ -23,6 +23,7 @@ public class Machine : Draggable {
     /// </summary>
     public Queue<Resource> OutputBuffer { get; } = new Queue<Resource>();
     public ResourceDictQueue InputBuffer { get; } = new ResourceDictQueue();
+    public int MaxStorage = 1;
 
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
@@ -197,6 +198,24 @@ public class Machine : Draggable {
         return recipeObj.InCriteria.Resources;
     }
 
+    public int GetStorageCount() {
+        return OutputBuffer.Count + InputBuffer.ToList().Count;
+    }
+
+    public bool StorageFull() {
+        return GetStorageCount() >= MaxStorage;
+    }
+
+    public bool NextMachineFull() {
+        bool ret = false;
+        foreachMachine(new List<MachinePort>(OutputPorts) , m => {
+            if (m.StorageFull()) {
+                ret = true;
+            }
+        });
+        return ret;
+    }
+
     private bool _checkEnoughInput() {
         bool ret = true;
         if (recipeObj == null) { print(name); print(transform.parent.name);}
@@ -258,7 +277,7 @@ public class Machine : Draggable {
                 print("enoughInput: " + enoughInput);
             }
             
-            if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
+            if (enoughInput && _ticksSinceProduced >= recipeObj.ticks && !NextMachineFull()) {
                 ResourceDictQueue skimmed = Skim();
                 List<Resource> result = recipeObj.Create(skimmed, transform.position);
                 foreach (Resource r in result) {
@@ -282,6 +301,7 @@ public class Machine : Draggable {
     /// </summary>
     public void OnDrawGizmosSelected() {
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
+        Handles.Label(curPos, "" + GetStorageCount());
         /*foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             Helper.DrawArrow(curPos, direction, Color.green);
@@ -496,7 +516,7 @@ public class Machine : Draggable {
 
     public void ClearResources()
     {
-        foreach (Resource r in storage)
+        foreach (Resource r in InputBuffer.ToList())
         {
             Destroy(r.gameObject);
         }

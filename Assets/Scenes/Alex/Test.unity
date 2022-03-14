@@ -864,7 +864,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _smoothSpeed: 0
+  _smoothSpeed: 20
 --- !u!4 &593363503 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5951824276090157558, guid: d5ddc98688f350b4ab72107e76805085, type: 3}
@@ -2276,6 +2276,7 @@ MonoBehaviour:
   OutputPorts: []
   InputPorts: []
   _isActive: 1
+  MaxStorage: 1
   _shouldPrint: 0
   _shouldBreak: 0
   door: {fileID: 9151949488562116374, guid: e260f54d7424749be80f8fb45d6b13eb, type: 3}
