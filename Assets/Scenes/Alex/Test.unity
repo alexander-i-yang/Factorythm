@@ -637,6 +637,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3431385738032740326, guid: d5ddc98688f350b4ab72107e76805085, type: 3}
+      propertyPath: UnlockCriteria.Resources.Array.data[0].num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3431385738032740326, guid: d5ddc98688f350b4ab72107e76805085, type: 3}
       propertyPath: UnlockCriteria.Resources.Array.data[0].resource
       value: 
       objectReference: {fileID: 7796586414147078100, guid: 4e173a4fbb7007b43ba46130f9984a9a, type: 3}
