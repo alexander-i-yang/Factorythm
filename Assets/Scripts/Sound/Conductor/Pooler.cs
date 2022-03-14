@@ -53,5 +53,9 @@ public class Pooler : MonoBehaviour {
     public MachineBluePrint CreateMachineBluePrint(GameObject m, Vector2 pos) {
         Vector3 instantiatePos = new Vector3(pos.x, pos.y, m.transform.position.z);
         return Instantiate(m, instantiatePos, Quaternion.identity).GetComponent<MachineBluePrint>();
-    } 
+    }
+    
+    public Resource InstantiateResource(Resource resource, Vector3 position, Quaternion rotation) {
+        return Instantiate(resource, position, rotation).GetComponent<Resource>();
+    }
 }

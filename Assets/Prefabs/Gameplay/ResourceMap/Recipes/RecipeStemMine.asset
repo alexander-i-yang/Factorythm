@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: RecipeStemMine
   m_EditorClassIdentifier: 
   InCriteria:
-    resources: []
+    Resources: []
     Cash: 0
   OutCriteria:
-    resources:
+    Resources:
     - resource: {fileID: 8898906047096598653, guid: 13eef7ce646dde04cbb6724112f9c423, type: 3}
       num: 1
     Cash: 0
+  Style: 0
   ticks: 4
-  CreatesNewOutput: 1
