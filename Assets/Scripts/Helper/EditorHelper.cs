@@ -112,11 +112,11 @@ public class EditorHelper : EditorWindow {
         curveBinding.propertyName = "m_Sprite";
 
         // An array to hold the object keyframes
-        ObjectReferenceKeyframe[] keyFrames = new ObjectReferenceKeyframe[10];
-        for (int i = 0; i < 10; i++) {
+        ObjectReferenceKeyframe[] keyFrames = new ObjectReferenceKeyframe[sprites.Length];
+        for (int i = 0; i < sprites.Length; i++) {
             keyFrames[i] = new ObjectReferenceKeyframe();
             // set the time
-            keyFrames[i].time = i;
+            keyFrames[i].time = i == 0 ? 0 : (0.4f+i*0.02f);
             // set reference for the sprite you want
             keyFrames[i].value = sprites[i];
             Debug.LogWarning(sprites[i]);

@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2769446843562495427, guid: 06147abca4295174685e9d4308404de2, type: 3}
+      objectReference: {fileID: -7025760825990288548, guid: e90b64b6eab3f25499ebd80477e5b615, type: 3}
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Color.b
       value: 0.509434
@@ -142,6 +142,7 @@ MonoBehaviour:
   OutputPorts: []
   InputPorts: []
   _isActive: 1
+  MaxStorage: 1
   _shouldPrint: 0
   _shouldBreak: 0
   Sprites:

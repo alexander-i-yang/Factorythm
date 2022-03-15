@@ -18,7 +18,7 @@ public class Conveyor : Machine {
 
     public float Angle;
     public Vector2 BetweenMachines;
-    public static readonly string[] ANIMATIONS = {"ConveyorRLB", "ConveyorDL", "ConveyorUPL", "ConveyorLU", "ConveyorRLT", "ConveyorUR", "ConveyorUDR", "ConveyorRD"};
+    public static readonly string[] ANIMATIONS = {"Right", "ConveyorDL", "Down", "ConveyorLU", "Left", "ConveyorUR", "Up", "ConveyorRD"};
 
     protected override void Awake() {
         base.Awake();
