@@ -262,7 +262,7 @@ public class Machine : Draggable {
     /// Completes one cycle of logic.
     /// Produces output if needed.
     /// </summary>
-    public void Tick() {
+    public virtual void Tick() {
         if (!_isActive)
         {
             OnDestruction();

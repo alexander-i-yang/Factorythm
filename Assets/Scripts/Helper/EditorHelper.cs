@@ -1,6 +1,7 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -112,17 +113,24 @@ public class EditorHelper : EditorWindow {
         curveBinding.propertyName = "m_Sprite";
 
         // An array to hold the object keyframes
-        ObjectReferenceKeyframe[] keyFrames = new ObjectReferenceKeyframe[sprites.Length];
+        List<ObjectReferenceKeyframe> keyFrames = new List<ObjectReferenceKeyframe>();
         for (int i = 0; i < sprites.Length; i++) {
-            keyFrames[i] = new ObjectReferenceKeyframe();
-            // set the time
-            keyFrames[i].time = i == 0 ? 0 : (0.4f+i*0.02f);
-            // set reference for the sprite you want
-            keyFrames[i].value = sprites[i];
-            Debug.LogWarning(sprites[i]);
+            ObjectReferenceKeyframe add = new ObjectReferenceKeyframe();
+            add.value = sprites[i];
+            keyFrames.Add(add);
         }
 
-        AnimationUtility.SetObjectReferenceCurve(animClip, curveBinding, keyFrames);
+        ObjectReferenceKeyframe first = keyFrames.First();
+        keyFrames.Add(first);
+        keyFrames.RemoveAt(0);
+        
+        for (int i = 0; i < keyFrames.Count; i++) {
+            var objectReferenceKeyframe = keyFrames[i];
+            objectReferenceKeyframe.time = i / 60.0f;
+            keyFrames[i] = objectReferenceKeyframe;
+        }
+        
+        AnimationUtility.SetObjectReferenceCurve(animClip, curveBinding, keyFrames.ToArray());
         AssetDatabase.CreateAsset(animClip, exportPath + name + ".anim");
     }
 

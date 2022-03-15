@@ -20,6 +20,8 @@ public class Conveyor : Machine {
     public Vector2 BetweenMachines;
     public static readonly string[] ANIMATIONS = {"Right", "ConveyorDL", "Down", "ConveyorLU", "Left", "ConveyorUR", "Up", "ConveyorRD"};
 
+    private String _animationName;
+    
     protected override void Awake() {
         base.Awake();
         _mySR = GetComponent<SpriteRenderer>();
@@ -93,9 +95,20 @@ public class Conveyor : Machine {
         _spriteIndex = index;
         // _mySR.sprite = Sprites[index];
         //_myAnimator.SetInteger("Index", index);
+        _mySR.sprite = Sprites[index];
+        print(_mySR.sprite.name);
+        print(Sprites[index].name);
+        _animationName = ANIMATIONS[index];
+        _myAnimator.Play("Base Layer." + _animationName, -1, 1);
+    }
 
-        String animationName = ANIMATIONS[index];
-        _myAnimator.Play("Base Layer." + animationName);
+    public override void Tick() {
+        if (_myAnimator.GetCurrentAnimatorStateInfo(0).IsName(_animationName)) {
+            print("Playing");
+        }
+        // _myAnimator.Play("Base Layer.None");
+        _myAnimator.Play("Base Layer." + _animationName, -1, 0f);
+        base.Tick();
     }
 
     /*#if UNITY_EDITOR
