@@ -32,7 +32,6 @@ public class Conveyor : Machine {
     }
 
     public override void AddOutputMachine(Machine m) {
-        ClearOutputPorts();
         base.AddOutputMachine(m);
         ResetSprite();
     }
@@ -40,6 +39,16 @@ public class Conveyor : Machine {
     public override void AddInputMachine(Machine m) {
         ClearInputPorts();
         base.AddInputMachine(m);
+        ResetSprite();
+    }
+
+    public override void RemoveInput(Machine m) {
+        base.RemoveInput(m);
+        ResetSprite();
+    }
+    
+    public override void RemoveOutput(Machine m) {
+        base.RemoveOutput(m);
         ResetSprite();
     }
 
