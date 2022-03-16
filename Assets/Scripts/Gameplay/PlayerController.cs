@@ -21,9 +21,6 @@ public class PlayerController : MonoBehaviour {
 
     public bool RhythmLocked = true;
 
-    public bool CanPlaceHeadMine;
-    public bool CanPlaceStemMine;
-
 
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
@@ -44,8 +41,6 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         _ism.SetZPressed(_isHoldingZ);
         _ism.SetXPressed(_isHoldingX);
-
-        this.CheckTileOn();
 
         if (Input.GetKeyDown(KeyCode.Escape)) {
             RestartGame();
@@ -184,37 +179,4 @@ public class PlayerController : MonoBehaviour {
 
     #endregion
     
-    /// <summary>
-    /// [March 12th, 2022] Update: Added a return value for this method if extension is needed for more than just
-    /// head and stem tile tags.
-    /// </summary>
-    /// <returns> the Raycast's hit ray</returns>
-    public RaycastHit2D CheckTileOn()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(
-            transform.position,
-            new Vector3(0, 0, 1),
-            10.0f,
-            LayerMask.GetMask("Default"));
-        if (hit.transform != null) {
-            if (hit.transform.gameObject.CompareTag("StemTiles")) {
-                CanPlaceStemMine = true;
-                CanPlaceHeadMine = false;
-            }
-            else if (hit.transform.gameObject.CompareTag("HeadTiles")) {
-                CanPlaceStemMine = false;
-                CanPlaceHeadMine = true;
-            }
-            else {
-                CanPlaceStemMine = false;
-                CanPlaceHeadMine = false;
-            }
-        }
-        else {
-            CanPlaceStemMine = false;
-            CanPlaceHeadMine = false;
-        }
-
-        return hit;
-    }
 }
