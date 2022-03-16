@@ -429,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 90908459054358875, guid: 09d6dc33a2fbc1f4c9cfa5811b70df9c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6734892112642455897, guid: 09d6dc33a2fbc1f4c9cfa5811b70df9c, type: 3}
       propertyPath: machineBPInstance
@@ -1118,7 +1118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1759962178201264602, guid: d59780e7421238c4b9f7471214450bcb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4925099833555843544, guid: d59780e7421238c4b9f7471214450bcb, type: 3}
       propertyPath: machineBPInstance
@@ -3198,7 +3198,7 @@ PrefabInstance:
       objectReference: {fileID: 4803320674075562905, guid: 1a8113c61ff11014e802d7f572151df1, type: 3}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: RhythmLock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: secPerBeat
@@ -3223,11 +3223,11 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
+      objectReference: {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
+      objectReference: {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[2]
       value: 
