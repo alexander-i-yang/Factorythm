@@ -11,22 +11,26 @@ using UnityEngine;
 /// Input or Output criteria for a recipe. Can specify cash, specific resources, or types of resources.
 /// </summary>
 [Serializable]
-public struct Criteria {
-    [SerializeField] public ResourceNum[] resources;
+public struct ResourceCriteria {
+    [SerializeField] public ResourceNum[] Resources;
     public int Cash;
 
-    public List<Resource> toList() {
+    public List<Resource> ToList(Vector3 position) {
         List<Resource> ret = new List<Resource>();
-        foreach (ResourceNum rn in resources) {
-            ret.AddRange(rn.toList());
+        foreach (ResourceNum rn in Resources) {
+            foreach (Resource r in rn.toList()) {
+                var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
+                var newObj = Conductor.GetPooler().InstantiateResource(r, instantiatePos, Quaternion.identity);
+                ret.Add(newObj);
+            }
         }
         return ret;
     }
-    
+
     public bool CheckInputs(List<Resource> inputs) {
         var inputOccurences = occurenceDict(inputs);
         bool enoughInput = true;
-        foreach (ResourceNum rn in resources) {
+        foreach (ResourceNum rn in Resources) {
             bool resourceInInput = false;
             foreach (var inputOccurence in inputOccurences) {
                 if (inputOccurence.Value >= rn.num && _isInputValidR(rn.resource, inputOccurence.Key)) {
@@ -45,9 +49,9 @@ public struct Criteria {
     
     public bool _isInputValidR(Resource recipeResource, Resource compareAgainst) {
         // Compare in descending order of specificity
-        if (recipeResource.ResourceName != "") {
-            return recipeResource.ResourceName == compareAgainst.ResourceName;
-        } else if (recipeResource.matterState == ResourceMatter.None) {
+        if (recipeResource.Name != ResourceName.DEFAULT) {
+            return recipeResource.Name == compareAgainst.Name;
+        } else if (recipeResource.matterState != ResourceMatter.None) {
             return recipeResource.matterState == compareAgainst.matterState;
         } else {
             return true;

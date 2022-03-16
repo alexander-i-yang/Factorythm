@@ -22,10 +22,13 @@ public class Conveyor : Machine {
 
     protected override void Awake() {
         base.Awake();
-        base.Start();
         _mySR = GetComponent<SpriteRenderer>();
         _myAnimator = GetComponent<Animator>();
         ResetSprite();
+    }
+
+    protected override void Start() {
+        base.Start();
     }
 
     public override void AddOutputMachine(Machine m) {
@@ -86,10 +89,6 @@ public class Conveyor : Machine {
         _myAnimator.Play("Base Layer." + animationName);
     }
 
-    public void Update() {
-        // ResetSprite();
-    }
-    
     /*#if UNITY_EDITOR
     public void OnDrawGizmos() {
         base.OnDrawGizmos();
