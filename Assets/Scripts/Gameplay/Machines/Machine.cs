@@ -269,7 +269,7 @@ public class Machine : Draggable {
     /// Completes one cycle of logic.
     /// Produces output if needed.
     /// </summary>
-    public virtual void Tick() {
+    public void Tick() {
         if (!_isActive)
         {
             OnDestruction();
@@ -334,7 +334,6 @@ public class Machine : Draggable {
     /// </summary>
     /// <param name="m">The machine to connect to</param>
     public virtual void AddOutputMachine(Machine m) {
-        ClearOutputPorts();
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
@@ -537,7 +536,7 @@ public class Machine : Draggable {
         OutputBuffer.Clear();
     }
 
-    public virtual void RemoveOutput(Machine m)
+    public void RemoveOutput(Machine m)
     {
         foreach (OutputPort port in OutputPorts) {
             if (port.ConnectedMachine.Equals(m))
@@ -548,7 +547,7 @@ public class Machine : Draggable {
         }
     }
 
-    public virtual void RemoveInput(Machine m)
+    public void RemoveInput(Machine m)
     {
         foreach (InputPort port in InputPorts) {
             if (port.ConnectedMachine.Equals(m))

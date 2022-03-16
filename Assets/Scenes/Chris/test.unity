@@ -360,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2450200076133068508, guid: d8df6abc45330a24297c7e5ce2e27036, type: 3}
       propertyPath: m_TagString
-      value: StemTiles
+      value: HeadTiles
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8df6abc45330a24297c7e5ce2e27036, type: 3}
@@ -807,6 +807,8 @@ MonoBehaviour:
   DeInteract: {fileID: 649223268058989734, guid: 5005772efa082ce43bbdb7eca58755d7, type: 3}
   Interact: {fileID: -9000188618666376746, guid: 5005772efa082ce43bbdb7eca58755d7, type: 3}
   machineBPInstance: {fileID: 3209483221131802990, guid: 6348ba1d18a512a459f4c3aacac0cc35, type: 3}
+  IconDown: {x: 0, y: 0, z: 0}
+  cost: 0
 --- !u!4 &1158031648
 Transform:
   m_ObjectHideFlags: 0
@@ -899,8 +901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RhythmLocked: 1
-  CanPlaceHeadMine: 0
-  CanPlaceStemMine: 0
 --- !u!50 &1359130705
 Rigidbody2D:
   serializedVersion: 4
@@ -1056,7 +1056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 245c4a9065d74ffd9f1e257ee04d12ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Follow: {fileID: 1359130706}
+  Target: {fileID: 1359130706}
   SmoothCurve:
     serializedVersion: 2
     m_Curve:
@@ -1081,6 +1081,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _smoothSpeed: 40
 --- !u!114 &1845339556
 MonoBehaviour:
   m_ObjectHideFlags: 0

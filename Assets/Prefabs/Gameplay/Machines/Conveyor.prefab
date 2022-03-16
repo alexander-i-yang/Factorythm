@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -7025760825990288548, guid: e90b64b6eab3f25499ebd80477e5b615, type: 3}
+      objectReference: {fileID: 2769446843562495427, guid: 06147abca4295174685e9d4308404de2, type: 3}
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Color.b
       value: 0.509434
@@ -142,17 +142,16 @@ MonoBehaviour:
   OutputPorts: []
   InputPorts: []
   _isActive: 1
-  MaxStorage: 1
   _shouldPrint: 0
   _shouldBreak: 0
   Sprites:
-  - {fileID: 9044786021765537137, guid: 184401782db7393448bb407eed83e9c5, type: 3}
-  - {fileID: 9044786021765537137, guid: c89dd06a6911a604f99d5e56ee8dd4a4, type: 3}
-  - {fileID: 9044786021765537137, guid: a471ef30d356b4e439b403d3cbfb44ec, type: 3}
-  - {fileID: 9044786021765537137, guid: d78373c6f2ed61b418b34e2527265f4c, type: 3}
-  - {fileID: 9044786021765537137, guid: e90b64b6eab3f25499ebd80477e5b615, type: 3}
-  - {fileID: 9044786021765537137, guid: 2d51ff9eedcd6234c98850caef2b69f2, type: 3}
-  - {fileID: 9044786021765537137, guid: 2e1dde69d4cb05d4099d56d784a5a794, type: 3}
-  - {fileID: 9044786021765537137, guid: a62ca58ec2ef9454fb6dea29f6572656, type: 3}
+  - {fileID: 6588283335923157485, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 4678259398471549702, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8199771426994200264, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: -6756607066556995429, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8073556761677482203, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 1992827507389386230, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 8216710035026873855, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: -6424201123812103037, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
   Angle: 0
   BetweenMachines: {x: 0, y: 0}
