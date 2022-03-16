@@ -341,7 +341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7117618622287913221, guid: 46c7d593b71545b47bf70198bc64f85d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.9
+      value: 0.100000024
       objectReference: {fileID: 0}
     - target: {fileID: 7117618622287913221, guid: 46c7d593b71545b47bf70198bc64f85d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1800,6 +1800,18 @@ PrefabInstance:
       propertyPath: OutputPorts.Array.data[0]
       value: 
       objectReference: {fileID: 4081814859755479553}
+    - target: {fileID: 6634523024244770741, guid: d8073aeb333af2c4583010f8f6ee1920, type: 3}
+      propertyPath: UnlockCriteria.Resources.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634523024244770741, guid: d8073aeb333af2c4583010f8f6ee1920, type: 3}
+      propertyPath: UnlockCriteria.Resources.Array.data[0].num
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6634523024244770741, guid: d8073aeb333af2c4583010f8f6ee1920, type: 3}
+      propertyPath: UnlockCriteria.Resources.Array.data[0].resource
+      value: 
+      objectReference: {fileID: 7796586414147078100, guid: 4e173a4fbb7007b43ba46130f9984a9a, type: 3}
     - target: {fileID: 8655999284317464244, guid: d8073aeb333af2c4583010f8f6ee1920, type: 3}
       propertyPath: ConnectedMachine
       value: 

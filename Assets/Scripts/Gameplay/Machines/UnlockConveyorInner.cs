@@ -5,6 +5,7 @@ public class UnlockConveyorInner : Conveyor {
     public GameObject UnlockCounterObj;
 
     private UnlockCounter _unlockCounter;
+    private bool _unlocked = false;
 
     public void Awake() {
         base.Awake();
@@ -33,7 +34,7 @@ public class UnlockConveyorInner : Conveyor {
     }
 
     protected override ResourceNum[] GetInResources() {
-        return UnlockCriteria.Resources;
+        return _unlocked ? base.GetInResources() : UnlockCriteria.Resources;
     }
 
     protected override void MoveHere(Resource r, bool destroyOnComplete) {
@@ -56,5 +57,6 @@ public class UnlockConveyorInner : Conveyor {
 
     public void Unlock() {
         recipeObj = Conductor.GetPooler().ConveyorRecipe;
+        _unlocked = true;
     }
 }

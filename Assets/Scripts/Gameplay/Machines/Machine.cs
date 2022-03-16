@@ -186,9 +186,16 @@ public class Machine : Draggable {
     
     protected void MoveResourcesIn() {
         foreachMachine(new List<MachinePort>(InputPorts), m => {
+            if (_shouldPrint) {
+                print("Checking: " + m.name + " ");
+            }
             if (m.OutputBuffer.Count > 0) {
                 Resource popped = m.OutputBuffer.Dequeue();
                 InputBuffer.Add(popped);
+                if (_shouldPrint) {
+                    print("Moving: " + popped.GetType() + " in");
+                }
+
                 MoveHere(popped, false);
             }
         });

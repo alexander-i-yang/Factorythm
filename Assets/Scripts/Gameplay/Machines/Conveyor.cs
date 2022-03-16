@@ -96,16 +96,11 @@ public class Conveyor : Machine {
         // _mySR.sprite = Sprites[index];
         //_myAnimator.SetInteger("Index", index);
         _mySR.sprite = Sprites[index];
-        print(_mySR.sprite.name);
-        print(Sprites[index].name);
         _animationName = ANIMATIONS[index];
         _myAnimator.Play("Base Layer." + _animationName, -1, 1);
     }
 
     public override void Tick() {
-        if (_myAnimator.GetCurrentAnimatorStateInfo(0).IsName(_animationName)) {
-            print("Playing");
-        }
         // _myAnimator.Play("Base Layer.None");
         _myAnimator.Play("Base Layer." + _animationName, -1, 0f);
         base.Tick();
