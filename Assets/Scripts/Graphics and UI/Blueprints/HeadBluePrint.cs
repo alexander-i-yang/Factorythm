@@ -7,11 +7,7 @@ using UnityEngine;
 public class HeadBluePrint : MachineBluePrint
 {
     public override bool CanPlace(Vector3 pos) {
-        RaycastHit2D hit = this.CheckTileOn(pos);
-        if (hit.transform == null) {
-            return false;
-        } else {
-            return hit.transform.gameObject.CompareTag("HeadTiles");
-        }
+        PlayerController p = (PlayerController) (GameObject.Find("Player").GetComponent(typeof(PlayerController)));
+        return p.CanPlaceHeadMine;
     }
 }
