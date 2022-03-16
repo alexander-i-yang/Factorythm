@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum ResourceMatter {
     Solid,
@@ -7,39 +9,44 @@ public enum ResourceMatter {
     None
 }
 
+public enum ResourceName {
+    DEFAULT,
+    HEAD,
+    STEM,
+    EIGHTH,
+    QUARTER,
+    HALF,
+    CHRORD,
+    PHRASE,
+}
+
 [Serializable]
-public class Resource : MonoBehaviour {
+public class Resource : MonoBehaviour, DictQueueElement<ResourceName> {
     public int price;
-    public string ResourceName;
+    public ResourceName Name;
     public ResourceMatter matterState;
     private Vector2 _dragDirection;
     public SmoothSprite MySmoothSprite { get; private set; }
 
-    /*public override void OnDeInteract(PlayerController p)
-    {
-        Debug.Log("OnDeInteract has been called");
-        //Elliott - This should "add" the resource back onto the machine it's on. Raycast down probably
-    }
-
-    public override void OnDrag(PlayerController p, Vector3 newPos)
-    {
-        Debug.Log("I'm dragging copper");
-        MySmoothSprite.Move(newPos);
-        transform.position = newPos;
-    }
-
-    public override void OnInteract(PlayerController p)
-    {
-        //This should remove the resource from whatever machine it's in to avoid rubberbanding
-        Debug.Log("You attemped to pick me up!");
-        Color c = MySmoothSprite.SpriteRenderer.color;
-        c.a = 0.8f;
-        MySmoothSprite.SpriteRenderer.color = c;
-    }*/
-
     public void Awake() {
         MySmoothSprite = GetComponentInChildren<SmoothSprite>();
+        if (Name == ResourceName.DEFAULT) {
+            throw new ArgumentNullException("FACTORYTYM ERROR: give resource " + gameObject.name + " a type!");
+        }
     }
     
-    
+    public ResourceName GetType() {
+        return Name;
+    }
+}
+
+public class ResourceDictQueue : DictQueue<ResourceName, Resource> {
+    public override bool CompareKeys(ResourceName k1, ResourceName k2) {
+        if (k1 == ResourceName.DEFAULT || k2 == ResourceName.DEFAULT) {
+            return true;
+        }
+        else {
+            return k1 == k2;
+        }
+    }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 /// <summary>
 /// All machine logic is contained within here.
@@ -20,8 +21,9 @@ public class Machine : Draggable {
     /// A list of resources that this machine just produced this tick.
     /// Currently, it just includes all resources stored in this machine.
     /// </summary>
-    public List<Resource> OutputBuffer { get; private set; }
-    public Queue<Resource> storage { get; private set; }
+    public Queue<Resource> OutputBuffer { get; } = new Queue<Resource>();
+    public ResourceDictQueue InputBuffer { get; } = new ResourceDictQueue();
+    public int MaxStorage = 1;
 
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
@@ -30,11 +32,10 @@ public class Machine : Draggable {
     [SerializeField] private bool _shouldBreak;
 
     protected virtual void Awake() {
-        OutputBuffer = new List<Resource>();
-        storage = new Queue<Resource>();
+        // InputBuffer = 
     }
 
-    protected void Start() {
+    protected virtual void Start() {
         _dragBluePrints = new List<ConveyorBlueprint>();
     }
 
@@ -58,7 +59,7 @@ public class Machine : Draggable {
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Returns true if the connected input machines have enough resources for this machine to produce an output.
     /// </summary>
     /// <returns></returns>
@@ -78,7 +79,7 @@ public class Machine : Draggable {
         }
 
         return ret;
-    }
+    }*/
 
     /// <summary>
     /// Removes all resources from OutputBuffer.
@@ -99,7 +100,7 @@ public class Machine : Draggable {
         r.transform.position = instantiatePos;
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Creates output resources according to the recipe and adds them to the outputBuffer.
     /// </summary>
     protected void MoveResourcesIn() {
@@ -111,27 +112,27 @@ public class Machine : Draggable {
     }
 
     /// <summary>
-    /// Puts stuff in either the output buffer or storage as needs be.
+    /// Puts stuff in either the output buffer or InputBuffer as needs be.
     /// </summary>
     /// <param name= "r">The resource to store</param>
-    /// <param name="isStoring">Whether or not something needs to be stored in storage</param>
+    /// <param name="isStoring">Whether or not something needs to be stored in InputBuffer</param>
     protected void StoreResources(Resource r, bool isStoring) {
 
         if (isStoring) {
-            storage.Enqueue(r);
+            InputBuffer.Enqueue(r);
         }
 
         if (!OutputBuffer.Any()) {
-            OutputBuffer.Add(storage.Dequeue());
+            OutputBuffer.Add(InputBuffer.Dequeue());
         }
-    }
+    }*/
 
-    /// <summary>
+    /*/// <summary>
     /// Instantiates new resources to feed into the output machine.
     /// </summary>
     protected virtual void CreateOutput() {
         var position = transform.position;
-        var resourcesToCreate = recipeObj.outToList();
+        var resourcesToCreate = recipeObj.OutToList();
         foreach (Resource r in resourcesToCreate) {
             var instantiatePos = new Vector3(position.x, position.y, r.transform.position.z);
             var newObj = Instantiate(r, instantiatePos, transform.rotation);
@@ -151,7 +152,7 @@ public class Machine : Draggable {
     }
 
     /// <summary>
-    /// Moves all resources from each input machine into this machine, removing them from the input machine's storage.
+    /// Moves all resources from each input machine into this machine, removing them from the input machine's InputBuffer.
     /// </summary>
     public void MoveAndDestroy() {
         //Foreach resource in each port's input buffer, move to this machine
@@ -181,6 +182,76 @@ public class Machine : Draggable {
         } else {
             MoveResourcesIn();
         }
+    }*/
+    
+    protected void MoveResourcesIn() {
+        foreachMachine(new List<MachinePort>(InputPorts), m => {
+            if (m.OutputBuffer.Count > 0) {
+                Resource popped = m.OutputBuffer.Dequeue();
+                InputBuffer.Add(popped);
+                MoveHere(popped, false);
+            }
+        });
+    }
+
+    protected virtual ResourceNum[] GetInResources() {
+        return recipeObj.InCriteria.Resources;
+    }
+
+    public int GetStorageCount() {
+        return OutputBuffer.Count + InputBuffer.ToList().Count;
+    }
+
+    public bool StorageFull() {
+        return GetStorageCount() >= MaxStorage;
+    }
+
+    public bool NextMachineFull() {
+        bool ret = false;
+        foreachMachine(new List<MachinePort>(OutputPorts) , m => {
+            if (m.StorageFull()) {
+                ret = true;
+            }
+        });
+        return ret;
+    }
+
+    private bool _checkEnoughInput() {
+        bool ret = true;
+        if (recipeObj == null) { print(name); print(transform.parent.name);}
+
+        foreach (ResourceNum rn in GetInResources()) {
+            if (_shouldPrint) {
+                print(rn.resource.Name + " " + rn.resource.GetType() + " " + rn.num);
+                print(InputBuffer.ToList().Count);
+                foreach (ResourceName k in InputBuffer._backer.Keys) {
+                    print(k + " " + InputBuffer.CompareKeys(rn.resource.Name, k) + " " + InputBuffer._backer[k].Count);
+                }
+            }
+            
+            if (!InputBuffer.HasEnough(rn.resource.Name, rn.num)) {
+                ret = false;
+                break;
+            }
+        }
+
+        return ret;
+    }
+
+    public ResourceDictQueue Skim() {
+        ResourceNum[] rns = GetInResources();
+        ResourceDictQueue ret = new ResourceDictQueue();
+        foreach (ResourceNum rn in rns) {
+            for (int i = 0; i < rn.num; ++i) {
+                //Conditional needed so we can tell whether there's a resource actually in the input buffer
+                InputBuffer.ForEachForgivable(rn.resource.Name, q => {
+                    ret.Add(q.Dequeue());
+                    return 0;
+                });
+            }
+        }
+
+        return ret;
     }
 
     public void PrepareTick() {
@@ -199,13 +270,19 @@ public class Machine : Draggable {
 
         if (!_pokedThisTick) {
             _pokedThisTick = true;
+            MoveResourcesIn();
             bool enoughInput = _checkEnoughInput();
             if (_shouldPrint) {
                 print("Enough ticks: " + (_ticksSinceProduced >= recipeObj.ticks));
+                print("enoughInput: " + enoughInput);
             }
-
-            if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
-                _produce();
+            
+            if (enoughInput && _ticksSinceProduced >= recipeObj.ticks && !NextMachineFull()) {
+                ResourceDictQueue skimmed = Skim();
+                List<Resource> result = recipeObj.Create(skimmed, transform.position);
+                foreach (Resource r in result) {
+                    OutputBuffer.Enqueue(r);
+                }
                 _ticksSinceProduced = 0;
             } else {
                 _ticksSinceProduced++;
@@ -224,6 +301,7 @@ public class Machine : Draggable {
     /// </summary>
     public void OnDrawGizmosSelected() {
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
+        Handles.Label(curPos, "" + GetStorageCount());
         /*foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             Helper.DrawArrow(curPos, direction, Color.green);
@@ -438,7 +516,7 @@ public class Machine : Draggable {
 
     public void ClearResources()
     {
-        foreach (Resource r in storage)
+        foreach (Resource r in InputBuffer.ToList())
         {
             Destroy(r.gameObject);
         }

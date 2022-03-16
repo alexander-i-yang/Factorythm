@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 
 public class UnlockConveyorInner : Conveyor {
-    public Criteria UnlockCriteria;
+    public ResourceCriteria UnlockCriteria;
     public GameObject UnlockCounterObj;
 
     private UnlockCounter _unlockCounter;
+
+    public void Awake() {
+        base.Awake();
+    }
 
     public void Start() {
         base.Start();
         _unlockCounter = UnlockCounterObj.GetComponent<UnlockCounter>();
         //TODO: automatic sprite setting
         // _unlockCounter.SetSprite(UnlockCriteria.resources[0].resource);
-        _unlockCounter.Updatecounter(UnlockCriteria.resources[0].num);
+        _unlockCounter.Updatecounter(UnlockCriteria.Resources[0].num);
     }
 
     public bool Done { get; private set; } = false;
@@ -28,13 +32,17 @@ public class UnlockConveyorInner : Conveyor {
         }
     }
 
+    protected override ResourceNum[] GetInResources() {
+        return UnlockCriteria.Resources;
+    }
+
     protected override void MoveHere(Resource r, bool destroyOnComplete) {
         base.MoveHere(r, destroyOnComplete);
         if (!Done) {
             bool isDone = true;
-            ResourceNum[] rns = UnlockCriteria.resources;
+            ResourceNum[] rns = GetInResources();
             for (var i = 0; i < rns.Length; i++) {
-                if (rns[i].resource.ResourceName == r.ResourceName) {
+                if (rns[i].resource.Name == r.Name) {
                     rns[i].num--;
                     _unlockCounter.Updatecounter(rns[i].num);
                 }

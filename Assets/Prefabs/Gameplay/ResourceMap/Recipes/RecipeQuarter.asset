@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: RecipeQuarter
   m_EditorClassIdentifier: 
   InCriteria:
-    resources:
+    Resources:
     - resource: {fileID: 4260335696561330830, guid: 2d01800266f44114bab5c2d185e4d115, type: 3}
-      num: 1
+      num: 2
     Cash: 0
   OutCriteria:
-    resources:
+    Resources:
     - resource: {fileID: 4260335696561330830, guid: ff8aa361334e53b42aa86334b176e642, type: 3}
       num: 1
     Cash: 0
+  Style: 0
   ticks: 4
-  CreatesNewOutput: 1
