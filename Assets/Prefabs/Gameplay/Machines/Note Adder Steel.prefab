@@ -63,6 +63,10 @@ PrefabInstance:
       propertyPath: recipeObj
       value: 
       objectReference: {fileID: 11400000, guid: 1e30dca1ec201f0438bbd9ac0f264ff9, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: MaxStorage
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8714590015041616768, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.125

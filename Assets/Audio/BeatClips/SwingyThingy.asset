@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwingyThingy
   m_EditorClassIdentifier: 
   BPM: 128
-  BeatOffset: 0.5
+  BeatOffset: 0.25
   fmodSongReference:
     Guid:
       Data1: -162831567

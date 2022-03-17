@@ -18,8 +18,10 @@ public class Conveyor : Machine {
 
     public float Angle;
     public Vector2 BetweenMachines;
-    public static readonly string[] ANIMATIONS = {"ConveyorRLB", "ConveyorDL", "ConveyorUPL", "ConveyorLU", "ConveyorRLT", "ConveyorUR", "ConveyorUDR", "ConveyorRD"};
+    public static readonly string[] ANIMATIONS = {"Right", "ConveyorDL", "Down", "ConveyorLU", "Left", "ConveyorUR", "Up", "ConveyorRD"};
 
+    private String _animationName;
+    
     protected override void Awake() {
         base.Awake();
         _mySR = GetComponent<SpriteRenderer>();
@@ -32,7 +34,6 @@ public class Conveyor : Machine {
     }
 
     public override void AddOutputMachine(Machine m) {
-        ClearOutputPorts();
         base.AddOutputMachine(m);
         ResetSprite();
     }
@@ -40,6 +41,16 @@ public class Conveyor : Machine {
     public override void AddInputMachine(Machine m) {
         ClearInputPorts();
         base.AddInputMachine(m);
+        ResetSprite();
+    }
+
+    public override void RemoveInput(Machine m) {
+        base.RemoveInput(m);
+        ResetSprite();
+    }
+    
+    public override void RemoveOutput(Machine m) {
+        base.RemoveOutput(m);
         ResetSprite();
     }
 
@@ -84,9 +95,15 @@ public class Conveyor : Machine {
         _spriteIndex = index;
         // _mySR.sprite = Sprites[index];
         //_myAnimator.SetInteger("Index", index);
+        _mySR.sprite = Sprites[index];
+        _animationName = ANIMATIONS[index];
+        _myAnimator.Play("Base Layer." + _animationName, -1, 1);
+    }
 
-        String animationName = ANIMATIONS[index];
-        _myAnimator.Play("Base Layer." + animationName);
+    public override void Tick() {
+        // _myAnimator.Play("Base Layer.None");
+        _myAnimator.Play("Base Layer." + _animationName, -1, 0f);
+        base.Tick();
     }
 
     /*#if UNITY_EDITOR

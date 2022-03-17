@@ -186,9 +186,16 @@ public class Machine : Draggable {
     
     protected void MoveResourcesIn() {
         foreachMachine(new List<MachinePort>(InputPorts), m => {
+            if (_shouldPrint) {
+                print("Checking: " + m.name + " ");
+            }
             if (m.OutputBuffer.Count > 0) {
                 Resource popped = m.OutputBuffer.Dequeue();
                 InputBuffer.Add(popped);
+                if (_shouldPrint) {
+                    print("Moving: " + popped.GetType() + " in");
+                }
+
                 MoveHere(popped, false);
             }
         });
@@ -262,7 +269,7 @@ public class Machine : Draggable {
     /// Completes one cycle of logic.
     /// Produces output if needed.
     /// </summary>
-    public void Tick() {
+    public virtual void Tick() {
         if (!_isActive)
         {
             OnDestruction();
@@ -327,6 +334,7 @@ public class Machine : Draggable {
     /// </summary>
     /// <param name="m">The machine to connect to</param>
     public virtual void AddOutputMachine(Machine m) {
+        ClearOutputPorts();
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
@@ -529,7 +537,7 @@ public class Machine : Draggable {
         OutputBuffer.Clear();
     }
 
-    public void RemoveOutput(Machine m)
+    public virtual void RemoveOutput(Machine m)
     {
         foreach (OutputPort port in OutputPorts) {
             if (port.ConnectedMachine.Equals(m))
@@ -540,7 +548,7 @@ public class Machine : Draggable {
         }
     }
 
-    public void RemoveInput(Machine m)
+    public virtual void RemoveInput(Machine m)
     {
         foreach (InputPort port in InputPorts) {
             if (port.ConnectedMachine.Equals(m))

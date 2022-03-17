@@ -21,6 +21,8 @@ public class UnlockableSquares : MonoBehaviour
     private List<BluePrintCreator> _bluePrintCreators;
     private Canvas _canvas;
 
+    private Lock _lockSprite;
+
     void Awake() {
         _mySR = gameObject.GetComponent<SpriteRenderer>();
         _myCollider = GetComponent<BoxCollider2D>();
@@ -35,6 +37,7 @@ public class UnlockableSquares : MonoBehaviour
         }
 
         _canvas = GetComponentInChildren<Canvas>();
+        _lockSprite = GetComponentInChildren<Lock>();
     }
     
     void Update() {
@@ -68,6 +71,8 @@ public class UnlockableSquares : MonoBehaviour
                 bpc.Unlock();
             }
         }
+        print(_lockSprite);
+        _lockSprite.Unlock();
     }
 
     protected virtual bool CheckIfDone() {
