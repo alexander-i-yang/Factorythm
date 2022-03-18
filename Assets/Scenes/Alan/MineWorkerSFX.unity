@@ -180,6 +180,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0fc53f9126ba48b5abde75d633d3e37, type: 3}
+--- !u!1 &281184812 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6298895056147078219, guid: f0fc53f9126ba48b5abde75d633d3e37, type: 3}
+  m_PrefabInstance: {fileID: 201368396}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &281184819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281184812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -744086230
+      Data2: 1140694747
+      Data3: -1739868241
+      Data4: 1871765753
+    Path: event:/sfx/MineWorker
+  src:
+    Guid:
+      Data1: -744086230
+      Data2: 1140694747
+      Data3: -1739868241
+      Data4: 1871765753
+    Path: event:/sfx/MineWorker
+  startCondition: 0
 --- !u!4 &496959951 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2807202956182607608, guid: 3a3192da3f54c764e8b283a3f17333b1, type: 3}
@@ -418,6 +450,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1610513546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5096779315247917584, guid: cacdd84470c7b314a994499eabc978b1, type: 3}
+  m_PrefabInstance: {fileID: 5096779317064930470}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1610513547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610513546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 1610513546}
+  ListenerNumber: -1
 --- !u!4 &1944043192 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5096779315247917598, guid: cacdd84470c7b314a994499eabc978b1, type: 3}
