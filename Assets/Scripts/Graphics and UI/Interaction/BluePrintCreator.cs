@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class BluePrintCreator : Button {
     [SerializeField] private GameObject machineBPInstance;
     private MachineBluePrint _myMachineBluePrint;

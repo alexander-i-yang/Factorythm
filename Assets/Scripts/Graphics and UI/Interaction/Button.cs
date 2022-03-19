@@ -1,25 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(BoxCollider2D), typeof(Animator))]
 public class Button : Interactable {
     public UnityEvent OnPress;
-    private SpriteRenderer _mySR;
-
-    public Sprite DeInteract;
-    public Sprite Interact;
+    private Animator _myAnimator;
 
     public void Start() {
-        _mySR = GetComponent<SpriteRenderer>();
+        _myAnimator = GetComponent<Animator>();
     }
     
     public override void OnInteract(PlayerController p) {
         OnPress.Invoke();
-        _mySR.sprite = Interact;
+        _myAnimator.SetBool("IsUp", false);
+        // _mySR.sprite = Interact;
     }
 
     public override void OnDeInteract(PlayerController p) {
         // GetComponent<SpriteRenderer>().color = Color.blue;
-        _mySR.sprite = DeInteract;
+        // _mySR.sprite = DeInteract;
+        _myAnimator.SetBool("IsUp", true);
     }
 }

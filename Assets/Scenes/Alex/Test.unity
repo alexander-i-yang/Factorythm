@@ -431,10 +431,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 543067186578683416, guid: 09d6dc33a2fbc1f4c9cfa5811b70df9c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6734892112642455897, guid: 09d6dc33a2fbc1f4c9cfa5811b70df9c, type: 3}
       propertyPath: machineBPInstance
       value: 
       objectReference: {fileID: 603504042536466823, guid: a2c16e726412c5744b7b3db424ecf9f0, type: 3}
+    - target: {fileID: 7394836450457580615, guid: 09d6dc33a2fbc1f4c9cfa5811b70df9c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7412463674239257250, guid: 09d6dc33a2fbc1f4c9cfa5811b70df9c, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1120,10 +1128,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2208734414207006361, guid: d59780e7421238c4b9f7471214450bcb, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4925099833555843544, guid: d59780e7421238c4b9f7471214450bcb, type: 3}
       propertyPath: machineBPInstance
       value: 
       objectReference: {fileID: 3209483221131802990, guid: 6348ba1d18a512a459f4c3aacac0cc35, type: 3}
+    - target: {fileID: 9201381906060293318, guid: d59780e7421238c4b9f7471214450bcb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9218869492133186083, guid: d59780e7421238c4b9f7471214450bcb, type: 3}
       propertyPath: m_RootOrder
       value: 2
