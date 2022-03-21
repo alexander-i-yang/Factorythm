@@ -33,15 +33,15 @@ public class UnlockConveyorInner : Conveyor {
         }
     }
 
-    protected override ResourceNum[] GetInResources() {
-        return _unlocked ? base.GetInResources() : UnlockCriteria.Resources;
+    protected override ResourceNum[] GetInResources(Recipe recipeObj) {
+        return _unlocked ? base.GetInResources(recipeObj) : UnlockCriteria.Resources;
     }
 
     protected override void MoveHere(Resource r, bool destroyOnComplete) {
         base.MoveHere(r, destroyOnComplete);
         if (!Done) {
             bool isDone = true;
-            ResourceNum[] rns = GetInResources();
+            ResourceNum[] rns = GetInResources(recipes[0]);
             for (var i = 0; i < rns.Length; i++) {
                 if (rns[i].resource.Name == r.Name) {
                     rns[i].num--;
@@ -56,7 +56,7 @@ public class UnlockConveyorInner : Conveyor {
     }
 
     public void Unlock() {
-        recipeObj = Conductor.GetPooler().ConveyorRecipe;
+        recipes[0] = Conductor.GetPooler().ConveyorRecipe;
         _unlocked = true;
     }
 }

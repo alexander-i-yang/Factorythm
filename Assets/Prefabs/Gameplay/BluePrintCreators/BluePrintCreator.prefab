@@ -95,6 +95,9 @@ GameObject:
   - component: {fileID: 3631104310742194136}
   - component: {fileID: 7817076637837213347}
   - component: {fileID: 6337557472564267499}
+  - component: {fileID: 3032836171371982006}
+  - component: {fileID: -6908859591305832574}
+  - component: {fileID: 4121559462778678529}
   m_Layer: 6
   m_Name: BluePrintCreator
   m_TagString: Untagged
@@ -204,7 +207,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 1.0625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -232,6 +235,79 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3032836171371982006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491127831472918445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15172d99f8794f55ae32e6a6bed50ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipeObj: {fileID: 0}
+  OutputPorts: []
+  InputPorts: []
+  _isActive: 1
+  MaxStorage: 1
+  _shouldPrint: 0
+  _shouldBreak: 0
+--- !u!114 &-6908859591305832574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491127831472918445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  startCondition: 1
+--- !u!114 &4121559462778678529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5491127831472918445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
+  src:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  startCondition: 2
 --- !u!1 &7111394558733579348
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1801245409951718824}
   - component: {fileID: 5341053927266769297}
   - component: {fileID: 1728646613923302145}
+  - component: {fileID: -1932836445534971543}
+  - component: {fileID: 4033198971377291128}
   m_Layer: 6
   m_Name: Machine BluePrint
   m_TagString: Untagged
@@ -72,6 +74,52 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-1932836445534971543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243557835273114965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15172d99f8794f55ae32e6a6bed50ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipeObj: {fileID: 0}
+  OutputPorts: []
+  InputPorts: []
+  _isActive: 1
+  MaxStorage: 1
+  _shouldPrint: 0
+  _shouldBreak: 0
+--- !u!114 &4033198971377291128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243557835273114965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  startCondition: 1
 --- !u!1001 &5493127684277247443
 PrefabInstance:
   m_ObjectHideFlags: 0

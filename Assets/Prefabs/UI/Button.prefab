@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 7826987830262284001}
   - component: {fileID: 7089786287177715230}
   - component: {fileID: 955322480256453653}
+  - component: {fileID: 7326326597109692268}
+  - component: {fileID: 7721592477548550343}
+  - component: {fileID: 2902963103295603646}
   m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
@@ -100,8 +103,6 @@ MonoBehaviour:
   OnPress:
     m_PersistentCalls:
       m_Calls: []
-  DeInteract: {fileID: 649223268058989734, guid: 5005772efa082ce43bbdb7eca58755d7, type: 3}
-  Interact: {fileID: -9000188618666376746, guid: 5005772efa082ce43bbdb7eca58755d7, type: 3}
 --- !u!61 &7089786287177715230
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119,7 +120,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1, y: 1.0625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -147,3 +148,76 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7326326597109692268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4273409980704497486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15172d99f8794f55ae32e6a6bed50ca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recipeObj: {fileID: 0}
+  OutputPorts: []
+  InputPorts: []
+  _isActive: 1
+  MaxStorage: 1
+  _shouldPrint: 0
+  _shouldBreak: 0
+--- !u!114 &7721592477548550343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4273409980704497486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  startCondition: 1
+--- !u!114 &2902963103295603646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4273409980704497486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
+  src:
+    Guid:
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
+  startCondition: 2

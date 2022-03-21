@@ -80,10 +80,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2466a8428204ca0a9d9a0bda754bc85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recipeObj: {fileID: 11400000, guid: 61e4fcb3e5cde064c9f43e3ab171db14, type: 2}
+  recipes:
+  - {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
   OutputPorts: []
   InputPorts: []
   _isActive: 1
+  MaxStorage: 1
   _shouldPrint: 0
   _shouldBreak: 0
   Sprites:
@@ -96,11 +98,11 @@ MonoBehaviour:
   - {fileID: 8216710035026873855, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
   - {fileID: -6424201123812103037, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
   Angle: 0
+  BetweenMachines: {x: 0, y: 0}
   UnlockCriteria:
-    resources:
-    - resource: {fileID: 4260335696561330830, guid: 2d01800266f44114bab5c2d185e4d115, type: 3}
-      num: 16
+    Resources: []
     Cash: 0
+  UnlockCounterObj: {fileID: 0}
 --- !u!1001 &5226232610730420591
 PrefabInstance:
   m_ObjectHideFlags: 0

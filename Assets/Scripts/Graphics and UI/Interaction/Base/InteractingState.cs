@@ -18,7 +18,7 @@
     }
 
     public override void Enter(InteractableStateInput i) {
-        MyStateMachine.CurInput.CurInteractable.OnInteract(MyStateMachine.CurInput.PC);
+        MyStateMachine.CurInput.CurInteractable.OnInteractWrapper(MyStateMachine.CurInput.PC);
     }
 
     public override void Exit(InteractableStateInput i) {
