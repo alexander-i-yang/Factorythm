@@ -14,12 +14,14 @@ public class MachineBluePrint : Draggable {
     }
 
     public override void OnInteract(PlayerController p) {
+        print("Interact");
         Color c = SmoothSprite.SpriteRenderer.color;
         c.a = 0.8f;
         SmoothSprite.SpriteRenderer.color = c;
     }
 
     public override void OnDeInteract(PlayerController p) {
+        print("DeInteract");
         if (CanPlace(SmoothSprite.transform.position)) {
             Conductor.checkForOverlappingMachines(transform.position);
             Destroy(gameObject);

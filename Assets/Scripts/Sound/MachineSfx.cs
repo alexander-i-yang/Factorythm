@@ -9,7 +9,6 @@ using UnityEditor;
 using Unity.EditorCoroutines.Editor;
 using Debug = UnityEngine.Debug;
 
-[RequireComponent(typeof(Machine))]
 public class MachineSfx : MonoBehaviour
 {
     [SerializeField, HideInInspector]
