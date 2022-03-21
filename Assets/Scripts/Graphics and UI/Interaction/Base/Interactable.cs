@@ -19,10 +19,7 @@ public abstract class Interactable : MonoBehaviour {
     /// <summary>
     /// Called when player presses [interact] over this object
     /// </summary>
-    public abstract void OnInteract(PlayerController p);
-
-    public void OnInteractWrapper(PlayerController p) {
-        OnInteract(p);
+    public virtual void OnInteract(PlayerController p) {
         if (_clickSfx) {
             _clickSfx.UnPause();
         }
@@ -31,10 +28,7 @@ public abstract class Interactable : MonoBehaviour {
     /// <summary>
     /// Called after the player is no longer holding [interact] over this object
     /// </summary>
-    public abstract void OnDeInteract(PlayerController p);
-    
-    public void OnDeInteractWrapper(PlayerController p) {
-        OnDeInteract(p);
+    public virtual void OnDeInteract(PlayerController p) {
         if (_deselectSfx) {
             _deselectSfx.UnPause();
         }

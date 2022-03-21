@@ -28,7 +28,7 @@
         if (MyStateMachine.CurInput.CurInteractable)
         {
             Interactable ci = MyStateMachine.CurInput.CurInteractable;
-            ci.OnDeInteractWrapper(MyStateMachine.CurInput.PC);
+            ci.OnDeInteract(MyStateMachine.CurInput.PC);
         }
         MyStateMachine.CurInput.CurInteractable = null;
     }
