@@ -138,7 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c01d1b3139d475bacaedbf506e1eade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recipeObj: {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
+  recipes:
+  - {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
   OutputPorts: []
   InputPorts: []
   _isActive: 1

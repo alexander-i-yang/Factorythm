@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ using Debug = UnityEngine.Debug;
 public class MachineSfx : MonoBehaviour
 {
     [SerializeField, HideInInspector]
-    private EventReference exposed_src;
+    public EventReference exposed_src;
     [HideInInspector]
     public EventReference src;
 
@@ -29,7 +30,13 @@ public class MachineSfx : MonoBehaviour
             // Debug.Log("Uhhh");
             yield return null;
         }
-        instance = RuntimeManager.CreateInstance(src);
+
+        try {
+            instance = RuntimeManager.CreateInstance(src);
+        } catch (EventNotFoundException) {
+            instance = RuntimeManager.CreateInstance(exposed_src);
+        }
+
         if (instance.isValid()) {
             if (loopByDefault != null) {
                 instance.setParameterByName("loop", loopByDefault.Value ? 1f : 0f);
@@ -37,16 +44,15 @@ public class MachineSfx : MonoBehaviour
             // if the loop parameter is not in the timeline, loop is left as null by default
 
             // decide whether to start the song or not
+            instance.set3DAttributes(transform.To3DAttributes());
             if (startCondition == StartCondition.ON_ENABLE)
             {
                 if (instance.getParameterByName("loop", out float _) == RESULT.OK)
                 {
-                    instance.set3DAttributes(transform.To3DAttributes());
                     instance.start();
                     instance.release();
                 }
                 else {
-                    instance.set3DAttributes(transform.To3DAttributes());
                     instance.start();
                 }
             }
@@ -61,10 +67,10 @@ public class MachineSfx : MonoBehaviour
         }
     }
 
-    public void UnPause()
-    {
+    public void UnPause() {
         if(instance.isValid())
         {
+            instance.start();
             instance.setPaused(false);
         }
     }
@@ -92,7 +98,8 @@ public class MachineSfx : MonoBehaviour
     public enum StartCondition
     {
         ON_ENABLE,
-        ON_CLICK
+        ON_CLICK,
+        ON_DESELECT,
     }
 }
 
@@ -159,9 +166,9 @@ public class MachineSfxEditor : Editor
         base.OnInspectorGUI();
     }
 
-    void UpdateLoopable(MachineSfx m){
-        try {
-            var instance = RuntimeManager.CreateInstance(m.src);
+    void UpdateLoopable(MachineSfx m) {
+        Action<EventReference> e = src => {
+            Studio.EventInstance instance = RuntimeManager.CreateInstance(src);
             if (instance.isValid()){
                 var loopable = instance.getParameterByName("loop", out float val) == RESULT.OK;
                 if (loopable)
@@ -172,8 +179,11 @@ public class MachineSfxEditor : Editor
             } else {
                 m.loopByDefault = null;
             }
+        };
+        try {
+            e(m.src);
         } catch (EventNotFoundException) {
-            Debug.LogError("Event Not Found");
+            e(m.exposed_src);
         }
     }
 
