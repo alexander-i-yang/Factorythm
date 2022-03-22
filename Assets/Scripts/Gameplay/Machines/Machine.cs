@@ -424,6 +424,7 @@ public class Machine : Draggable {
             Destroy(r.gameObject);
         }
 
+        InputBuffer.Clear();
         OutputBuffer.Clear();
     }
 

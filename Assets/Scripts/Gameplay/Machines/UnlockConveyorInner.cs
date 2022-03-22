@@ -51,6 +51,7 @@ public class UnlockConveyorInner : Conveyor {
                     isDone = false;
                 }
             }
+            ClearResources();
             Done = isDone;
         }
     }
