@@ -177,6 +177,7 @@ public class Machine : Draggable {
                     ResourceDictQueue skimmed = Skim(recipeObj);
                     List<Resource> result = recipeObj.Create(skimmed, transform.position);
                     foreach (Resource r in result) {
+                        if (_shouldPrint) print("Creating: " + r.name);
                         OutputBuffer.Enqueue(r);
                     }
                     _ticksSinceProduced = 0;

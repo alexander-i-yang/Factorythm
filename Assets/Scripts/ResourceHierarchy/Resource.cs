@@ -16,7 +16,9 @@ public enum ResourceName {
     EIGHTH,
     QUARTER,
     HALF,
-    CHRORD,
+    EIGHTH_CHRORD,
+    QUARTER_CHRORD,
+    HALF_CHRORD,
     PHRASE,
 }
 

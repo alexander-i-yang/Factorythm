@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &9062862087748361570
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 906088496670311126, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 911365051145308736, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_Name
+      value: EighthChord
+      objectReference: {fileID: 0}
+    - target: {fileID: 3182992077492199487, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 739e13649d8f1944da4042560de1887c, type: 3}
+    - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: Name
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: matterState
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 578159bbc28fb7440821157405334170, type: 3}

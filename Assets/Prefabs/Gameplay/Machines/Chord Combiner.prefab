@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4590213518212070728, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Name
-      value: EighthBuyer
+      value: Chord Combiner
       objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070741, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_RootOrder
@@ -79,6 +79,26 @@ PrefabInstance:
       propertyPath: recipeObj
       value: 
       objectReference: {fileID: 11400000, guid: b26a40bf66c812a4bb664e1427d3670b, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: MaxStorage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ff732feb02e25664ca2f9e75dba8deb0, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a0c0b85f1f7bbf4ea64cbd347e8c8bd, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0df932678ef821a4690b59b8444a5a99, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
 --- !u!1 &4196126780359366089 stripped
