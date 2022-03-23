@@ -58,4 +58,8 @@ public class Pooler : MonoBehaviour {
     public Resource InstantiateResource(Resource resource, Vector3 position, Quaternion rotation) {
         return Instantiate(resource, position, rotation).GetComponent<Resource>();
     }
+
+    public void Destroy<R>(R d) where R : Object {
+        GameObject.Destroy(d);
+    }
 }

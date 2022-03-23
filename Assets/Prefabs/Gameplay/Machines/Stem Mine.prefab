@@ -54,10 +54,10 @@ PrefabInstance:
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4e83cbae23790fb43adca66b18308f27, type: 3}
+      objectReference: {fileID: 2928721631438596398, guid: 4e83cbae23790fb43adca66b18308f27, type: 3}
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: recipeObj
@@ -67,6 +67,18 @@ PrefabInstance:
       propertyPath: recipes.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: f9ecececb1a28e940a62d4260939d5f2, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[0].num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[0].resource
+      value: 
+      objectReference: {fileID: 8898906047096598653, guid: 13eef7ce646dde04cbb6724112f9c423, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
 --- !u!1 &4459458567936107020 stripped

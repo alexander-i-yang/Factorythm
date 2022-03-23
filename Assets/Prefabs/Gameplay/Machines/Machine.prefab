@@ -105,7 +105,9 @@ MonoBehaviour:
   OutputPorts: []
   InputPorts: []
   _isActive: 1
-  MaxStorage: 1
+  EditorMaxStorage:
+  - resource: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
+    num: 1
   _shouldPrint: 0
   _shouldBreak: 0
 --- !u!114 &8303644587406122049
