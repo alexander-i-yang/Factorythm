@@ -251,9 +251,8 @@ public class Conductor : MonoBehaviour {
                 machine.GetComponent<NormalDestroy>().OnDestruct();
                 checkForOverlappingMachines(pos);
             }
-            catch (NullReferenceException)
-            {
-                Debug.Log("Why this no have Normal Destroy?????");
+            catch (NullReferenceException) {
+                Debug.LogWarning("Normal Destroy not found");
             }
             
         }

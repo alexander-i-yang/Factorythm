@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public enum ResourceMatter {
     Solid,
@@ -9,7 +8,7 @@ public enum ResourceMatter {
     None
 }
 
-public enum ResourceName {
+public enum ResourceID {
     DEFAULT,
     HEAD,
     STEM,
@@ -23,32 +22,35 @@ public enum ResourceName {
 }
 
 [Serializable]
-public class Resource : MonoBehaviour, DictQueueElement<ResourceName> {
+public class Resource : MonoBehaviour, DictQueueElement<ResourceID> {
     public int price;
-    public ResourceName Name;
+    public ResourceID id;
     public ResourceMatter matterState;
-    private Vector2 _dragDirection;
     public SmoothSprite MySmoothSprite { get; private set; }
 
     public void Awake() {
         MySmoothSprite = GetComponentInChildren<SmoothSprite>();
-        if (Name == ResourceName.DEFAULT) {
+        if (id == ResourceID.DEFAULT) {
             throw new ArgumentNullException("FACTORYTYM ERROR: give resource " + gameObject.name + " a type!");
         }
     }
     
-    public ResourceName GetType() {
-        return Name;
+    public ResourceID GetID() {
+        return id;
     }
-}
-
-public class ResourceDictQueue : DictQueue<ResourceName, Resource> {
-    public override bool CompareKeys(ResourceName k1, ResourceName k2) {
-        if (k1 == ResourceName.DEFAULT || k2 == ResourceName.DEFAULT) {
+    
+    public static bool CompareIDs(ResourceID k1, ResourceID k2) {
+        if (k1 == ResourceID.DEFAULT || k2 == ResourceID.DEFAULT) {
             return true;
         }
         else {
             return k1 == k2;
         }
+    }
+}
+
+public class ResourceDictQueue : DictQueue<ResourceID, Resource> {
+    public override bool CompareKeys(ResourceID k1, ResourceID k2) {
+        return Resource.CompareIDs(k1, k2);
     }
 }

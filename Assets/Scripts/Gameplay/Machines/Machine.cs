@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// All machine logic is contained within here.
@@ -23,7 +22,8 @@ public class Machine : Draggable {
     /// </summary>
     public Queue<Resource> OutputBuffer { get; } = new Queue<Resource>();
     public ResourceDictQueue InputBuffer { get; } = new ResourceDictQueue();
-    public int MaxStorage = 1;
+    [FormerlySerializedAs("Max Storage")] public ResourceNum[] EditorMaxStorage;
+    private Dictionary<Resource, int> _maxStorage = new Dictionary<Resource, int>();
 
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
@@ -33,6 +33,9 @@ public class Machine : Draggable {
 
     protected virtual void Awake() {
         base.Awake();
+        foreach (var rn in EditorMaxStorage) {
+            _maxStorage.Add(rn.resource, rn.num);
+        }
     }
 
     protected virtual void Start() {
@@ -54,13 +57,6 @@ public class Machine : Draggable {
     }
 
     /// <summary>
-    /// Removes all resources from OutputBuffer.
-    /// </summary>
-    public void ClearOutput() {
-        OutputBuffer.Clear();
-    }
-
-    /// <summary>
     /// Moves <paramref name="r"/> to this machine's position.
     /// </summary>
     /// <param name="r">The resource to move</param>
@@ -78,13 +74,15 @@ public class Machine : Draggable {
                 print("Checking: " + m.name + " ");
             }
             if (m.OutputBuffer.Count > 0) {
-                Resource popped = m.OutputBuffer.Dequeue();
-                InputBuffer.Add(popped);
+                Resource next = m.OutputBuffer.Peek();
                 if (_shouldPrint) {
-                    print("Moving: " + popped.GetType() + " in");
+                    print("Storage full: " + StorageFull(next));
                 }
-
-                MoveHere(popped, false);
+                if (!StorageFull(next)) {
+                    next = m.OutputBuffer.Dequeue();
+                    InputBuffer.Add(next);
+                    MoveHere(next, false);
+                }
             }
         });
     }
@@ -93,18 +91,46 @@ public class Machine : Draggable {
         return recipeObj.InCriteria.Resources;
     }
 
-    public int GetStorageCount() {
-        return OutputBuffer.Count + InputBuffer.ToList().Count;
+    public int GetStorageCount(Resource r) {
+        int ret = 0;
+        foreach (var resource in OutputBuffer) {
+            if (Resource.CompareIDs(r.GetID(), resource.GetID())) {
+                ret++;
+            }
+        }
+
+        ret += InputBuffer.CountForgivable(r.GetID());
+        if (_shouldPrint) {
+            print("InputBuffer Total Storage: " + InputBuffer.ToList().Count());
+            print("InputBuffer cur storage: " + InputBuffer.CountForgivable(r.GetID()));
+        }
+        return ret;
     }
 
-    public bool StorageFull() {
-        return GetStorageCount() >= MaxStorage;
+    public bool StorageFull(Resource r) {
+        int maxStorage = 0;
+        foreach (var k in _maxStorage.Keys) {
+            if (Resource.CompareIDs(r.GetID(), k.GetID())) {
+                maxStorage = _maxStorage[k];
+            }
+        }
+
+        if (maxStorage == 0) {
+            Debug.Break();
+        }
+
+        if (_shouldPrint) {
+            print("Storage: " + GetStorageCount(r));
+            print("Max storage: " + maxStorage);
+        }
+
+        return GetStorageCount(r) >= maxStorage;
     }
 
-    public bool NextMachineFull() {
+    public bool NextMachineFull(Resource r) {
         bool ret = false;
         foreachMachine(new List<MachinePort>(OutputPorts) , m => {
-            if (m.StorageFull()) {
+            if (m.StorageFull(r)) {
                 ret = true;
             }
         });
@@ -117,14 +143,14 @@ public class Machine : Draggable {
 
         foreach (ResourceNum rn in GetInResources(recipeObj)) {
             if (_shouldPrint) {
-                print(rn.resource.Name + " " + rn.resource.GetType() + " " + rn.num);
+                print(rn.resource.id + " " + rn.resource.GetID() + " " + rn.num);
                 print(InputBuffer.ToList().Count);
-                foreach (ResourceName k in InputBuffer._backer.Keys) {
-                    print(k + " " + InputBuffer.CompareKeys(rn.resource.Name, k) + " " + InputBuffer._backer[k].Count);
+                foreach (ResourceID k in InputBuffer._backer.Keys) {
+                    print(k + " " + InputBuffer.CompareKeys(rn.resource.id, k) + " " + InputBuffer._backer[k].Count);
                 }
             }
             
-            if (!InputBuffer.HasEnough(rn.resource.Name, rn.num)) {
+            if (!InputBuffer.HasEnough(rn.resource.id, rn.num)) {
                 ret = false;
                 break;
             }
@@ -139,7 +165,7 @@ public class Machine : Draggable {
         foreach (ResourceNum rn in rns) {
             for (int i = 0; i < rn.num; ++i) {
                 //Conditional needed so we can tell whether there's a resource actually in the input buffer
-                InputBuffer.ForEachForgivable(rn.resource.Name, q => {
+                InputBuffer.ForEachForgivable(rn.resource.id, q => {
                     ret.Add(q.Dequeue());
                     return 0;
                 });
@@ -173,7 +199,7 @@ public class Machine : Draggable {
                     print("enoughInput: " + enoughInput);
                 }
             
-                if (enoughInput && _ticksSinceProduced >= recipeObj.ticks && !NextMachineFull()) {
+                if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
                     ResourceDictQueue skimmed = Skim(recipeObj);
                     List<Resource> result = recipeObj.Create(skimmed, transform.position);
                     foreach (Resource r in result) {
@@ -199,7 +225,6 @@ public class Machine : Draggable {
     /// </summary>
     public void OnDrawGizmosSelected() {
         Vector3 curPos = transform.position + new Vector3(0.1f, 0.1f, 0);
-        Handles.Label(curPos, "" + GetStorageCount());
         /*foreachMachine(new List<MachinePort>(OutputPorts), m => {
             Vector3 direction = m.transform.position +new Vector3(0.1f, 0.1f, 0) - curPos;
             Helper.DrawArrow(curPos, direction, Color.green);

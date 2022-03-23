@@ -7,7 +7,7 @@ using UnityEngine;
 using Object = System.Object;
 
 public interface DictQueueElement<T> where T : Enum {
-    public T GetType();
+    public T GetID();
 }
 
 /// <summary>
@@ -25,7 +25,7 @@ public abstract class DictQueue<K, V>
     }
 
     public void Add(V add) {
-        K type = add.GetType();
+        K type = add.GetID();
         if (!ContainsKey(type)) {
             Queue<V> newQueue = new Queue<V>();
             _backer.Add(type, newQueue);
@@ -96,5 +96,15 @@ public abstract class DictQueue<K, V>
             if (CompareKeys(key, type) && _backer[key].Count >= num) return true;
         }
         return false;
+    }
+
+    public int CountForgivable(K type) {
+        int ret = 0;
+        foreach(K key in _backer.Keys) {
+            if (CompareKeys(key, type)) {
+                ret += _backer[key].Count;
+            }
+        }
+        return ret;
     }
 }

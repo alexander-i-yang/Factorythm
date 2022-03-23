@@ -18,14 +18,19 @@ public class Recipe : ScriptableObject {
     public ResourceCriteria OutCriteria;
     public RecipeStyle Style;
     
-    private static Func<Recipe, DictQueue<ResourceName, Resource>, Vector3, List<Resource>>[] RecipeStyles = {
-        (recipe, dictQueue, position) => recipe.OutCriteria.ToList(position),
+    private static Func<Recipe, DictQueue<ResourceID, Resource>, Vector3, List<Resource>>[] RecipeStyles = {
+        (recipe, dictQueue, position) => {
+            foreach (var r in dictQueue.ToList()) {
+                Conductor.GetPooler().Destroy<Resource>(r);
+            }
+            return recipe.OutCriteria.ToList(position);
+        },
         (recipe, dictQueue, position) => dictQueue.ToList(),
     };
 
     public int ticks;
 
-    public List<Resource> Create(DictQueue<ResourceName, Resource> d, Vector3 position) {
+    public List<Resource> Create(DictQueue<ResourceID, Resource> d, Vector3 position) {
         return RecipeStyles[(int) Style](this, d, position);
     }
 }

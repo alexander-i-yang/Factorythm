@@ -43,7 +43,7 @@ public class UnlockConveyorInner : Conveyor {
             bool isDone = true;
             ResourceNum[] rns = GetInResources(recipes[0]);
             for (var i = 0; i < rns.Length; i++) {
-                if (rns[i].resource.Name == r.Name) {
+                if (rns[i].resource.id == r.id) {
                     rns[i].num--;
                     _unlockCounter.Updatecounter(rns[i].num);
                 }
