@@ -12,8 +12,8 @@ public class Machine : Draggable {
 
     public List<OutputPort> OutputPorts = new List<OutputPort>();
     public List<InputPort> InputPorts = new List<InputPort>();
-    private int _ticksSinceProduced;
-    private bool _pokedThisTick;
+    protected int _ticksSinceProduced;
+    protected bool _pokedThisTick;
     public bool _isActive = true;
 
     /// <summary>
@@ -28,8 +28,8 @@ public class Machine : Draggable {
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
 
-    [SerializeField] private bool _shouldPrint;
-    [SerializeField] private bool _shouldBreak;
+    [SerializeField] protected bool _shouldPrint;
+    [SerializeField] protected bool _shouldBreak;
 
     protected virtual void Awake() {
         base.Awake();
@@ -47,7 +47,7 @@ public class Machine : Draggable {
     /// </summary>
     /// <param name="portList">The list of ports to iterate over</param>
     /// <param name="func">The function to perform on each machine in <paramref name="portList"/></param>
-    private static void foreachMachine(List<MachinePort> portList, Action<Machine> func) {
+    protected static void foreachMachine(List<MachinePort> portList, Action<Machine> func) {
         foreach (MachinePort i in portList) {
             var inputMachine = i.ConnectedMachine;
             if (inputMachine) {
@@ -68,7 +68,7 @@ public class Machine : Draggable {
         r.transform.position = instantiatePos;
     }
 
-    protected void MoveResourcesIn() {
+    protected virtual void MoveResourcesIn() {
         foreachMachine(new List<MachinePort>(InputPorts), m => {
             if (_shouldPrint) {
                 print("Checking: " + m.name + " ");
