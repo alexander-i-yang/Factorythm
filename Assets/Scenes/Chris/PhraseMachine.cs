@@ -21,7 +21,7 @@ public class PhraseMachine : Machine
             }
             if (m.OutputBuffer.Count > 0) {
                 Resource popped = m.OutputBuffer.Peek();
-                if (popped.id != ResourceID.HEAD && popped.id != ResourceID.PHRASE) {
+                if (popped.id != ResourceID.HEAD && popped.id != ResourceID.STEM && popped.id != ResourceID.PHRASE) {
                     m.OutputBuffer.Dequeue();
                     InputBuffer.Add(popped);
                     if (_shouldPrint) {
