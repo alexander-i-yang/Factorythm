@@ -52,17 +52,17 @@ public class UnlockableSquares : MonoBehaviour
             }
         }
     }
-    
+
     protected virtual void Unlock() {
         _lockedRoom.enabled = false;
         _mySR.enabled = false;
-            
+
         foreach (var c in ConveyorInners) {
             c.Unlock();
         }
 
         isActive = false;
-        if (_canvas != null) { 
+        if (_canvas != null) {
             _canvas.gameObject.SetActive(false);
         }
 
@@ -71,8 +71,10 @@ public class UnlockableSquares : MonoBehaviour
                 bpc.Unlock();
             }
         }
-        print(_lockSprite);
-        _lockSprite.Unlock();
+
+        if (_lockSprite) {
+            _lockSprite.Unlock();
+        }
     }
 
     protected virtual bool CheckIfDone() {

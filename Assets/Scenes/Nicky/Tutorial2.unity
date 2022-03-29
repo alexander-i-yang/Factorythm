@@ -140,15 +140,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 33
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8.5
+      value: -9.5
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -182,11 +182,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!4 &150216973 stripped
 Transform:
@@ -252,11 +265,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!1001 &312781464
 PrefabInstance:
@@ -2081,11 +2107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 33
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2123,11 +2149,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!1 &726088238
 GameObject:
@@ -2188,7 +2227,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press X to delete
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a4d8b2444c771484895665797c6e9185, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2252,7 +2291,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &726088241
@@ -2476,7 +2515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -79.5, y: -77.5}
+  m_AnchoredPosition: {x: -79.5, y: -90}
   m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &765687433
@@ -2501,15 +2540,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: Move on the beat
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a4d8b2444c771484895665797c6e9185, type: 2}
+  m_sharedMaterial: {fileID: -8520606039478277794, guid: a4d8b2444c771484895665797c6e9185, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
-  m_fontColor: {r: 1, g: 0, b: 0, a: 1}
+    rgba: 4278204927
+  m_fontColor: {r: 1, g: 0.22274338, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2896,7 +2935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2934,11 +2973,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!1001 &1110788794
 PrefabInstance:
@@ -2961,7 +3013,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 2523218150497831210, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2999,11 +3051,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!1001 &1297726755
 PrefabInstance:
@@ -3082,7 +3147,7 @@ PrefabInstance:
       objectReference: {fileID: 4803320674075562905, guid: 1a8113c61ff11014e802d7f572151df1, type: 3}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: RhythmLock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: secPerBeat
@@ -3107,11 +3172,11 @@ PrefabInstance:
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
+      objectReference: {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
+      objectReference: {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
     - target: {fileID: 7631533364823168575, guid: 0846f6d312bc09a4e8fb79a0fcc790f3, type: 3}
       propertyPath: PlayList.Array.data[2]
       value: 
@@ -3244,7 +3309,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press Z and drag to place machines
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a4d8b2444c771484895665797c6e9185, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3308,7 +3373,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1436369364
@@ -3440,11 +3505,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare (6)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!1 &1495730648 stripped
 GameObject:
@@ -3774,11 +3852,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
       propertyPath: m_Name
       value: UnlockableSquare (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171724881697136091, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6639824440954257168, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3ddcd351a42234a8fb48ef52a8e5a56c, type: 3}
 --- !u!1001 &1889015128
 PrefabInstance:
@@ -3801,7 +3892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5096779315247917598, guid: cacdd84470c7b314a994499eabc978b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 5096779315247917598, guid: cacdd84470c7b314a994499eabc978b1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5007,7 +5098,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911417569631032926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 7435213707224660870}
