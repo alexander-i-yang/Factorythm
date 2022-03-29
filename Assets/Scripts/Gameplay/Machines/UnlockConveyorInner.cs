@@ -33,15 +33,15 @@ public class UnlockConveyorInner : Conveyor {
         }
     }
 
-    protected override ResourceNum[] GetInResources(Recipe recipeObj) {
-        return _unlocked ? base.GetInResources(recipeObj) : UnlockCriteria.Resources;
+    protected override ResourceNum[] GetInCriteria(Recipe recipeObj) {
+        return _unlocked ? base.GetInCriteria(recipeObj) : UnlockCriteria.Resources;
     }
 
     protected override void MoveHere(Resource r, bool destroyOnComplete) {
         base.MoveHere(r, destroyOnComplete);
         if (!Done) {
             bool isDone = true;
-            ResourceNum[] rns = GetInResources(recipes[0]);
+            ResourceNum[] rns = GetInCriteria(recipes[0]);
             for (var i = 0; i < rns.Length; i++) {
                 if (rns[i].resource.id == r.id) {
                     rns[i].num--;

@@ -17,20 +17,24 @@ public class Recipe : ScriptableObject {
     public ResourceCriteria InCriteria;
     public ResourceCriteria OutCriteria;
     public RecipeStyle Style;
-    
-    private static Func<Recipe, DictQueue<ResourceID, Resource>, Vector3, List<Resource>>[] RecipeStyles = {
-        (recipe, dictQueue, position) => {
-            foreach (var r in dictQueue.ToList()) {
-                Conductor.GetPooler().Destroy<Resource>(r);
-            }
-            return recipe.OutCriteria.ToList(position);
-        },
-        (recipe, dictQueue, position) => dictQueue.ToList(),
-    };
+
+    private static Func<Recipe, DictQueue<ResourceID, Resource>, Vector3, List<Delegate>, List<Resource>>[]
+        RecipeStyles = {
+            (recipe, dictQueue, position, destroyers) => {
+                foreach (var r in dictQueue.ToList()) {
+                    destroyers.Add(new Action(() => {
+                        Destroy(r.gameObject);
+                    }));
+                }
+
+                return recipe.OutCriteria.ToList(position);
+            },
+            (recipe, dictQueue, position, destroyers) => dictQueue.ToList(),
+        };
 
     public int ticks;
 
-    public List<Resource> Create(DictQueue<ResourceID, Resource> d, Vector3 position) {
-        return RecipeStyles[(int) Style](this, d, position);
+    public List<Resource> Create(DictQueue<ResourceID, Resource> d, Vector3 position, List<Delegate> destroyers) {
+        return RecipeStyles[(int) Style](this, d, position, destroyers);
     }
 }
