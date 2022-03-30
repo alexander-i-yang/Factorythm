@@ -90,6 +90,14 @@ public abstract class DictQueue<K, V>
 
         return default;
     }
+    
+    public void ForEachForgivable(K type, Action<Queue<V>> e) {
+        foreach(K key in _backer.Keys) {
+            if (CompareKeys(key, type)) {
+                e(_backer[key]);
+            }
+        }
+    }
 
     public bool HasEnough(K type, int num) {
         foreach(K key in _backer.Keys) {

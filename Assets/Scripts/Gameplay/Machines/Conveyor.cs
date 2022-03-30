@@ -100,6 +100,7 @@ public class Conveyor : Machine {
         }
 
         if (outputEndConv) {
+            print(index);
             index /= 2;
         }
 
