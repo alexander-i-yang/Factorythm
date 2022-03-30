@@ -137,7 +137,7 @@ public class Machine : Draggable {
         return ret;
     }
 
-    private bool _checkEnoughInput(Recipe recipeObj) {
+    protected virtual bool _checkEnoughInput(Recipe recipeObj) {
         bool ret = true;
         if (recipeObj == null) {
             print(name);
@@ -267,6 +267,10 @@ public class Machine : Draggable {
     /// <param name="m">The machine to connect to</param>
     public virtual void AddOutputMachine(Machine m) {
         ClearOutputPorts();
+        AddOutputPort(m);
+    }
+
+    protected void AddOutputPort(Machine m) {
         Vector3 portPos = (m.transform.position + transform.position) / 2;
         OutputPort newPort = Conductor.GetPooler().InstantiateOutputPort(portPos, transform);
         newPort.ConnectedMachine = m;
