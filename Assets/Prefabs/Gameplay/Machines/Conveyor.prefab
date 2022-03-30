@@ -157,5 +157,9 @@ MonoBehaviour:
   - {fileID: 9044786021765537137, guid: 2d51ff9eedcd6234c98850caef2b69f2, type: 3}
   - {fileID: 9044786021765537137, guid: 2e1dde69d4cb05d4099d56d784a5a794, type: 3}
   - {fileID: 9044786021765537137, guid: a62ca58ec2ef9454fb6dea29f6572656, type: 3}
+  - {fileID: 9044786021765537137, guid: 60e5de269491e0c4fba7684454c18fbb, type: 3}
+  - {fileID: 9044786021765537137, guid: 34806e1ba8dfd4f4fb261bdee6d0096a, type: 3}
+  - {fileID: 9044786021765537137, guid: 80e6501a9b67c0a4a8b25974ec957309, type: 3}
+  - {fileID: 9044786021765537137, guid: 60e5de269491e0c4fba7684454c18fbb, type: 3}
   Angle: 0
   BetweenMachines: {x: 0, y: 0}

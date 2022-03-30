@@ -168,16 +168,25 @@ public class Machine : Draggable {
         
         foreach (ResourceNum rn in rns) {
             InputBuffer.ForEachForgivable(rn.resource.id, q => {
-                for (int i = 0; i < rn.num; ++i) {
-                    try {
-                        ret.Add(q.Peek());
-                        dequeuers.Add(new Func<Resource>(() => q.Dequeue()));
-                    } catch {
-                        Debug.LogWarning("Error: resource not found");
-                    }
+                if (_shouldPrint) {
+                    print("Skim prelim " + rn.resource.id);
                 }
 
-                return 0;
+                if (q.Count >= rn.num) {
+                    for (int i = 0; i < rn.num; ++i) {
+                        if (_shouldPrint) print("trying again");
+                        try {
+                            ret.Add(q.Peek());
+                            if (_shouldPrint) {
+                                print("skimming " + q.Peek().name);
+                            }
+
+                            dequeuers.Add(new Func<Resource>(() => q.Dequeue()));
+                        } catch {
+                            Debug.LogWarning("Error: resource not found");
+                        }
+                    }
+                }
             });
         }
 
@@ -208,6 +217,10 @@ public class Machine : Draggable {
                 }
 
                 if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
+                    if (_shouldPrint) {
+                        print("Here I am");
+                    }
+
                     List<Delegate> deleters = new List<Delegate>();
                     ResourceDictQueue skimmed = Skim(recipeObj, deleters);
                     List<Resource> result = recipeObj.Create(skimmed, transform.position, deleters);
