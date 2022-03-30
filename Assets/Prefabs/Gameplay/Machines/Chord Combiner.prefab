@@ -105,15 +105,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: EditorMaxStorage.Array.data[0].num
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: EditorMaxStorage.Array.data[1].num
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: EditorMaxStorage.Array.data[2].num
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: EditorMaxStorage.Array.data[3].num
