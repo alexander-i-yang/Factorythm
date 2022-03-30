@@ -21,10 +21,22 @@ public class UnlockableSquares : MonoBehaviour
     private List<BluePrintCreator> _bluePrintCreators;
     private Canvas _canvas;
 
+    [SerializeField]
+    private GameObject lockSpriteObj;
     private Lock _lockSprite;
 
+    public Material LockMat;
+    private Material _lockMat;
+
     void Awake() {
-        _mySR = gameObject.GetComponent<SpriteRenderer>();
+        _mySR = lockSpriteObj.GetComponent<SpriteRenderer>();
+
+        _lockMat = new Material(LockMat);
+        _mySR.material = _lockMat;
+        _lockMat.SetFloat("_T", 0);
+        _lockMat.SetFloat("_L", (lockSpriteObj.transform.localScale.x - 1) / 2);
+        _mySR.enabled = true;
+
         _myCollider = GetComponent<BoxCollider2D>();
         Machines = GetComponentsInChildren<Machine>();
         ConveyorInners = GetComponentsInChildren<UnlockConveyorInner>();
@@ -41,7 +53,7 @@ public class UnlockableSquares : MonoBehaviour
     }
     
     void Update() {
-        _mySR.enabled = isActive;
+        // _mySR.enabled = isActive;
         _myCollider.enabled = isActive;
 
         if (isActive) {
@@ -55,7 +67,7 @@ public class UnlockableSquares : MonoBehaviour
 
     protected virtual void Unlock() {
         _lockedRoom.enabled = false;
-        _mySR.enabled = false;
+        //_mySR.enabled = false;
 
         foreach (var c in ConveyorInners) {
             c.Unlock();
@@ -75,6 +87,29 @@ public class UnlockableSquares : MonoBehaviour
         if (_lockSprite) {
             _lockSprite.Unlock();
         }
+
+        StartCoroutine(UnlockAnimation());
+    }
+
+    private IEnumerator UnlockAnimation()
+    {
+        float t = -1.15f;
+
+        while (t < 1)
+        {
+
+            if (t >= 0)
+            {
+                _lockMat.SetFloat("_T", t);
+                t += Time.deltaTime * Conductor.Instance.BPM / 60;
+            } else
+            {
+                t += Time.deltaTime;
+            }
+
+            yield return null;
+        }
+        _mySR.enabled = false;
     }
 
     protected virtual bool CheckIfDone() {
