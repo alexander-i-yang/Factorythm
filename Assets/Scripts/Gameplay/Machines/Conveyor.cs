@@ -20,6 +20,9 @@ public class Conveyor : Machine {
     public Vector2 BetweenMachines;
     public static readonly string[] ANIMATIONS = {"Right", "ConveyorDL", "Down", "ConveyorLU", "Left", "ConveyorUR", "Up", "ConveyorRD"};
 
+    public static readonly string[] END_ANIMATIONS =
+        {"right end conv", "down end conv", "left end conv", "up end conv"};
+    
     private String _animationName;
     
     protected override void Awake() {
@@ -61,15 +64,19 @@ public class Conveyor : Machine {
 
         Vector2 inputLoc; 
         Vector2 outputLoc;
+        bool inputEndConv = false;
+        bool outputEndConv = false;
 
         if (InputPorts.Count() == 0) {
             inputLoc = -1*OutputPorts[0].transform.localPosition;
+            inputEndConv = true;
         } else {
             inputLoc = InputPorts[0].transform.localPosition;
         }
         
         if (OutputPorts.Count() == 0) {
             outputLoc = -1*InputPorts[0].transform.localPosition;
+            outputEndConv = true;
         } else {
             outputLoc = OutputPorts[0].transform.localPosition;
         }
@@ -92,11 +99,23 @@ public class Conveyor : Machine {
             index = index >= 8 ? 0 : index;
         }
 
+        if (outputEndConv) {
+            index /= 2;
+        }
+
         _spriteIndex = index;
         // _mySR.sprite = Sprites[index];
         //_myAnimator.SetInteger("Index", index);
-        _mySR.sprite = Sprites[index];
-        _animationName = ANIMATIONS[index];
+
+        if (outputEndConv) {
+            print(index);
+            _mySR.sprite = Sprites[index+8];
+            _animationName = END_ANIMATIONS[index];
+        } else {
+            _mySR.sprite = Sprites[index];
+            _animationName = ANIMATIONS[index];
+        }
+
         _myAnimator.Play("Base Layer." + _animationName, -1, 1);
     }
 
