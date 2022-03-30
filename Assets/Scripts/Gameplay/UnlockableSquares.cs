@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(LockedRoom))]
 public class UnlockableSquares : MonoBehaviour
@@ -27,6 +28,7 @@ public class UnlockableSquares : MonoBehaviour
 
     public Material LockMat;
     private Material _lockMat;
+    public UnityEvent UnlockEvent;
 
     void Awake() {
         _mySR = lockSpriteObj.GetComponent<SpriteRenderer>();
@@ -88,6 +90,7 @@ public class UnlockableSquares : MonoBehaviour
             _lockSprite.Unlock();
         }
 
+        UnlockEvent.Invoke();
         StartCoroutine(UnlockAnimation());
     }
 

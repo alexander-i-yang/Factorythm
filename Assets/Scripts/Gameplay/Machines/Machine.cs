@@ -21,6 +21,7 @@ public class Machine : Draggable {
     /// Currently, it just includes all resources stored in this machine.
     /// </summary>
     public Queue<Resource> OutputBuffer { get; } = new Queue<Resource>();
+
     public ResourceDictQueue InputBuffer { get; } = new ResourceDictQueue();
     [FormerlySerializedAs("Max Storage")] public ResourceNum[] EditorMaxStorage;
     private Dictionary<Resource, int> _maxStorage = new Dictionary<Resource, int>();
@@ -41,7 +42,7 @@ public class Machine : Draggable {
     protected virtual void Start() {
         _dragBluePrints = new List<ConveyorBlueprint>();
     }
-    
+
     /// <summary>
     /// Performs <paramref name="func"/> on all machines in <typeparamref name="portlist"/>.
     /// </summary>
@@ -73,11 +74,13 @@ public class Machine : Draggable {
             if (_shouldPrint) {
                 print("Checking: " + m.name + " ");
             }
+
             if (m.OutputBuffer.Count > 0) {
                 Resource next = m.OutputBuffer.Peek();
                 if (_shouldPrint) {
                     print("Storage full: " + StorageFull(next));
                 }
+
                 if (!StorageFull(next)) {
                     next = m.OutputBuffer.Dequeue();
                     InputBuffer.Add(next);
@@ -87,7 +90,7 @@ public class Machine : Draggable {
         });
     }
 
-    protected virtual ResourceNum[] GetInResources(Recipe recipeObj) {
+    protected virtual ResourceNum[] GetInCriteria(Recipe recipeObj) {
         return recipeObj.InCriteria.Resources;
     }
 
@@ -104,6 +107,7 @@ public class Machine : Draggable {
             print("InputBuffer Total Storage: " + InputBuffer.ToList().Count());
             print("InputBuffer cur storage: " + InputBuffer.CountForgivable(r.GetID()));
         }
+
         return ret;
     }
 
@@ -113,10 +117,6 @@ public class Machine : Draggable {
             if (Resource.CompareIDs(r.GetID(), k.GetID())) {
                 maxStorage = _maxStorage[k];
             }
-        }
-
-        if (maxStorage == 0) {
-            Debug.Break();
         }
 
         if (_shouldPrint) {
@@ -129,7 +129,7 @@ public class Machine : Draggable {
 
     public bool NextMachineFull(Resource r) {
         bool ret = false;
-        foreachMachine(new List<MachinePort>(OutputPorts) , m => {
+        foreachMachine(new List<MachinePort>(OutputPorts), m => {
             if (m.StorageFull(r)) {
                 ret = true;
             }
@@ -139,9 +139,12 @@ public class Machine : Draggable {
 
     private bool _checkEnoughInput(Recipe recipeObj) {
         bool ret = true;
-        if (recipeObj == null) { print(name); print(transform.parent.name);}
+        if (recipeObj == null) {
+            print(name);
+            print(transform.parent.name);
+        }
 
-        foreach (ResourceNum rn in GetInResources(recipeObj)) {
+        foreach (ResourceNum rn in GetInCriteria(recipeObj)) {
             if (_shouldPrint) {
                 print(rn.resource.id + " " + rn.resource.GetID() + " " + rn.num);
                 print(InputBuffer.ToList().Count);
@@ -149,7 +152,7 @@ public class Machine : Draggable {
                     print(k + " " + InputBuffer.CompareKeys(rn.resource.id, k) + " " + InputBuffer._backer[k].Count);
                 }
             }
-            
+
             if (!InputBuffer.HasEnough(rn.resource.id, rn.num)) {
                 ret = false;
                 break;
@@ -159,17 +162,23 @@ public class Machine : Draggable {
         return ret;
     }
 
-    public ResourceDictQueue Skim(Recipe recipeObj) {
-        ResourceNum[] rns = GetInResources(recipeObj);
+    public ResourceDictQueue Skim(Recipe recipeObj, List<Delegate> dequeuers) {
+        ResourceNum[] rns = GetInCriteria(recipeObj);
         ResourceDictQueue ret = new ResourceDictQueue();
+        
         foreach (ResourceNum rn in rns) {
-            for (int i = 0; i < rn.num; ++i) {
-                //Conditional needed so we can tell whether there's a resource actually in the input buffer
-                InputBuffer.ForEachForgivable(rn.resource.id, q => {
-                    ret.Add(q.Dequeue());
-                    return 0;
-                });
-            }
+            InputBuffer.ForEachForgivable(rn.resource.id, q => {
+                for (int i = 0; i < rn.num; ++i) {
+                    try {
+                        ret.Add(q.Peek());
+                        dequeuers.Add(new Func<Resource>(() => q.Dequeue()));
+                    } catch {
+                        Debug.LogWarning("Error: resource not found");
+                    }
+                }
+
+                return 0;
+            });
         }
 
         return ret;
@@ -184,8 +193,7 @@ public class Machine : Draggable {
     /// Produces output if needed.
     /// </summary>
     public virtual void Tick() {
-        if (!_isActive)
-        {
+        if (!_isActive) {
             OnDestruction();
         }
 
@@ -198,18 +206,25 @@ public class Machine : Draggable {
                     print("Enough ticks: " + (_ticksSinceProduced >= recipeObj.ticks));
                     print("enoughInput: " + enoughInput);
                 }
-            
+
                 if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
-                    ResourceDictQueue skimmed = Skim(recipeObj);
-                    List<Resource> result = recipeObj.Create(skimmed, transform.position);
+                    List<Delegate> deleters = new List<Delegate>();
+                    ResourceDictQueue skimmed = Skim(recipeObj, deleters);
+                    List<Resource> result = recipeObj.Create(skimmed, transform.position, deleters);
+                    
                     foreach (Resource r in result) {
                         if (_shouldPrint) print("Creating: " + r.name);
                         OutputBuffer.Enqueue(r);
                     }
+                    foreach (var d in deleters) {
+                        d.DynamicInvoke();
+                    }
                     _ticksSinceProduced = 0;
-                } else {
+                }
+                else {
                     _ticksSinceProduced++;
                 }
+
                 foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
             }
         }
@@ -218,8 +233,8 @@ public class Machine : Draggable {
             Debug.Break();
         }
     }
-    
-    #if UNITY_EDITOR
+
+#if UNITY_EDITOR
     /// <summary>
     /// Unity Specific function. Defines how debug arrows are drawn.
     /// </summary>
@@ -234,13 +249,14 @@ public class Machine : Draggable {
             Helper.DrawArrow(m.transform.position, direction, Color.blue);
         });*/
     }
-    #endif
+#endif
 
     public int GetNumOutputMachines() {
         int ret = 0;
         foreach (OutputPort p in OutputPorts) {
             if (p.ConnectedMachine != null) ret++;
         }
+
         return ret;
     }
 
@@ -269,9 +285,7 @@ public class Machine : Draggable {
         InputPorts.Add(newPort);
     }
 
-    public override void OnInteract(PlayerController p) {
-        
-    }
+    public override void OnInteract(PlayerController p) { }
 
     public override void OnDeInteract(PlayerController p) {
         _dragDirection = Vector2.zero;
@@ -289,6 +303,7 @@ public class Machine : Draggable {
                 onMachine = onInteractable.gameObject.GetComponent<UnlockConveyorInner>();
             }*/
         }
+
         List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
         ClearDragBluePrints();
         ConfigureDragPorts(conveyors, onMachine);
@@ -327,6 +342,7 @@ public class Machine : Draggable {
                 bluePrint.GetComponentInChildren<SpriteRenderer>().sprite;
             ret.Add(instMachine);
         }
+
         return ret;
     }
 
@@ -348,14 +364,14 @@ public class Machine : Draggable {
             // Set the output of the new conveyor to the new machine
             if (i >= conveyors.Count - 1) {
                 break;
-            } else {
-                curMachine.AddOutputMachine(conveyors[i+1]);
+            }
+            else {
+                curMachine.AddOutputMachine(conveyors[i + 1]);
             }
         }
     }
 
     public override void OnDrag(PlayerController p, Vector3 newPos) {
-
         ClearDragBluePrints();
 
         Vector2 delta = newPos - transform.position;
@@ -365,11 +381,11 @@ public class Machine : Draggable {
         // Then draw blueprints in that direction
         int n1 = (int) Math.Round(Math.Abs(Vector2.Dot(delta, _dragDirection)));
 
-        Vector3 startPos2 = transform.position + (Vector3)_dragDirection * n1;
-        Vector2 orthoDir = delta - n1*_dragDirection;
+        Vector3 startPos2 = transform.position + (Vector3) _dragDirection * n1;
+        Vector2 orthoDir = delta - n1 * _dragDirection;
         int n2 = (int) Math.Round(orthoDir.magnitude);
         orthoDir.Normalize();
-        
+
         _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n1, transform.position, _dragDirection, orthoDir));
 
         // Get the component of delta orthogonal to the direction of dir
@@ -378,13 +394,13 @@ public class Machine : Draggable {
             _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
         }
     }
-    
-    
-    
+
+
     public void ClearDragBluePrints() {
         foreach (ConveyorBlueprint m in _dragBluePrints) {
             Destroy(m.gameObject);
         }
+
         _dragBluePrints.Clear();
     }
 
@@ -396,18 +412,21 @@ public class Machine : Draggable {
     public List<ConveyorBlueprint> RenderConveyorBluePrintLine(int n, Vector3 startPos, Vector2 dir, Vector2 orthoDir) {
         List<ConveyorBlueprint> ret = new List<ConveyorBlueprint>();
         // Account for dir.x being 0 which causes a div by 0 error
-        for (int i = 1; i < n+1; ++i) {
+        for (int i = 1; i < n + 1; ++i) {
             ConveyorBlueprint add = Conductor.GetPooler().CreateConveyorBluePrint(startPos + (Vector3) (dir * i));
             if (i < n) {
                 add.SetEdgeSprite(dir);
-            } else if(orthoDir != Vector2.zero) {
+            }
+            else if (orthoDir != Vector2.zero) {
                 add.SetCornerSprite(dir, orthoDir);
-            } else {
+            }
+            else {
                 add.SetEdgeSprite(dir);
             }
 
             ret.Add(add);
         }
+
         return ret;
     }
 
@@ -428,6 +447,7 @@ public class Machine : Draggable {
             //        .GetComponent<NormalDestroy>().OnDestruct();
             //}
         }
+
         OutputPorts.Clear();
     }
 
@@ -435,18 +455,16 @@ public class Machine : Draggable {
         foreach (InputPort port in InputPorts) {
             port.ConnectedMachine.RemoveOutput(this);
         }
+
         InputPorts.Clear();
     }
 
-    public void ClearResources()
-    {
-        foreach (Resource r in InputBuffer.ToList())
-        {
+    public void ClearResources() {
+        foreach (Resource r in InputBuffer.ToList()) {
             Destroy(r.gameObject);
         }
 
-        foreach (Resource r in OutputBuffer)
-        {
+        foreach (Resource r in OutputBuffer) {
             Destroy(r.gameObject);
         }
 
@@ -454,22 +472,18 @@ public class Machine : Draggable {
         OutputBuffer.Clear();
     }
 
-    public virtual void RemoveOutput(Machine m)
-    {
+    public virtual void RemoveOutput(Machine m) {
         foreach (OutputPort port in OutputPorts) {
-            if (port.ConnectedMachine.Equals(m))
-            {
+            if (port.ConnectedMachine.Equals(m)) {
                 OutputPorts.Remove(port);
                 break;
             }
         }
     }
 
-    public virtual void RemoveInput(Machine m)
-    {
+    public virtual void RemoveInput(Machine m) {
         foreach (InputPort port in InputPorts) {
-            if (port.ConnectedMachine.Equals(m))
-            {
+            if (port.ConnectedMachine.Equals(m)) {
                 InputPorts.Remove(port);
                 break;
             }
