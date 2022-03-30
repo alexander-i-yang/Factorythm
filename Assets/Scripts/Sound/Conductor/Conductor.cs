@@ -21,6 +21,8 @@ public class Conductor : MonoBehaviour {
         get { return PlayList[_index]; }
     }
 
+    public float BPM => CurrentBeatClip.BPM;
+
     private int _index = 0;
 
     private Pooler _pooler;
