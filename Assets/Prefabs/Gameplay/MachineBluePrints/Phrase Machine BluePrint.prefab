@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Phrase Machine BluePrint
       objectReference: {fileID: 0}
+    - target: {fileID: 3288924237238521731, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4673404851822949850, guid: 3478f6940749a904898ed01d88c00511, type: 3}
     - target: {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: MachineCopy
       value: 
