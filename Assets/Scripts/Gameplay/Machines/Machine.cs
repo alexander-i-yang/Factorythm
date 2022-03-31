@@ -113,18 +113,21 @@ public class Machine : Draggable {
 
     public bool StorageFull(Resource r) {
         int maxStorage = 0;
+        int curStorage = 0;
         foreach (var k in _maxStorage.Keys) {
             if (Resource.CompareIDs(r.GetID(), k.GetID())) {
                 maxStorage = _maxStorage[k];
+                curStorage = GetStorageCount(k);
+                break;
             }
         }
 
         if (_shouldPrint) {
-            print("Storage: " + GetStorageCount(r));
+            print("Storage of " + r.id + ": " + curStorage);
             print("Max storage: " + maxStorage);
         }
 
-        return GetStorageCount(r) >= maxStorage;
+        return curStorage >= maxStorage;
     }
 
     public bool NextMachineFull(Resource r) {
