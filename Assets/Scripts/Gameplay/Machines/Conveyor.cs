@@ -100,7 +100,6 @@ public class Conveyor : Machine {
         }
 
         if (outputEndConv) {
-            print(index);
             index /= 2;
         }
 
@@ -110,7 +109,11 @@ public class Conveyor : Machine {
 
         if (outputEndConv) {
             print(index);
-            _mySR.sprite = Sprites[index+8];
+            if (index+8 < Sprites.Length) {
+                _mySR.sprite = Sprites[index+8];
+            } else {
+                _mySR.sprite = Sprites[index * 2];
+            }
             _animationName = END_ANIMATIONS[index];
         } else {
             _mySR.sprite = Sprites[index];
