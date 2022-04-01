@@ -16,6 +16,6 @@ public class UIManager : MonoBehaviour {
     }
     
     public void Tick() {
-        BeatBar.Tick();
+        // BeatBar.Tick();
     }
 }
