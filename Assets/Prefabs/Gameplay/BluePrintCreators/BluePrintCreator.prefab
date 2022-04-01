@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3164099770181835441}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0.1, z: -1}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 3145978848633660500}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 2
   m_SpriteSortPoint: 0
 --- !u!1 &5491127831472918445
 GameObject:
@@ -137,8 +137,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   machineBPInstance: {fileID: 0}
-  IconDown: {x: 0, y: 0.085, z: -0.1}
   cost: 0
+  IconY: 0
 --- !u!212 &3631104310742194136
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -247,11 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15172d99f8794f55ae32e6a6bed50ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recipeObj: {fileID: 0}
+  recipes: []
   OutputPorts: []
   InputPorts: []
   _isActive: 1
-  MaxStorage: 1
+  EditorMaxStorage: []
   _shouldPrint: 0
   _shouldBreak: 0
 --- !u!114 &-6908859591305832574
@@ -302,11 +302,11 @@ MonoBehaviour:
     Path: event:/sfx/deselect1
   src:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
   startCondition: 2
 --- !u!1 &7111394558733579348
 GameObject:

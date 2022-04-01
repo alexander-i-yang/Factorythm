@@ -67,6 +67,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5404253388655712494, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1048777790841150847, guid: a91c05455aa8ca641ab862467a34fa91, type: 3}
     - target: {fileID: 5491127831472918445, guid: b11a94f2b77c7334c9ff8da08e9500b0, type: 3}
       propertyPath: m_Name
       value: Note Adder Steel BPC

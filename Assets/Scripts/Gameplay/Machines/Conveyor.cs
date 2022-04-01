@@ -108,7 +108,6 @@ public class Conveyor : Machine {
         //_myAnimator.SetInteger("Index", index);
 
         if (outputEndConv) {
-            print(index);
             if (index+8 < Sprites.Length) {
                 _mySR.sprite = Sprites[index+8];
             } else {
