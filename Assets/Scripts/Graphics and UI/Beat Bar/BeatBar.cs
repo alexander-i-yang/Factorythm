@@ -19,12 +19,11 @@ public class BeatBar : MonoBehaviour {
     [Tooltip("The amount of time a player can press before the beat line touches the end zone. Multiplied by seconds/beat")]
     [SerializeField] private float _graceTime = 0.1f;
 
-    //The amount of time it takes for a beat line to dissapate after stopping. Multiplied by seconds/beat
+    //The amount of time it takes for a beat line to dissipate after stopping. Multiplied by seconds/beat
     public float DissolveTime { get; } = 0.1f;
 
     void Start() {
         StartPos = transform.Find("StartPos").localPosition;
-        StartPos = new Vector3(StartPos.x, StartPos.y, BeatLineInstance.transform.position.z);
         EndPos = transform.Find("End zone").localPosition;
 
         _endZoneWidth = transform.Find("End zone").GetComponent<SpriteRenderer>().bounds.size.x;
@@ -49,11 +48,11 @@ public class BeatBar : MonoBehaviour {
         double secPerBeat = Conductor.Instance.BeatClipHelper.BeatClip.SecPerBeat;
         double validMult = Conductor.Instance.BeatClipHelper.ValidTime;
 
-        // Represents the total time between the moment a beatline crosses the valid threshold and the moment it reaches
+        // Represents the total time between the moment a beatline starts to exist and the moment it reaches
         // The center of the endzone
-        double timeElapsed = secPerBeat*validMult - DissolveTime + _graceTime*secPerBeat;
+        double timeElapsed = 3 * secPerBeat + Conductor.Instance.BeatClipHelper.BeatClip.BeatOffset;
 
-        double v = (_endZoneWidth + _beatLineWidth) / (2 * timeElapsed);
+        double v = (StartPos.x-EndPos.x)/(timeElapsed);
         return v;
     }
 
