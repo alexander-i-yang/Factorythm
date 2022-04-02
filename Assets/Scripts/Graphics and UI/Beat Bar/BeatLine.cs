@@ -11,15 +11,20 @@ public class BeatLine : MonoBehaviour {
     private SpriteRenderer _mySR;
 
     void Start() {
+        // Record when the line started moving:
         _moveStartTime = Time.time;
+
         _mySR = GetComponent<SpriteRenderer>();
     }
 
     void Update() {
         float startX = beatBar.StartPos.x;
         float endX = beatBar.EndPos.x;
-        
-        float t = (float) ((Time.time-_moveStartTime)/((startX-endX)/beatBar.GetVelocity()));
+
+        // Determine the progress of the beat line's movement across the bar (t = 1 means destination reached)
+        float t = (float)((Time.time - _moveStartTime) / ((startX - endX) / beatBar.GetVelocity()));
+
+        // Stop and dissolve the beat line if the end is reached
         if (t > 1) {
             t = 1;
             StartCoroutine(Fade(beatBar.DissolveTime));
@@ -27,9 +32,10 @@ public class BeatLine : MonoBehaviour {
             // Destroy(gameObject);
         }
 
+        // Determine x position of beat line on the bar based on its progress
         float newX = Helper.ActualLerp(startX, endX, t);
         
-        //Set localPos.x to newX
+        // Set localPosition.x to newX so the beat line moves to its correct spot
         var localPosition = transform.localPosition;
         localPosition = new Vector3(newX, localPosition.y, localPosition.z);
         transform.localPosition = localPosition;
