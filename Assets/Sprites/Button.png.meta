@@ -8,6 +8,21 @@ TextureImporter:
   - first:
       213: -9000188618666376746
     second: Button_1
+  - first:
+      213: 8467241744927558709
+    second: Button_2
+  - first:
+      213: 1566552715412073297
+    second: Button_3
+  - first:
+      213: -1257769187640015746
+    second: Button_4
+  - first:
+      213: -2574449355943416012
+    second: Button_5
+  - first:
+      213: 2527607607167286074
+    second: Button_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,7 +130,7 @@ TextureImporter:
         x: 0
         y: 0
         width: 32
-        height: 32
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -136,7 +151,7 @@ TextureImporter:
         x: 32
         y: 0
         width: 32
-        height: 32
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,6 +161,69 @@ TextureImporter:
       bones: []
       spriteID: 6d180e8e228e81380800000000000000
       internalID: -9000188618666376746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53c04c1718fa18570800000000000000
+      internalID: 8467241744927558709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15b6f0c05638db510800000000000000
+      internalID: 1566552715412073297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e74094976918b8ee0800000000000000
+      internalID: -1257769187640015746
       vertices: []
       indices: 
       edges: []

@@ -68,6 +68,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: id
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
+      propertyPath: Name
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
       propertyPath: price
       value: 12
       objectReference: {fileID: 0}

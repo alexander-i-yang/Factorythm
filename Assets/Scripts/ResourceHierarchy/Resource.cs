@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum ResourceMatter {
     Solid,
@@ -7,39 +8,49 @@ public enum ResourceMatter {
     None
 }
 
+public enum ResourceID {
+    DEFAULT,
+    HEAD,
+    STEM,
+    EIGHTH,
+    QUARTER,
+    HALF,
+    EIGHTH_CHRORD,
+    QUARTER_CHRORD,
+    HALF_CHRORD,
+    PHRASE,
+}
+
 [Serializable]
-public class Resource : MonoBehaviour {
+public class Resource : MonoBehaviour, DictQueueElement<ResourceID> {
     public int price;
-    public string ResourceName;
+    public ResourceID id;
     public ResourceMatter matterState;
-    private Vector2 _dragDirection;
     public SmoothSprite MySmoothSprite { get; private set; }
-
-    /*public override void OnDeInteract(PlayerController p)
-    {
-        Debug.Log("OnDeInteract has been called");
-        //Elliott - This should "add" the resource back onto the machine it's on. Raycast down probably
-    }
-
-    public override void OnDrag(PlayerController p, Vector3 newPos)
-    {
-        Debug.Log("I'm dragging copper");
-        MySmoothSprite.Move(newPos);
-        transform.position = newPos;
-    }
-
-    public override void OnInteract(PlayerController p)
-    {
-        //This should remove the resource from whatever machine it's in to avoid rubberbanding
-        Debug.Log("You attemped to pick me up!");
-        Color c = MySmoothSprite.SpriteRenderer.color;
-        c.a = 0.8f;
-        MySmoothSprite.SpriteRenderer.color = c;
-    }*/
 
     public void Awake() {
         MySmoothSprite = GetComponentInChildren<SmoothSprite>();
+        if (id == ResourceID.DEFAULT) {
+            throw new ArgumentNullException("FACTORYTYM ERROR: give resource " + gameObject.name + " a type!");
+        }
     }
     
+    public ResourceID GetID() {
+        return id;
+    }
     
+    public static bool CompareIDs(ResourceID k1, ResourceID k2) {
+        if (k1 == ResourceID.DEFAULT || k2 == ResourceID.DEFAULT) {
+            return true;
+        }
+        else {
+            return k1 == k2;
+        }
+    }
+}
+
+public class ResourceDictQueue : DictQueue<ResourceID, Resource> {
+    public override bool CompareKeys(ResourceID k1, ResourceID k2) {
+        return Resource.CompareIDs(k1, k2);
+    }
 }

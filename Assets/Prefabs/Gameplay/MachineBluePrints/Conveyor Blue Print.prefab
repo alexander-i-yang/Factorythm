@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.509434
       objectReference: {fileID: 0}
+    - target: {fileID: 3288924237238521731, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: MachineCopy
       value: 
@@ -96,11 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sprites:
-  - {fileID: 2769446843562495427, guid: 06147abca4295174685e9d4308404de2, type: 3}
-  - {fileID: 7859002990489181371, guid: e5fa57404f69ed94098aa7b21edbeb09, type: 3}
-  - {fileID: 2769446843562495427, guid: 06147abca4295174685e9d4308404de2, type: 3}
-  - {fileID: 7859002990489181371, guid: e5fa57404f69ed94098aa7b21edbeb09, type: 3}
-  - {fileID: 5616740889837228944, guid: b39ecdd0ade77894f848402179735b36, type: 3}
-  - {fileID: 6202648279761705326, guid: 9482f366eeaa5b14a83c33862b83ae87, type: 3}
-  - {fileID: -1282609978944831159, guid: cb17753f8535f8c4682fee1685036f8d, type: 3}
-  - {fileID: 5224847125229212897, guid: 36936d86014319f4c8548502beb9c04d, type: 3}
+  - {fileID: 9044786021765537137, guid: 184401782db7393448bb407eed83e9c5, type: 3}
+  - {fileID: 9044786021765537137, guid: 2e1dde69d4cb05d4099d56d784a5a794, type: 3}
+  - {fileID: 9044786021765537137, guid: e90b64b6eab3f25499ebd80477e5b615, type: 3}
+  - {fileID: 9044786021765537137, guid: a471ef30d356b4e439b403d3cbfb44ec, type: 3}
+  - {fileID: 9044786021765537137, guid: d78373c6f2ed61b418b34e2527265f4c, type: 3}
+  - {fileID: 9044786021765537137, guid: 7548d26c32475d343aae8030e85b6815, type: 3}
+  - {fileID: 9044786021765537137, guid: d206f8b1ab762ac47919eded226aae4e, type: 3}
+  - {fileID: 9044786021765537137, guid: 5109d32a3e138fa43a6210332e84385f, type: 3}

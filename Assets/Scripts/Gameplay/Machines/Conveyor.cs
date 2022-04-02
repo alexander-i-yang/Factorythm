@@ -18,18 +18,25 @@ public class Conveyor : Machine {
 
     public float Angle;
     public Vector2 BetweenMachines;
-    public static readonly string[] ANIMATIONS = {"ConveyorRLB", "ConveyorDL", "ConveyorUPL", "ConveyorLU", "ConveyorRLT", "ConveyorUR", "ConveyorUDR", "ConveyorRD"};
+    public static readonly string[] ANIMATIONS = {"Right", "ConveyorDL", "Down", "ConveyorLU", "Left", "ConveyorUR", "Up", "ConveyorRD"};
 
+    public static readonly string[] END_ANIMATIONS =
+        {"right end conv", "down end conv", "left end conv", "up end conv"};
+    
+    private String _animationName;
+    
     protected override void Awake() {
         base.Awake();
-        base.Start();
         _mySR = GetComponent<SpriteRenderer>();
         _myAnimator = GetComponent<Animator>();
         ResetSprite();
     }
 
+    protected override void Start() {
+        base.Start();
+    }
+
     public override void AddOutputMachine(Machine m) {
-        ClearOutputPorts();
         base.AddOutputMachine(m);
         ResetSprite();
     }
@@ -40,6 +47,16 @@ public class Conveyor : Machine {
         ResetSprite();
     }
 
+    public override void RemoveInput(Machine m) {
+        base.RemoveInput(m);
+        ResetSprite();
+    }
+    
+    public override void RemoveOutput(Machine m) {
+        base.RemoveOutput(m);
+        ResetSprite();
+    }
+
     private void ResetSprite() {
         if (OutputPorts.Count == 0 && InputPorts.Count == 0) {
             return;
@@ -47,15 +64,19 @@ public class Conveyor : Machine {
 
         Vector2 inputLoc; 
         Vector2 outputLoc;
+        bool inputEndConv = false;
+        bool outputEndConv = false;
 
         if (InputPorts.Count() == 0) {
             inputLoc = -1*OutputPorts[0].transform.localPosition;
+            inputEndConv = true;
         } else {
             inputLoc = InputPorts[0].transform.localPosition;
         }
         
         if (OutputPorts.Count() == 0) {
             outputLoc = -1*InputPorts[0].transform.localPosition;
+            outputEndConv = true;
         } else {
             outputLoc = OutputPorts[0].transform.localPosition;
         }
@@ -78,18 +99,35 @@ public class Conveyor : Machine {
             index = index >= 8 ? 0 : index;
         }
 
+        if (outputEndConv) {
+            index /= 2;
+        }
+
         _spriteIndex = index;
         // _mySR.sprite = Sprites[index];
         //_myAnimator.SetInteger("Index", index);
 
-        String animationName = ANIMATIONS[index];
-        _myAnimator.Play("Base Layer." + animationName);
+        if (outputEndConv) {
+            if (index+8 < Sprites.Length) {
+                _mySR.sprite = Sprites[index+8];
+            } else {
+                _mySR.sprite = Sprites[index * 2];
+            }
+            _animationName = END_ANIMATIONS[index];
+        } else {
+            _mySR.sprite = Sprites[index];
+            _animationName = ANIMATIONS[index];
+        }
+
+        _myAnimator.Play("Base Layer." + _animationName, -1, 1);
     }
 
-    public void Update() {
-        // ResetSprite();
+    public override void Tick() {
+        // _myAnimator.Play("Base Layer.None");
+        _myAnimator.Play("Base Layer." + _animationName, -1, 0f);
+        base.Tick();
     }
-    
+
     /*#if UNITY_EDITOR
     public void OnDrawGizmos() {
         base.OnDrawGizmos();

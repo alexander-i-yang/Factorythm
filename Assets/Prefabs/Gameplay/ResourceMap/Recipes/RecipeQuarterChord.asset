@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f704d344b244a02a05164ca23c79555, type: 3}
+  m_Name: RecipeQuarterChord
+  m_EditorClassIdentifier: 
+  InCriteria:
+    Resources:
+    - resource: {fileID: 4260335696561330830, guid: ff8aa361334e53b42aa86334b176e642, type: 3}
+      num: 2
+    Cash: 0
+  OutCriteria:
+    Resources:
+    - resource: {fileID: 4347485188886014569, guid: 17fdbf7bc01bd754aa4561c8eae5d102, type: 3}
+      num: 1
+    Cash: 0
+  Style: 0
+  ticks: 1

@@ -74,7 +74,47 @@ PrefabInstance:
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: recipeObj
       value: 
+      objectReference: {fileID: 11400000, guid: b26a40bf66c812a4bb664e1427d3670b, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: MaxStorage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.data[0]
+      value: 
       objectReference: {fileID: 11400000, guid: 2cf62b4e7ea94b34b8e2e36345cb01d2, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[0].num
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[1].num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[2].num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[0].resource
+      value: 
+      objectReference: {fileID: 4260335696561330830, guid: ff8aa361334e53b42aa86334b176e642, type: 3}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[1].resource
+      value: 
+      objectReference: {fileID: 4260335696561330830, guid: 02881236e48278546ad5aab5a87761c5, type: 3}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[2].resource
+      value: 
+      objectReference: {fileID: 4260335696561330830, guid: 2d01800266f44114bab5c2d185e4d115, type: 3}
     - target: {fileID: 8714590015041616768, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 1.125

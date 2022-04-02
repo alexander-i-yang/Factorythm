@@ -55,6 +55,26 @@ PrefabInstance:
       propertyPath: recipeObj
       value: 
       objectReference: {fileID: 11400000, guid: a6bd4140b2a12864ba9a5e70fbd6b5f2, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: recipes.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a6bd4140b2a12864ba9a5e70fbd6b5f2, type: 2}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[0].num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: EditorMaxStorage.Array.data[0].resource
+      value: 
+      objectReference: {fileID: 7796586414147078100, guid: 4e173a4fbb7007b43ba46130f9984a9a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
 --- !u!1 &6367174043284167244 stripped

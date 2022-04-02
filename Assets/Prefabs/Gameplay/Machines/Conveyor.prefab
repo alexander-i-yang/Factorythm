@@ -66,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2769446843562495427, guid: 06147abca4295174685e9d4308404de2, type: 3}
+      objectReference: {fileID: -7025760825990288548, guid: e90b64b6eab3f25499ebd80477e5b615, type: 3}
     - target: {fileID: 4590213518212070742, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Color.b
       value: 0.509434
@@ -138,20 +138,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c01d1b3139d475bacaedbf506e1eade, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recipeObj: {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
+  recipes:
+  - {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
   OutputPorts: []
   InputPorts: []
   _isActive: 1
+  EditorMaxStorage:
+  - resource: {fileID: 4260335696561330830, guid: 5b84075583d0d724dab2f73db3bff28b, type: 3}
+    num: 1
   _shouldPrint: 0
   _shouldBreak: 0
   Sprites:
-  - {fileID: 6588283335923157485, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: 4678259398471549702, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: 8199771426994200264, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: -6756607066556995429, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: 8073556761677482203, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: 1992827507389386230, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: 8216710035026873855, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
-  - {fileID: -6424201123812103037, guid: d7171f3b670ffe446be60f31d617b640, type: 3}
+  - {fileID: 9044786021765537137, guid: 184401782db7393448bb407eed83e9c5, type: 3}
+  - {fileID: 9044786021765537137, guid: c89dd06a6911a604f99d5e56ee8dd4a4, type: 3}
+  - {fileID: 9044786021765537137, guid: a471ef30d356b4e439b403d3cbfb44ec, type: 3}
+  - {fileID: 9044786021765537137, guid: d78373c6f2ed61b418b34e2527265f4c, type: 3}
+  - {fileID: 9044786021765537137, guid: e90b64b6eab3f25499ebd80477e5b615, type: 3}
+  - {fileID: 9044786021765537137, guid: 2d51ff9eedcd6234c98850caef2b69f2, type: 3}
+  - {fileID: 9044786021765537137, guid: 2e1dde69d4cb05d4099d56d784a5a794, type: 3}
+  - {fileID: 9044786021765537137, guid: a62ca58ec2ef9454fb6dea29f6572656, type: 3}
+  - {fileID: 9044786021765537137, guid: 60e5de269491e0c4fba7684454c18fbb, type: 3}
+  - {fileID: 9044786021765537137, guid: 34806e1ba8dfd4f4fb261bdee6d0096a, type: 3}
+  - {fileID: 9044786021765537137, guid: 80e6501a9b67c0a4a8b25974ec957309, type: 3}
+  - {fileID: 9044786021765537137, guid: 60e5de269491e0c4fba7684454c18fbb, type: 3}
   Angle: 0
   BetweenMachines: {x: 0, y: 0}

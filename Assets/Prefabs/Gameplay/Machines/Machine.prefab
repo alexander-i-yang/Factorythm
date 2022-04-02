@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 4590213518212070743}
   - component: {fileID: 8303644587406122049}
   - component: {fileID: 8714590015041616768}
+  - component: {fileID: -7036125645711492483}
+  - component: {fileID: -4920688557668318078}
+  - component: {fileID: 4738100384511616137}
   m_Layer: 6
   m_Name: Machine
   m_TagString: Untagged
@@ -97,10 +100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15172d99f8794f55ae32e6a6bed50ca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recipeObj: {fileID: 0}
+  recipes:
+  - {fileID: 11400000, guid: b9970263896dbfe468a1e88e5cb70fe5, type: 2}
   OutputPorts: []
   InputPorts: []
   _isActive: 1
+  EditorMaxStorage:
+  - resource: {fileID: 4724451604307785483, guid: 578159bbc28fb7440821157405334170, type: 3}
+    num: 1
   _shouldPrint: 0
   _shouldBreak: 0
 --- !u!114 &8303644587406122049
@@ -141,3 +148,84 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-7036125645711492483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590213518212070728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -744086230
+      Data2: 1140694747
+      Data3: -1739868241
+      Data4: 1871765753
+    Path: event:/sfx/MineWorker
+  src:
+    Guid:
+      Data1: -744086230
+      Data2: 1140694747
+      Data3: -1739868241
+      Data4: 1871765753
+    Path: event:/sfx/MineWorker
+  startCondition: 0
+--- !u!114 &-4920688557668318078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590213518212070728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  src:
+    Guid:
+      Data1: -1318248333
+      Data2: 1134513908
+      Data3: -460458857
+      Data4: -215968906
+    Path: event:/sfx/click1
+  startCondition: 1
+--- !u!114 &4738100384511616137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590213518212070728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
+  src:
+    Guid:
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
+  startCondition: 2
