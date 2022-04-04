@@ -1,13 +1,12 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using FMOD;
 using FMODUnity;
 using Studio = FMOD.Studio;
+#if UNITY_EDITOR
 using UnityEditor;
-using Unity.EditorCoroutines.Editor;
-using Debug = UnityEngine.Debug;
+#endif
 
 public class MachineSfx : MonoBehaviour
 {

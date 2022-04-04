@@ -305,7 +305,9 @@ public class Machine : Draggable {
         InputPorts.Add(newPort);
     }
 
-    public override void OnInteract(PlayerController p) { }
+    public override void OnInteract(PlayerController p) {
+        base.OnInteract(p);
+    }
 
     public override void OnDeInteract(PlayerController p) {
         _dragDirection = Vector2.zero;
@@ -327,6 +329,7 @@ public class Machine : Draggable {
         List<Machine> conveyors = InstantiateFromBluePrints(_dragBluePrints, onMachine);
         ClearDragBluePrints();
         ConfigureDragPorts(conveyors, onMachine);
+        base.OnDeInteract(p);
     }
 
 
