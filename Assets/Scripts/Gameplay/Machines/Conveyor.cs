@@ -23,6 +23,9 @@ public class Conveyor : Machine {
     public static readonly string[] END_ANIMATIONS =
         {"right end conv", "down end conv", "left end conv", "up end conv"};
     
+    public static readonly string[] START_ANIMATIONS =
+        {"right start conv", "down start conv", "left start conv", "up start conv"};
+    
     private String _animationName;
     
     protected override void Awake() {
@@ -99,7 +102,7 @@ public class Conveyor : Machine {
             index = index >= 8 ? 0 : index;
         }
 
-        if (outputEndConv) {
+        if (outputEndConv || inputEndConv) {
             index /= 2;
         }
 
@@ -114,7 +117,10 @@ public class Conveyor : Machine {
                 _mySR.sprite = Sprites[index * 2];
             }
             _animationName = END_ANIMATIONS[index];
-        } else {
+        } else if (inputEndConv) {
+            _animationName = START_ANIMATIONS[index];
+            _mySR.sprite = Sprites[index * 2];
+        }else {
             _mySR.sprite = Sprites[index];
             _animationName = ANIMATIONS[index];
         }
