@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Alex/Test.unity
     guid: 5efbcd8d4adc19c4797878fdfd98d59b
+  - enabled: 0
+    path: Assets/Scenes/Alex/M2 Pres.unity
+    guid: 6aa01c6e84674e54da3eb4a5af55f9fb
   m_configObjects: {}

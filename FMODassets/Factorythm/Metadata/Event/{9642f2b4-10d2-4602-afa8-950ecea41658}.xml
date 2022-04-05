@@ -92,11 +92,17 @@
 		<property name="length">
 			<value>4.3624489795918366</value>
 		</property>
+		<property name="startOffset">
+			<value>10</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{739c0a7e-574c-404b-9944-6784e212ef08}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{d21330a7-84d4-4d1d-8923-5237ee2f1822}">
+		<property name="volume">
+			<value>2</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>

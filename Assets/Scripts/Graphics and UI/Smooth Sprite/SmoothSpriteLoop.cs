@@ -15,7 +15,7 @@ public class SmoothSpriteLoop : SmoothSprite {
 
     [NonSerialized] public positionState pos = positionState.START;
 
-    void Start() {
+    void Awake() {
         StartPos = transform.position;
         endPos = transform.TransformPoint(endPos);
     }
