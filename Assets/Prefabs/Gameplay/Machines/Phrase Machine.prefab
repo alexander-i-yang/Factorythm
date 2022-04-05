@@ -103,6 +103,7 @@ MonoBehaviour:
   InputPorts: []
   _isActive: 1
   EditorMaxStorage: []
+  MinCombo: 16
   _shouldPrint: 0
   _shouldBreak: 0
   phrase: {fileID: -6937697046348853207, guid: a0ad6dd80f4457a419465c6c9710f301, type: 3}

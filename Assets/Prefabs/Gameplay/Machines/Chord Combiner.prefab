@@ -76,6 +76,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5868530607594993500, guid: 31705b6e0e1dca54ab37b0faa5f589e4, type: 3}
     - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: MinCombo
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4590213518212070743, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: recipeObj
       value: 
       objectReference: {fileID: 11400000, guid: b26a40bf66c812a4bb664e1427d3670b, type: 2}
