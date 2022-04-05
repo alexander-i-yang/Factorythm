@@ -28,18 +28,20 @@ public class PauseMenu : MonoBehaviour
     }
 
     private void PauseGame (){
-      FMODUnity.RuntimeManager.PauseAllEvents(true);
-      Time.timeScale = 0;
-      Conductor.Instance.DisableCombo();
-      pauseMenuUI.SetActive(true);
-      isPaused = !isPaused;
-      hidden = !hidden;
+          FMODUnity.RuntimeManager.PauseAllEvents(true);
+          //Time.timeScale = 0;
+          Conductor.Instance.DisableCombo();
+          Conductor.Instance.DisableCameraFollow();
+          pauseMenuUI.SetActive(true);
+          isPaused = !isPaused;
+          hidden = !hidden;
     }
 
     public void ResumeGame () {
-      Time.timeScale = 1;
+      //Time.timeScale = 1;
       FMODUnity.RuntimeManager.PauseAllEvents(false);
       Conductor.Instance.EnableCombo();
+        Conductor.Instance.EnableCameraFollow();
       pauseMenuUI.SetActive(false);
       isPaused = !isPaused;
       hidden = !hidden;

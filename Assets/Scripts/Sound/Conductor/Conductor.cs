@@ -15,6 +15,8 @@ public class Conductor : MonoBehaviour {
     public BeatClipSO[] PlayList;
 
     private PlayerController _player;
+
+    private GameObject _mainCamera;
     
     private BeatClipSO CurrentBeatClip
     {
@@ -91,7 +93,7 @@ public class Conductor : MonoBehaviour {
 
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
-
+        _mainCamera = FindObjectOfType<CameraFollow>().gameObject;
     }
 
     FMOD.Studio.EventInstance currentSong;
@@ -237,6 +239,16 @@ public class Conductor : MonoBehaviour {
 
     public void Sell(Resource r) {
         Cash += r.price;
+    }
+
+    public void EnableCameraFollow()
+    {
+        _mainCamera.GetComponent<CameraFollow>().enabled = true;
+    }
+
+    public void DisableCameraFollow()
+    {
+        _mainCamera.GetComponent<CameraFollow>().enabled = false;
     }
 
     public static Pooler GetPooler() {
