@@ -45,18 +45,16 @@ public class PhraseMachine : Machine
 
         if (!_pokedThisTick) {
             _pokedThisTick = true;
-            if (ComboHighEnough()) {
-                _beatsSinceInput++;
-                MoveResourcesIn();
-                if (_beatsSinceInput % 4 == 0 && InputBuffer._backer.Count > 0 && !NextMachineFull(phrase)) {
-                    OutputBuffer.Enqueue(CreatePhrase(InputBuffer));
-                    _ticksSinceProduced = 0;
-                    _beatsSinceInput = 0;
-                    InputBuffer.Clear();
-                }
-                else {
-                    _ticksSinceProduced++;
-                }
+            _beatsSinceInput++;
+            MoveResourcesIn();
+            if (_beatsSinceInput % 4 == 0 && InputBuffer._backer.Count > 0 && !NextMachineFull(phrase)) {
+                OutputBuffer.Enqueue(CreatePhrase(InputBuffer));
+                _ticksSinceProduced = 0;
+                _beatsSinceInput = 0;
+                InputBuffer.Clear();
+            }
+            else {
+                _ticksSinceProduced++;
             }
 
             foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());

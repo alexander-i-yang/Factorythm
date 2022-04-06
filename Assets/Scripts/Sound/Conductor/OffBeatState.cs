@@ -16,7 +16,7 @@ public class OffBeatState : BeatState {
     }
 
     public override bool AttemptMove(BeatStateInput input) {
-        Conductor.Instance.SetCurCombo(0);
+        Conductor.Instance.ResetCombo();
         return !Conductor.Instance.RhythmLock;
     }
 }

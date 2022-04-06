@@ -27,7 +27,7 @@ public class Conductor : MonoBehaviour {
 
     private Pooler _pooler;
 
-    public bool RhythmLock = false;
+    public bool RhythmLock;
     public int TickNum { get; private set; }
 
     [NonSerialized] public AudioSource MusicSource;
@@ -37,11 +37,12 @@ public class Conductor : MonoBehaviour {
 
     public int CurCombo { get; private set; }
     private int MaxCombo = 0;
-    public bool ComboEnabled { get; private set; }
     private bool _wasOnBeat;
 
     public int Cash = 0;
     public FMOD.Studio.Bus MasterBus;
+
+    public int SpeedMultiplier = 1;
 
     private bool _paused;
     public bool Paused
@@ -215,24 +216,43 @@ public class Conductor : MonoBehaviour {
     }
 
     public void IncrCurCombo() {
+        if (CurCombo >= 12) {
+            MyUIManager.Gauge.Overflow();
+        } else {
+            MyUIManager.Gauge.Incr(CurCombo);
+        }
         SetCurCombo(CurCombo+1);
     }
 
+    public void ResetCombo() {
+        SetCurCombo(0);
+        MyUIManager.Gauge.ResetGauge();
+    }
+
     public void SetCurCombo(int c) {
-        if (ComboEnabled) {
+        if (RhythmLock) {
             CurCombo = c;
             MyUIManager.CurLabel.text = "Combo: " + c;
             MaxCombo = (CurCombo > MaxCombo) ? CurCombo : MaxCombo;
             MyUIManager.MaxLabel.text = "Max Combo: " + MaxCombo;
         }
+        
+        if (0 <= CurCombo && CurCombo <= 3) {
+            SpeedMultiplier = 1;
+        } else if (4 <= CurCombo && CurCombo <= 7) {
+            SpeedMultiplier = 2;
+        } else if (8 <= CurCombo/* && CurCombo <= 12*/) {
+            SpeedMultiplier = 4;
+        }
     }
 
     public void DisableCombo() {
-        ComboEnabled = false;
+        print("Disable combo");
+        RhythmLock = false;
     }
 
     public void EnableCombo() {
-        ComboEnabled = true;
+        RhythmLock = true;
     }
 
     public void Sell(Resource r) {

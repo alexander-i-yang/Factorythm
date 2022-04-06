@@ -95,13 +95,6 @@ public class Conveyor : Machine {
             }
         }
 
-        if (_shouldPrint) {
-            print(inputEndConv);
-            print(outputEndConv);
-            print(InputPorts.Count());
-            print(OutputPorts.Count());
-        }
-
         Vector2 betweenMachines = inputLoc - outputLoc;
         //The vector is rounded to avoid floating point math errors.
         int angleBtwn = (int) Vector2.SignedAngle(Helper.RoundVectorHalf(betweenMachines), Vector2.right) + 180;
