@@ -9,7 +9,7 @@ public class OnBeatState : BeatState {
     public override void Exit(BeatStateInput input) {
         if (MovesThisTick == 0) {
             if (Conductor.Instance.RhythmLock) Conductor.Instance.MachineTick();
-            Conductor.Instance.SetCurCombo(0);
+            Conductor.Instance.ResetCombo();
         }
     }
 

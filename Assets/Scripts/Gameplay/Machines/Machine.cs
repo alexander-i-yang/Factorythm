@@ -26,8 +26,6 @@ public class Machine : Draggable {
     [FormerlySerializedAs("Max Storage")] public ResourceNum[] EditorMaxStorage;
     private Dictionary<Resource, int> _maxStorage = new Dictionary<Resource, int>();
     
-    public int MinCombo = 0;
-    
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
 
@@ -202,8 +200,12 @@ public class Machine : Draggable {
         _pokedThisTick = false;
     }
 
-    public bool ComboHighEnough() {
-        return Conductor.Instance.CurCombo >= MinCombo;
+    protected int GetTicksRequired(Recipe recipeObj) {
+        return recipeObj.ticks / Conductor.Instance.SpeedMultiplier;
+    }
+
+    protected virtual bool EnoughTicks(Recipe recipeObj) {
+        return _ticksSinceProduced >= GetTicksRequired(recipeObj);
     }
 
     /// <summary>
@@ -217,36 +219,34 @@ public class Machine : Draggable {
 
         if (!_pokedThisTick) {
             _pokedThisTick = true;
-            if (ComboHighEnough()) {
-                MoveResourcesIn();
-                foreach (var recipeObj in recipes) {
-                    bool enoughInput = _checkEnoughInput(recipeObj);
+            MoveResourcesIn();
+            foreach (var recipeObj in recipes) {
+                bool enoughInput = _checkEnoughInput(recipeObj);
+                if (_shouldPrint) {
+                    print("Enough ticks: " + (_ticksSinceProduced >= recipeObj.ticks));
+                    print("enoughInput: " + enoughInput);
+                }
+
+                if (enoughInput && EnoughTicks(recipeObj)) {
                     if (_shouldPrint) {
-                        print("Enough ticks: " + (_ticksSinceProduced >= recipeObj.ticks));
-                        print("enoughInput: " + enoughInput);
+                        print("Here I am");
                     }
 
-                    if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
-                        if (_shouldPrint) {
-                            print("Here I am");
-                        }
-
-                        List<Delegate> deleters = new List<Delegate>();
-                        ResourceDictQueue skimmed = Skim(recipeObj, deleters);
-                        List<Resource> result = recipeObj.Create(skimmed, transform.position, deleters);
+                    List<Delegate> deleters = new List<Delegate>();
+                    ResourceDictQueue skimmed = Skim(recipeObj, deleters);
+                    List<Resource> result = recipeObj.Create(skimmed, transform.position, deleters);
                     
-                        foreach (Resource r in result) {
-                            if (_shouldPrint) print("Creating: " + r.name);
-                            OutputBuffer.Enqueue(r);
-                        }
-                        foreach (var d in deleters) {
-                            d.DynamicInvoke();
-                        }
-                        _ticksSinceProduced = 0;
+                    foreach (Resource r in result) {
+                        if (_shouldPrint) print("Creating: " + r.name);
+                        OutputBuffer.Enqueue(r);
                     }
-                    else {
-                        _ticksSinceProduced++;
+                    foreach (var d in deleters) {
+                        d.DynamicInvoke();
                     }
+                    _ticksSinceProduced = 0;
+                }
+                else {
+                    _ticksSinceProduced++;
                 }
             }
             foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());

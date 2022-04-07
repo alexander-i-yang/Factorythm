@@ -29,6 +29,7 @@ public abstract class Interactable : MonoBehaviour {
     /// Called after the player is no longer holding [interact] over this object
     /// </summary>
     public virtual void OnDeInteract(PlayerController p) {
+        print(_deselectSfx);
         if (_deselectSfx) {
             _deselectSfx.UnPause();
         }

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -7036125645711492483}
   - component: {fileID: -4920688557668318078}
   - component: {fileID: 4738100384511616137}
+  - component: {fileID: 4097576874034558971}
   m_Layer: 6
   m_Name: Machine
   m_TagString: Untagged
@@ -229,3 +230,30 @@ MonoBehaviour:
       Data4: 1773827460
     Path: event:/sfx/deselect1
   startCondition: 2
+--- !u!114 &4097576874034558971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4590213518212070728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -220293829
+      Data2: 1213293688
+      Data3: 376101284
+      Data4: 1696748797
+    Path: event:/sfx/crunch3
+  src:
+    Guid:
+      Data1: 769866839
+      Data2: 1272751706
+      Data3: -1892122718
+      Data4: 1773827460
+    Path: event:/sfx/deselect1
+  startCondition: 3
