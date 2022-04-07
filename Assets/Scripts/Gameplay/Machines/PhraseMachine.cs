@@ -1,9 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 /// <summary>
 /// Subclass of Machine.cs without a recipe.

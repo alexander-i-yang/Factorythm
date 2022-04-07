@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Path
+      value: event:/sfx/conveyor_running2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data1
+      value: 1315157525
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data2
+      value: 1122094158
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data3
+      value: -162446463
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data4
+      value: 311546719
+      objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070728, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Name
       value: Conveyor
@@ -162,4 +182,5 @@ MonoBehaviour:
   - {fileID: 9044786021765537137, guid: 80e6501a9b67c0a4a8b25974ec957309, type: 3}
   - {fileID: 9044786021765537137, guid: 60e5de269491e0c4fba7684454c18fbb, type: 3}
   Angle: 0
+  Index: 0
   BetweenMachines: {x: 0, y: 0}

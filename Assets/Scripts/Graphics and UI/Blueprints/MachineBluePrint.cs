@@ -11,21 +11,22 @@ public class MachineBluePrint : Draggable {
 
     private void Awake() {
         SmoothSprite = GetComponentInChildren<SmoothSprite>();
+        base.Awake();
     }
 
     public override void OnInteract(PlayerController p) {
-        print("Interact");
         Color c = SmoothSprite.SpriteRenderer.color;
         c.a = 0.8f;
         SmoothSprite.SpriteRenderer.color = c;
+        base.OnInteract(p);
     }
 
     public override void OnDeInteract(PlayerController p) {
-        print("DeInteract");
         if (CanPlace(SmoothSprite.transform.position)) {
             Conductor.checkForOverlappingMachines(transform.position);
             Destroy(gameObject);
             Conductor.GetPooler().InstantiateMachine(MachineCopy, p.transform.position);
+            base.OnDeInteract(p);
         }
         else {
             Destroy(gameObject);
