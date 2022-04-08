@@ -25,7 +25,7 @@ public class Machine : Draggable {
     public ResourceDictQueue InputBuffer { get; } = new ResourceDictQueue();
     [FormerlySerializedAs("Max Storage")] public ResourceNum[] EditorMaxStorage;
     private Dictionary<Resource, int> _maxStorage = new Dictionary<Resource, int>();
-
+    
     private Vector2 _dragDirection;
     private List<ConveyorBlueprint> _dragBluePrints;
 
@@ -200,6 +200,14 @@ public class Machine : Draggable {
         _pokedThisTick = false;
     }
 
+    protected int GetTicksRequired(Recipe recipeObj) {
+        return recipeObj.ticks / Conductor.Instance.SpeedMultiplier;
+    }
+
+    protected virtual bool EnoughTicks(Recipe recipeObj) {
+        return _ticksSinceProduced >= GetTicksRequired(recipeObj);
+    }
+
     /// <summary>
     /// Completes one cycle of logic.
     /// Produces output if needed.
@@ -219,7 +227,7 @@ public class Machine : Draggable {
                     print("enoughInput: " + enoughInput);
                 }
 
-                if (enoughInput && _ticksSinceProduced >= recipeObj.ticks) {
+                if (enoughInput && EnoughTicks(recipeObj)) {
                     if (_shouldPrint) {
                         print("Here I am");
                     }
@@ -240,9 +248,8 @@ public class Machine : Draggable {
                 else {
                     _ticksSinceProduced++;
                 }
-
-                foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
             }
+            foreachMachine(new List<MachinePort>(InputPorts), m => m.Tick());
         }
 
         if (_shouldBreak) {

@@ -6,23 +6,24 @@ using UnityEngine;
 /// Controls all traditional UI for the game.
 /// </summary>
 public class UIManager : MonoBehaviour {
-    [NonSerialized] public TextMeshProUGUI CurLabel;
-    [NonSerialized] public BeatBar BeatBar;
-    [NonSerialized] public TextMeshProUGUI MaxLabel;
+    // public TextMeshProUGUI CurLabel;
+    public BeatBar BeatBar;
+    // public TextMeshProUGUI MaxLabel;
+    public Gauge Gauge;
     [SerializeField] private bool _visible;
     public bool Visible
     {
         set
         {
             _visible = value;
-            CurLabel.gameObject.SetActive(_visible);
-            MaxLabel.gameObject.SetActive(_visible);
         }
     }
+    
     void Start() {
-        CurLabel = transform.Find("Cur Combo").GetComponent<TextMeshProUGUI>();
+        // CurLabel = transform.Find("Cur Combo").GetComponent<TextMeshProUGUI>();
         BeatBar = FindObjectOfType<BeatBar>();
-        MaxLabel = transform.Find("Max Combo").GetComponent<TextMeshProUGUI>();
+        // MaxLabel = transform.Find("Max Combo").GetComponent<TextMeshProUGUI>();
+        Gauge = FindObjectOfType<Gauge>();
     }
 
     public void Tick() {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{393dbed3-61f5-437c-b632-adb3e216a9fe}">
+		<property name="assetPath">
+			<value>conveyor_running3.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.7692290249433107</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0ff115da-5d54-4029-8caf-55a4037a83fe}</destination>
+		</relationship>
+	</object>
+</objects>

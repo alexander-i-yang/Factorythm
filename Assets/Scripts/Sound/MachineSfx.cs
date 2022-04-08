@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using FMOD;
 using FMODUnity;
+using Debug = UnityEngine.Debug;
 using Studio = FMOD.Studio;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -12,8 +13,6 @@ public class MachineSfx : MonoBehaviour
 {
     [SerializeField, HideInInspector]
     public EventReference exposed_src;
-    [HideInInspector]
-    public EventReference src;
 
     [HideInInspector]
     public bool? loopByDefault = null;
@@ -29,12 +28,8 @@ public class MachineSfx : MonoBehaviour
             yield return null;
         }
 
-        try {
-            instance = RuntimeManager.CreateInstance(src);
-        } catch (EventNotFoundException) {
-            instance = RuntimeManager.CreateInstance(exposed_src);
-        }
-
+        instance = RuntimeManager.CreateInstance(exposed_src);
+        
         if (instance.isValid()) {
             if (loopByDefault != null) {
                 instance.setParameterByName("loop", loopByDefault.Value ? 1f : 0f);
@@ -45,8 +40,8 @@ public class MachineSfx : MonoBehaviour
             instance.set3DAttributes(transform.To3DAttributes());
             if (startCondition == StartCondition.ON_ENABLE)
             {
-                if (instance.getParameterByName("loop", out float _) == RESULT.OK)
-                {
+                if (instance.getParameterByName("loop", out float _) == RESULT.OK) {
+                    print(this);
                     instance.start();
                     instance.release();
                 }
@@ -98,6 +93,7 @@ public class MachineSfx : MonoBehaviour
         ON_ENABLE,
         ON_CLICK,
         ON_DESELECT,
+        ON_DELETE,
     }
 }
 
@@ -133,9 +129,9 @@ public class MachineSfxEditor : Editor
 
         EditorGUILayout.PropertyField(song, new GUIContent("Event Reference"));
         var newR = song.GetEventReference();
-        if (!newR.Equals(m.src)) {
+        if (!newR.Equals(m.exposed_src)) {
             // Debug.Log($"changed to {newR}");
-            m.src = newR;
+            m.exposed_src = newR;
             UpdateLoopable(m);
             // EditorCoroutineUtility.StartCoroutine(Preview(3, newR), this);
             if (m.instance.isValid()) {
@@ -178,11 +174,7 @@ public class MachineSfxEditor : Editor
                 m.loopByDefault = null;
             }
         };
-        try {
-            e(m.src);
-        } catch (EventNotFoundException) {
-            e(m.exposed_src);
-        }
+        e(m.exposed_src);
     }
 
     /// apparently FMOD doesn't play in editor mode...

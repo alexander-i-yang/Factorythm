@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5341053927266769297}
   - component: {fileID: 1728646613923302145}
   - component: {fileID: 4033198971377291128}
+  - component: {fileID: 3122955145514136460}
   m_Layer: 6
   m_Name: Machine BluePrint
   m_TagString: Untagged
@@ -100,6 +101,33 @@ MonoBehaviour:
       Data4: -215968906
     Path: event:/sfx/click1
   startCondition: 1
+--- !u!114 &3122955145514136460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3243557835273114965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: 1964109683
+      Data2: 1205001327
+      Data3: 667018410
+      Data4: 529175751
+    Path: event:/sfx/placement
+  src:
+    Guid:
+      Data1: 1964109683
+      Data2: 1205001327
+      Data3: 667018410
+      Data4: 529175751
+    Path: event:/sfx/placement
+  startCondition: 2
 --- !u!1001 &5493127684277247443
 PrefabInstance:
   m_ObjectHideFlags: 0

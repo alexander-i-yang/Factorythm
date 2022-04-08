@@ -37,7 +37,7 @@ public class BeatLine : MonoBehaviour {
         
         // Set localPosition.x to newX so the beat line moves to its correct spot
         var localPosition = transform.localPosition;
-        localPosition = new Vector3(newX, localPosition.y, localPosition.z);
+        localPosition = new Vector3(newX, 0.032f, -1);
         transform.localPosition = localPosition;
     }
 

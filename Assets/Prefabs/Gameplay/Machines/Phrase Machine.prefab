@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Path
+      value: event:/sfx/phrase_machine2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data1
+      value: -1857839754
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data2
+      value: 1188096888
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data3
+      value: 386074244
+      objectReference: {fileID: 0}
+    - target: {fileID: -7036125645711492483, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
+      propertyPath: exposed_src.Guid.Data4
+      value: -2107937400
+      objectReference: {fileID: 0}
     - target: {fileID: 4590213518212070728, guid: 0f350c7ab22e5794dbe04027fc33d041, type: 3}
       propertyPath: m_Name
       value: Phrase Machine
