@@ -232,9 +232,9 @@ public class Conductor : MonoBehaviour {
     public void SetCurCombo(int c) {
         if (RhythmLock) {
             CurCombo = c;
-            MyUIManager.CurLabel.text = "Combo: " + c;
+            // MyUIManager.CurLabel.text = "Combo: " + c;
             MaxCombo = (CurCombo > MaxCombo) ? CurCombo : MaxCombo;
-            MyUIManager.MaxLabel.text = "Max Combo: " + MaxCombo;
+            // MyUIManager.MaxLabel.text = "Max Combo: " + MaxCombo;
         }
         
         if (0 <= CurCombo && CurCombo <= 3) {
