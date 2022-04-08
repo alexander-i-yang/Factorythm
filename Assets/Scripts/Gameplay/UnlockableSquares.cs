@@ -25,6 +25,7 @@ public class UnlockableSquares : MonoBehaviour
     [SerializeField]
     private GameObject lockSpriteObj;
     private Lock _lockSprite;
+    private ScreenShake ScreenShake;
 
     public Material LockMat;
     private Material _lockMat;
@@ -52,6 +53,7 @@ public class UnlockableSquares : MonoBehaviour
 
         _canvas = GetComponentInChildren<Canvas>();
         _lockSprite = GetComponentInChildren<Lock>();
+        ScreenShake = GetComponent<ScreenShake>();
     }
     
     void Update() {
@@ -88,6 +90,7 @@ public class UnlockableSquares : MonoBehaviour
 
         if (_lockSprite) {
             _lockSprite.Unlock();
+            ScreenShake.DelayedLargeShake();
         }
 
         UnlockEvent.Invoke();
