@@ -11,10 +11,10 @@ public class BeatBar : MonoBehaviour {
     public Vector3 StartPos { get; private set; }
     public Vector3 EndPos { get; private set; }
 
-    [Header("Math for beatline movement calculations")]
+    [Header("Beat Line Movement")]
     
-    [Tooltip("The amount of time a player can press before the beat line touches the end zone. Multiplied by seconds/beat")]
-    [SerializeField] private float _graceTime = 0.1f;
+    [Tooltip("The amount of time, in beats, that a beat line will exist on the beat bar.")]
+    [SerializeField] private int beatLineDuration = 8;
 
     //The amount of time it takes for a beat line to dissipate after stopping. Multiplied by seconds/beat
     public float DissolveTime { get; } = 0.1f;
@@ -38,14 +38,14 @@ public class BeatBar : MonoBehaviour {
     }
 
     public double GetVelocity() {
+
         double secPerBeat = Conductor.Instance.BeatClipHelper.BeatClip.SecPerBeat;
 
-        // Represents the total time between the moment a beatline starts to exist and the moment it reaches
-        // The center of the endzone
-        double timeElapsed = 3 * secPerBeat + Conductor.Instance.BeatClipHelper.BeatClip.BeatOffset;
+        // The time we want between the beat line's appearance and it reaching it the end zone
+        double timeElapsed = beatLineDuration * secPerBeat + Conductor.Instance.BeatClipHelper.BeatClip.BeatOffset;
 
+        // Do not change this formula if you want beat lines to be on time.
         double v = (StartPos.x-EndPos.x)/(timeElapsed);
-        v /= 2;
         return v;
     }
 

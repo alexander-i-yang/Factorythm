@@ -15,6 +15,8 @@ public class Conductor : MonoBehaviour {
     public BeatClipSO[] PlayList;
 
     private PlayerController _player;
+
+    private ScreenShake ScreenShake;
     
     private BeatClipSO CurrentBeatClip
     {
@@ -40,6 +42,7 @@ public class Conductor : MonoBehaviour {
     private bool _wasOnBeat;
 
     public int Cash = 0;
+
     public FMOD.Studio.Bus MasterBus;
 
     public int SpeedMultiplier = 1;
@@ -92,7 +95,7 @@ public class Conductor : MonoBehaviour {
 
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
-
+        ScreenShake = GetComponent<ScreenShake>();
     }
 
     FMOD.Studio.EventInstance currentSong;
@@ -225,6 +228,7 @@ public class Conductor : MonoBehaviour {
     }
 
     public void ResetCombo() {
+        if (CurCombo >= 2) ScreenShake.SmallShake(); // Shake the screen!
         SetCurCombo(0);
         MyUIManager.Gauge.ResetGauge();
     }
