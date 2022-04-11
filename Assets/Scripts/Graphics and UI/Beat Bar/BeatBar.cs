@@ -42,7 +42,7 @@ public class BeatBar : MonoBehaviour {
         double secPerBeat = Conductor.Instance.BeatClipHelper.BeatClip.SecPerBeat;
 
         // The time we want between the beat line's appearance and it reaching it the end zone
-        double timeElapsed = beatLineDuration * secPerBeat + Conductor.Instance.BeatClipHelper.BeatClip.BeatOffset;
+        double timeElapsed = (beatLineDuration - Conductor.Instance.BeatClipHelper.BeatClip.BeatOffset) * secPerBeat;
 
         // Do not change this formula if you want beat lines to be on time.
         double v = (StartPos.x-EndPos.x)/(timeElapsed);

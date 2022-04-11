@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BeatLineInstance: {fileID: 7309259185115489940, guid: 57769ff572840b04092c6a9cb44f53db, type: 3}
-  _graceTime: 0.1
+  beatLineDuration: 8
 --- !u!1 &187632838565754567
 GameObject:
   m_ObjectHideFlags: 0
