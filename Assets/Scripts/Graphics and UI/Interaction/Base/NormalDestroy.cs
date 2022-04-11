@@ -21,8 +21,6 @@ public class NormalDestroy : Destructable {
     {
         gameObject.GetComponent<Machine>().OnDestruction();
         gameObject.SetActive(false);
-        print(_deleteSFX.exposed_src);
-        print(_deleteSFX.startCondition);
         _deleteSFX.UnPause();
     }
 }
