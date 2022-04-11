@@ -41,7 +41,6 @@ public class MachineSfx : MonoBehaviour
             if (startCondition == StartCondition.ON_ENABLE)
             {
                 if (instance.getParameterByName("loop", out float _) == RESULT.OK) {
-                    print(this);
                     instance.start();
                     instance.release();
                 }
