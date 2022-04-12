@@ -55,7 +55,7 @@ public class UnlockableSquares : MonoBehaviour
         _lockSprite = GetComponentInChildren<Lock>();
         ScreenShake = GetComponent<ScreenShake>();
     }
-    
+
     void Update() {
         // _mySR.enabled = isActive;
         _myCollider.enabled = isActive;
@@ -120,7 +120,7 @@ public class UnlockableSquares : MonoBehaviour
 
     protected virtual bool CheckIfDone() {
         bool done = true;
-            
+
         foreach (var c in ConveyorInners) {
             if (!c.Done) {
                 done = false;
