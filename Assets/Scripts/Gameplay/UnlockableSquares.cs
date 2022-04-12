@@ -55,7 +55,7 @@ public class UnlockableSquares : MonoBehaviour
         _lockSprite = GetComponentInChildren<Lock>();
         ScreenShake = GetComponent<ScreenShake>();
     }
-    
+
     void Update() {
         // _mySR.enabled = isActive;
         _myCollider.enabled = isActive;
@@ -63,7 +63,7 @@ public class UnlockableSquares : MonoBehaviour
         if (isActive) {
             bool done = CheckIfDone();
             if (done) {
-                FindObjectOfType<CameraFollow>().TempFollow(transform, 5f);
+                FindObjectOfType<CameraFollow>().TempFollow(transform, 3f);
                 Unlock();
             }
         }
@@ -90,7 +90,9 @@ public class UnlockableSquares : MonoBehaviour
 
         if (_lockSprite) {
             _lockSprite.Unlock();
-            ScreenShake.DelayedLargeShake();
+            if (ScreenShake) {
+                ScreenShake.DelayedLargeShake();
+            }
         }
 
         UnlockEvent.Invoke();
@@ -120,7 +122,7 @@ public class UnlockableSquares : MonoBehaviour
 
     protected virtual bool CheckIfDone() {
         bool done = true;
-            
+
         foreach (var c in ConveyorInners) {
             if (!c.Done) {
                 done = false;

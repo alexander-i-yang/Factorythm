@@ -94,4 +94,7 @@ MonoBehaviour:
   price: 0
   id: 9
   matterState: 0
+  isGoal: 0
+  goal: {fileID: 8452730695765515471, guid: f44d7cff359384b1c9d40836510a437b, type: 3}
+  thisPhrase: {fileID: 7322240480930828386}
   Notes: []
