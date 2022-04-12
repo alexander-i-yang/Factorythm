@@ -44,6 +44,14 @@ public class ConveyorBlueprint : MonoBehaviour {
         Sprite s = Sprites[4+(int) angleBetween / 90];
         _mySR.sprite = s;
     }
+
+    public void SetSpriteRed() {
+        _mySR.color = new Color(1.0f, 0.3f, 0.3f, _mySR.color.a);
+    }
+
+    public void SetSpriteNormal() {
+        _mySR.color = new Color(0.509434f, 0.509434f, 0.509434f, _mySR.color.a);
+    }
     
     #if UNITY_EDITOR
     public void OnDrawGizmos() {

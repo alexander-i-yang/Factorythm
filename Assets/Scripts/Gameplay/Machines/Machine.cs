@@ -317,6 +317,10 @@ public class Machine : Draggable {
     }
 
     public override void OnDeInteract(PlayerController p) {
+        if (_overlappedDragBluePrints) {
+            ClearDragBluePrints();
+            return;
+        }
         _dragDirection = Vector2.zero;
         Interactable onInteractable = p.OnInteractable();
         Machine onMachine = null;
@@ -401,6 +405,8 @@ public class Machine : Draggable {
         }
     }
 
+    private bool _overlappedDragBluePrints = false;
+
     public override void OnDrag(PlayerController p, Vector3 newPos) {
         ClearDragBluePrints();
 
@@ -423,8 +429,32 @@ public class Machine : Draggable {
         if (n2 != 0) {
             _dragBluePrints.AddRange(RenderConveyorBluePrintLine(n2, startPos2, orthoDir));
         }
+
+        HighlightDragBluePrints();
     }
 
+    private void HighlightDragBluePrints() {
+        foreach (ConveyorBlueprint m in _dragBluePrints) {
+            RaycastHit2D hit = Physics2D.Raycast(
+                new Vector3(m.gameObject.transform.position.x, m.gameObject.transform.position.y, 0),
+                new Vector3(0, 0, -1),
+                10.0f,
+                LayerMask.GetMask("Room"));
+            if (hit.transform != null) {
+                _overlappedDragBluePrints = true;
+                foreach (ConveyorBlueprint b in _dragBluePrints) {
+                    b.SetSpriteRed();
+                }
+                return;
+            }
+        }
+        if (_overlappedDragBluePrints) {
+            _overlappedDragBluePrints = false;
+            foreach (ConveyorBlueprint m in _dragBluePrints) {
+                m.SetSpriteNormal();
+            }
+        }
+    }
 
     public void ClearDragBluePrints() {
         foreach (ConveyorBlueprint m in _dragBluePrints) {
