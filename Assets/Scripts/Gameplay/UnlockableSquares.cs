@@ -63,7 +63,7 @@ public class UnlockableSquares : MonoBehaviour
         if (isActive) {
             bool done = CheckIfDone();
             if (done) {
-                FindObjectOfType<CameraFollow>().TempFollow(transform, 5f);
+                FindObjectOfType<CameraFollow>().TempFollow(transform, 3f);
                 Unlock();
             }
         }
@@ -90,7 +90,9 @@ public class UnlockableSquares : MonoBehaviour
 
         if (_lockSprite) {
             _lockSprite.Unlock();
-            ScreenShake.DelayedLargeShake();
+            if (ScreenShake) {
+                ScreenShake.DelayedLargeShake();
+            }
         }
 
         UnlockEvent.Invoke();
