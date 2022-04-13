@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(LockedRoom))]
 public class SmartUnlockableSquares : UnlockableSquares
 {
-    protected override void Unlock() {
+    public override void Unlock() {
         base.Unlock();
         var lockedRooms = GetComponentsInChildren<LockedRoom>();
         foreach (var lockedRoom in lockedRooms) {

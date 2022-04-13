@@ -517,9 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f54c76668aa04bb18b90c9b873217f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurLabel: {fileID: 0}
   BeatBar: {fileID: 0}
-  MaxLabel: {fileID: 0}
   Gauge: {fileID: 0}
 --- !u!114 &1704064240244402472
 MonoBehaviour:
