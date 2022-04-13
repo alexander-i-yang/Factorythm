@@ -91,4 +91,8 @@ class Helper {
 
         return components;
     }
+
+    public static double Clamp(double low, double high, double a) {
+        return Math.Min(Math.Max(a, low), high);
+    }
 }

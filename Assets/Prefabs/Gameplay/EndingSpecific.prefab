@@ -28519,7 +28519,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.75, y: 0.75}
+  m_Size: {x: 7.5, y: 7.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -40239,11 +40239,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exposed_src:
     Guid:
-      Data1: -744086230
-      Data2: 1140694747
-      Data3: -1739868241
-      Data4: 1871765753
-    Path: event:/sfx/MineWorker
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   startCondition: 0
 --- !u!114 &962939868959586461
 MonoBehaviour:

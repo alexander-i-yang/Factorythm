@@ -13,13 +13,15 @@ public class UIManager : MonoBehaviour {
     public Gauge Gauge;
     
     void Start() {
-        // CurLabel = transform.Find("Cur Combo").GetComponent<TextMeshProUGUI>();
         BeatBar = FindObjectOfType<BeatBar>();
-        // MaxLabel = transform.Find("Max Combo").GetComponent<TextMeshProUGUI>();
         Gauge = FindObjectOfType<Gauge>();
     }
     
     public void Tick() {
         BeatBar.Tick();
+    }
+
+    public static void Quit() {
+        Application.Quit();
     }
 }
