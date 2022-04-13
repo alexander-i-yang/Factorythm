@@ -18,7 +18,7 @@ public class MachineSfx : MonoBehaviour
     public bool? loopByDefault = null;
 
     public Studio.EventInstance instance { get; private set; }
-
+    
     public StartCondition startCondition;
 
     public IEnumerator InstantiateSong()
@@ -93,6 +93,8 @@ public class MachineSfx : MonoBehaviour
         ON_CLICK,
         ON_DESELECT,
         ON_DELETE,
+        ON_BUMP,
+        CUSTOM,
     }
 }
 

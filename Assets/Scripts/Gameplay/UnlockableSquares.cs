@@ -24,12 +24,14 @@ public class UnlockableSquares : MonoBehaviour
 
     [SerializeField]
     private GameObject lockSpriteObj;
-    private Lock _lockSprite;
+    private Lock _lock;
     private ScreenShake ScreenShake;
 
     public Material LockMat;
     private Material _lockMat;
     public UnityEvent UnlockEvent;
+
+    private MachineSfx _explosionSFX;
 
     void Awake() {
         _mySR = lockSpriteObj.GetComponent<SpriteRenderer>();
@@ -50,9 +52,15 @@ public class UnlockableSquares : MonoBehaviour
                 _bluePrintCreators.Add(bpc.GetComponent<BluePrintCreator>());
             }
         }
+        
+        foreach(MachineSfx s in GetComponents<MachineSfx>()) {
+            if (s.startCondition == MachineSfx.StartCondition.CUSTOM) {
+                _explosionSFX = s;
+            }
+        }
 
         _canvas = GetComponentInChildren<Canvas>();
-        _lockSprite = GetComponentInChildren<Lock>();
+        _lock = GetComponentInChildren<Lock>();
         ScreenShake = GetComponent<ScreenShake>();
     }
 
@@ -88,8 +96,8 @@ public class UnlockableSquares : MonoBehaviour
             }
         }
 
-        if (_lockSprite) {
-            _lockSprite.Unlock();
+        if (_lock) {
+            _lock.Unlock();
             if (ScreenShake) {
                 ScreenShake.DelayedLargeShake();
             }
@@ -102,12 +110,22 @@ public class UnlockableSquares : MonoBehaviour
     private IEnumerator UnlockAnimation()
     {
         float t = -1.15f;
-
+        bool explostionSFXPlayed = false;
+        bool unlockSFXPlayed = false;
         while (t < 1)
         {
+            if (t >= -0.75f && !unlockSFXPlayed) {
+                unlockSFXPlayed = true;
+                _lock.PlayUnlockSFX();
+            }
 
             if (t >= 0)
             {
+                if (!explostionSFXPlayed) {
+                    _explosionSFX.UnPause();
+                    explostionSFXPlayed = true;
+                }
+
                 _lockMat.SetFloat("_T", t);
                 t += Time.deltaTime * Conductor.Instance.BPM / 60;
             } else
