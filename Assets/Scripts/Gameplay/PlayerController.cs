@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
 
         this.CheckTileOn();
 
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.R)) {
             RestartGame();
         }
     }
