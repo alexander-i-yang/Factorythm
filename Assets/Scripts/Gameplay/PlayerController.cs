@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
     public bool CanPlaceHeadMine;
     public bool CanPlaceStemMine;
 
+    private MachineSfx _moveSFX;
+
 
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour {
         _mySRot = GetComponentInChildren<SmoothRotate>();
         _ism = GetComponent<InteractableStateMachine>();
         _pia = new PlayerInputActions();
+
+        _moveSFX = GetComponent<MachineSfx>();
 
         _pia.Player.Enable();
         _pia.Player.Interact.performed += Interact;
@@ -73,21 +77,6 @@ public class PlayerController : MonoBehaviour {
 
             _curRoom = null;
         }
-    }
-
-    /// <summary>
-    /// Checks whether there is a room at the position defined by [position]+[<paramref name="offset"/>].
-    /// Used to check whether there's an un-enterable room.
-    /// </summary>
-    /// <returns>True if can move there, false if not</returns>
-    private bool CanMoveTo(Vector2 offset) {
-        Collider2D roomCollider = CheckRoomOverlap(offset);
-        if (roomCollider) {
-            Room room = roomCollider.GetComponent<Room>();
-            return room.CanPlayerEnter(this);
-        }
-
-        return true;
     }
 
     /// <summary>
@@ -160,12 +149,24 @@ public class PlayerController : MonoBehaviour {
                 Vector2 offset = new Vector2(offsetX, offsetY);
                 newPos = _myRb.position + offset;
 
-                if (CanMoveTo(offset)) {
+                bool canMove = true;
+                
+                Collider2D roomCollider = CheckRoomOverlap(offset);
+                Room room;
+                if (roomCollider) {
+                    room = roomCollider.GetComponent<Room>();
+                    canMove = room.CanPlayerEnter(this);
+                    if (!canMove) {
+                        room.PlayBumpSFX();
+                    }
+                }
+                
+                if (canMove) {
                     _mySS.Move(newPos);
                     _myRb.MovePosition(newPos);
                     _ism.Move(newPos);
-                }
-                else {
+                    // _moveSFX.UnPause();
+                } else {
                     Vector2 delta = newPos - transform.position;
                     newPos = transform.position + (Vector3) delta * 0.2f;
                     _mySS.BounceAnimate(transform.position, newPos);
