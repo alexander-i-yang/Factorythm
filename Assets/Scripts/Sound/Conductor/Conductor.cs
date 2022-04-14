@@ -267,12 +267,12 @@ public class Conductor : MonoBehaviour {
 
     public void EnableCameraFollow()
     {
-        _mainCamera.GetComponent<CameraFollow>().enabled = true;
+        _mainCamera.GetComponent<CameraFollow>().Target = _player.transform;
     }
 
     public void DisableCameraFollow()
     {
-        _mainCamera.GetComponent<CameraFollow>().enabled = false;
+        _mainCamera.GetComponent<CameraFollow>().Target = null;
     }
 
     public static Pooler GetPooler() {

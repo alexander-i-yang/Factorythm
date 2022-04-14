@@ -9,7 +9,11 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
-    private SmoothSprite _mySS;
+    public SmoothSprite MySS 
+    {
+        get;
+        private set;
+    }
     private SmoothRotate _mySRot;
 
     private Room _curRoom;
@@ -23,12 +27,13 @@ public class PlayerController : MonoBehaviour {
 
     public bool CanPlaceHeadMine;
     public bool CanPlaceStemMine;
+    
 
 
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
-        _mySS = GetComponentInChildren<SmoothSprite>();
+        MySS = GetComponentInChildren<SmoothSprite>();
         _mySRot = GetComponentInChildren<SmoothRotate>();
         _ism = GetComponent<InteractableStateMachine>();
         _pia = new PlayerInputActions();
@@ -82,7 +87,12 @@ public class PlayerController : MonoBehaviour {
     /// <returns>True if can move there, false if not</returns>
     private bool CanMoveTo(Vector2 offset) {
         Collider2D roomCollider = CheckRoomOverlap(offset);
-        if (roomCollider) {
+        if (PauseMenu.isPaused)
+        {
+            
+        }
+        else if (roomCollider) {
+            
             Room room = roomCollider.GetComponent<Room>();
             return room.CanPlayerEnter(this);
         }
@@ -122,12 +132,26 @@ public class PlayerController : MonoBehaviour {
     }
 
     public Interactable OnInteractable() {
+        if (PauseMenu.isPaused)
+        {
+            return Helper.OnComponent<PausedButton>(transform.position);
+        }
         return Helper.OnComponent<Interactable>(transform.position);
     }
 
     public Destructable OnDestructable()
     {
         return Helper.OnComponent<Destructable>(transform.position);
+    }
+
+    public void EnableActions()
+    {
+        _pia.Player.Enable();
+    }
+
+    public void DisableActions()
+    {
+        _pia.Player.Disable();
     }
 
     #region Actions
@@ -161,14 +185,14 @@ public class PlayerController : MonoBehaviour {
                 newPos = _myRb.position + offset;
 
                 if (CanMoveTo(offset)) {
-                    _mySS.Move(newPos);
+                    MySS.Move(newPos);
                     _myRb.MovePosition(newPos);
                     _ism.Move(newPos);
                 }
                 else {
                     Vector2 delta = newPos - transform.position;
                     newPos = transform.position + (Vector3) delta * 0.2f;
-                    _mySS.BounceAnimate(transform.position, newPos);
+                    MySS.BounceAnimate(transform.position, newPos);
                 }
             }
         }
