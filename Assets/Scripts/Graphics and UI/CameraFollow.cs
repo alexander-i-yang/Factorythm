@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class CameraFollow : MonoBehaviour {
     public Transform Target;
-    public Vector2 focusedPositionTarget; 
     public AnimationCurve SmoothCurve;
 
     [SerializeField]
@@ -51,20 +50,9 @@ public class CameraFollow : MonoBehaviour {
         //Vector2 smoothPos = Vector2.Lerp(transform.position, desiredPos, 0.1f);
         //transform.position = new Vector3(smoothPos.x, smoothPos.y, transform.position.z);
 
-        if (Target != null)
-        {
-            Vector2 desiredPosition = Target.position;
-            focusedPositionTarget = desiredPosition;
-            Vector2 smoothedPosition
-                = Vector2.SmoothDamp(transform.position, desiredPosition, ref _velocity, _smoothSpeed * Time.deltaTime);
-            transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
-        } else if (focusedPositionTarget != null)
-        {
-            Vector2 desiredPosition = focusedPositionTarget;
-            Vector2 smoothedPosition
-                = Vector2.SmoothDamp(transform.position, desiredPosition, ref _velocity, _smoothSpeed * Time.deltaTime);
-            transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
-        }
-        
+        Vector2 desiredPosition = Target.position;
+        Vector2 smoothedPosition 
+            = Vector2.SmoothDamp(transform.position, desiredPosition, ref _velocity, _smoothSpeed * Time.deltaTime);
+        transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
     }
 }
