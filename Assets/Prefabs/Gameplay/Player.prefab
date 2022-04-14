@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5096779315247917599}
   - component: {fileID: 5096779315247917585}
   - component: {fileID: 5096779315247917597}
+  - component: {fileID: 8697454462196701137}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -109,6 +110,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca3c2947d74ef4b557a049503c2d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8697454462196701137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096779315247917584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exposed_src:
+    Guid:
+      Data1: -1118247196
+      Data2: 1168920023
+      Data3: 1918452125
+      Data4: -1862957648
+    Path: event:/sfx/Mouse_hover1
+  startCondition: 4
 --- !u!1001 &5096779316606495304
 PrefabInstance:
   m_ObjectHideFlags: 0

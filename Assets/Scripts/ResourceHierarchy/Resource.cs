@@ -19,6 +19,7 @@ public enum ResourceID {
     QUARTER_CHRORD,
     HALF_CHRORD,
     PHRASE,
+    PHRASE_GOAL,
 }
 
 [Serializable]
@@ -34,11 +35,11 @@ public class Resource : MonoBehaviour, DictQueueElement<ResourceID> {
             throw new ArgumentNullException("FACTORYTYM ERROR: give resource " + gameObject.name + " a type!");
         }
     }
-    
+
     public ResourceID GetID() {
         return id;
     }
-    
+
     public static bool CompareIDs(ResourceID k1, ResourceID k2) {
         if (k1 == ResourceID.DEFAULT || k2 == ResourceID.DEFAULT) {
             return true;

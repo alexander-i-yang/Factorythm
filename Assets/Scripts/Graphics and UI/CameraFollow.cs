@@ -36,7 +36,7 @@ public class CameraFollow : MonoBehaviour {
         Transform tempTarget = Target;
         float tempSpeed = _smoothSpeed;
 
-        _smoothSpeed = 150f;
+        _smoothSpeed = 30f;
         Target = focus;
 
         yield return new WaitForSeconds(seconds);

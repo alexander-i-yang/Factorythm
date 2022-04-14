@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using FMOD;
+using FMOD.Studio;
+using Debug = UnityEngine.Debug;
 
 /// <summary>
 /// A singleton class that controls the state of the entire game. Kind of like the "main" function of the game.
@@ -44,11 +47,11 @@ public class Conductor : MonoBehaviour {
 
     public int Cash = 0;
 
-    public FMOD.Studio.Bus MasterBus;
-
     public int SpeedMultiplier = 1;
-
     private bool _paused;
+    public BusController MusicBus { get; private set; }
+    public BusController SFXBus { get; private set; }
+
     public bool Paused
     {
         get { return _paused; }
@@ -98,16 +101,13 @@ public class Conductor : MonoBehaviour {
         _stateMachine = GetComponent<BeatStateMachine>();
         _mainCamera = FindObjectOfType<CameraFollow>().gameObject;
         ScreenShake = GetComponent<ScreenShake>();
+        
+        MusicBus = new BusController("Bus:/Music");
+        SFXBus = new BusController("Bus:/sfx");
     }
 
     FMOD.Studio.EventInstance currentSong;
-    // Start is called before the first frame update
     void Start() {
-        // MusicSource.Play();
-        MasterBus = FMODUnity.RuntimeManager.GetBus("Bus:/");
-
-        MasterBus.stopAllEvents(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        //FMODUnity.RuntimeManager.PlayOneShot("event:/DysonSphereSong");
         _pooler = GetComponent<Pooler>();
         _player = FindObjectOfType<PlayerController>();
         StartCurrentClip();
@@ -124,6 +124,7 @@ public class Conductor : MonoBehaviour {
         TickNum = 0;
         BeatClipHelper.Reset(CurrentBeatClip);
         currentSong = FMODUnity.RuntimeManager.CreateInstance(bcs.fmodSongReference);
+        
         currentSong.start();
     }
 

@@ -24,12 +24,14 @@ public class UnlockableSquares : MonoBehaviour
 
     [SerializeField]
     private GameObject lockSpriteObj;
-    private Lock _lockSprite;
+    private Lock _lock;
     private ScreenShake ScreenShake;
 
     public Material LockMat;
     private Material _lockMat;
     public UnityEvent UnlockEvent;
+
+    private MachineSfx _explosionSFX;
 
     void Awake() {
         _mySR = lockSpriteObj.GetComponent<SpriteRenderer>();
@@ -50,12 +52,18 @@ public class UnlockableSquares : MonoBehaviour
                 _bluePrintCreators.Add(bpc.GetComponent<BluePrintCreator>());
             }
         }
+        
+        foreach(MachineSfx s in GetComponents<MachineSfx>()) {
+            if (s.startCondition == MachineSfx.StartCondition.CUSTOM) {
+                _explosionSFX = s;
+            }
+        }
 
         _canvas = GetComponentInChildren<Canvas>();
-        _lockSprite = GetComponentInChildren<Lock>();
+        _lock = GetComponentInChildren<Lock>();
         ScreenShake = GetComponent<ScreenShake>();
     }
-    
+
     void Update() {
         // _mySR.enabled = isActive;
         _myCollider.enabled = isActive;
@@ -63,13 +71,13 @@ public class UnlockableSquares : MonoBehaviour
         if (isActive) {
             bool done = CheckIfDone();
             if (done) {
-                FindObjectOfType<CameraFollow>().TempFollow(transform, 5f);
+                FindObjectOfType<CameraFollow>().TempFollow(transform, 3f);
                 Unlock();
             }
         }
     }
 
-    protected virtual void Unlock() {
+    public virtual void Unlock() {
         _lockedRoom.enabled = false;
         //_mySR.enabled = false;
 
@@ -88,9 +96,11 @@ public class UnlockableSquares : MonoBehaviour
             }
         }
 
-        if (_lockSprite) {
-            _lockSprite.Unlock();
-            ScreenShake.DelayedLargeShake();
+        if (_lock) {
+            _lock.Unlock();
+            if (ScreenShake) {
+                ScreenShake.DelayedLargeShake();
+            }
         }
 
         UnlockEvent.Invoke();
@@ -100,12 +110,22 @@ public class UnlockableSquares : MonoBehaviour
     private IEnumerator UnlockAnimation()
     {
         float t = -1.15f;
-
+        bool explostionSFXPlayed = false;
+        bool unlockSFXPlayed = false;
         while (t < 1)
         {
+            if (t >= -0.75f && !unlockSFXPlayed) {
+                unlockSFXPlayed = true;
+                _lock.PlayUnlockSFX();
+            }
 
             if (t >= 0)
             {
+                if (!explostionSFXPlayed) {
+                    _explosionSFX.UnPause();
+                    explostionSFXPlayed = true;
+                }
+
                 _lockMat.SetFloat("_T", t);
                 t += Time.deltaTime * Conductor.Instance.BPM / 60;
             } else
@@ -120,7 +140,7 @@ public class UnlockableSquares : MonoBehaviour
 
     protected virtual bool CheckIfDone() {
         bool done = true;
-            
+
         foreach (var c in ConveyorInners) {
             if (!c.Done) {
                 done = false;

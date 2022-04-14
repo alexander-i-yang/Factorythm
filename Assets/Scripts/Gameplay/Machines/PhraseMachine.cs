@@ -68,6 +68,7 @@ public class PhraseMachine : Machine
         foreach (KeyValuePair<ResourceID, Queue<Resource>> entry in inputs._backer) {
             instantiatePhrase.Notes.Add(new ResourceNum(entry.Value.Peek(), entry.Value.Count));
         }
+        instantiatePhrase.CheckGoal();
         return instantiatePhrase;
     }
 }
