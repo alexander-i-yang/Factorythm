@@ -290,10 +290,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 1283119058974646803, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -308,11 +304,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.001
+      value: -0.024390245
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.004
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalPosition.z
@@ -378,10 +374,6 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 6917346874683859943, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6926731298702385561, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_Name
       value: digeticbutton_back
@@ -439,7 +431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7937657147074018797, guid: f5df1a351d7609148ab504a0f7e2a4a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.024390245
       objectReference: {fileID: 0}
     - target: {fileID: 7937657147074018797, guid: f5df1a351d7609148ab504a0f7e2a4a1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -498,10 +490,6 @@ PrefabInstance:
     - target: {fileID: 774130133928238244, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_Layer
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1283119058974646803, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_RootOrder
@@ -583,10 +571,6 @@ PrefabInstance:
       propertyPath: OnPress.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 6917346874683859943, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6926731298702385561, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_Name
       value: digeticbutton_resume
@@ -622,10 +606,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 1283119058974646803, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -640,11 +620,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.355
+      value: -0.351818
       objectReference: {fileID: 0}
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalPosition.z
@@ -677,10 +657,6 @@ PrefabInstance:
     - target: {fileID: 3062831163043528698, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6917346874683859943, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6926731298702385561, guid: e5da7f3dd74300f4eaa670b755bda319, type: 3}
       propertyPath: m_Name
@@ -832,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7937657147074018797, guid: f5df1a351d7609148ab504a0f7e2a4a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.024390245
       objectReference: {fileID: 0}
     - target: {fileID: 7937657147074018797, guid: f5df1a351d7609148ab504a0f7e2a4a1, type: 3}
       propertyPath: m_LocalPosition.y
