@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.030000001}
-  m_SizeDelta: {x: 4, y: 1}
+  m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1283119058974646803
 Canvas:
@@ -58,7 +58,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &5049712524158006637
 MonoBehaviour:
@@ -247,7 +247,7 @@ PrefabInstance:
       objectReference: {fileID: -6419301908698353625, guid: 757f6522c65e9314897ecb631e2ac9cf, type: 3}
     - target: {fileID: 329282308744731952, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 955322480256453653, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_Controller
@@ -259,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_Size.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_Offset.x
@@ -267,7 +267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8210025157369577773, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_RootOrder
@@ -313,10 +317,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7826987830262284001, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
+--- !u!1 &6926731298702385561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4273409980704497486, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
+  m_PrefabInstance: {fileID: 6588347164118515415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3062831163043528698 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8210025157369577773, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
   m_PrefabInstance: {fileID: 6588347164118515415}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6282336930419387143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6926731298702385561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770b8993fd9d37e4e9b23d859e9876af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPress:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRelease:
+    m_PersistentCalls:
+      m_Calls: []

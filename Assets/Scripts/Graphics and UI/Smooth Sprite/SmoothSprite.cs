@@ -21,19 +21,19 @@ public class SmoothSprite : MonoBehaviour
         SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void Move(Vector3 newPos, bool destroyOnComplete = false, bool isLocalPos = false, float duration = 0f) {
+    public void Move(Vector3 newPos, bool destroyOnComplete = false, bool isLocalPos = false, float duration = 0f, bool curved = true) {
         Vector3 beforePosition = isLocalPos ? transform.localPosition : transform.position;
         Vector3 afterPosition = new Vector3(newPos.x, newPos.y, transform.position.z);
-        StartCoroutine(_moveCoroutine(beforePosition, afterPosition, destroyOnComplete, isLocalPos, duration <= 0 ? moveTime : duration));
+        StartCoroutine(_moveCoroutine(beforePosition, afterPosition, destroyOnComplete, isLocalPos, duration <= 0 ? moveTime : duration, curved));
     }
     
-    IEnumerator _moveCoroutine(Vector3 beforePosition, Vector3 afterPosition, bool destroyOnComplete, bool isLocalPos, float duration) {
+    IEnumerator _moveCoroutine(Vector3 beforePosition, Vector3 afterPosition, bool destroyOnComplete, bool isLocalPos, float duration, bool curved) {
         IsRunning = true;
         for (float ft = 0; ft <= duration; ft += Time.deltaTime) {
             Vector3 newPos = Helper.ActualLerp(
                 beforePosition, 
                 afterPosition, 
-                movementCurve.Evaluate((float) (ft/duration))
+                curved ? movementCurve.Evaluate(ft/duration) : ft/duration
             );
             if (isLocalPos) {
                 transform.localPosition = newPos;

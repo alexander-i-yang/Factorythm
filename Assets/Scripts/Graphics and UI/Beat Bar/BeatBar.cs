@@ -11,6 +11,8 @@ public class BeatBar : MonoBehaviour {
     public Vector3 StartPos { get; private set; }
     public Vector3 EndPos { get; private set; }
 
+    private bool _paused = false;
+
     [Header("Beat Line Movement")]
     
     [Tooltip("The amount of time, in beats, that a beat line will exist on the beat bar.")]
@@ -53,13 +55,11 @@ public class BeatBar : MonoBehaviour {
         InitBeatClipAtStart();
     }
 
-    public void PauseBeatBar()
-    {
-
+    public void PauseBeatBar() {
+        // _paused = true;
     }
 
-    public void UnPauseBeatBar()
-    {
-
+    public void UnPauseBeatBar() {
+        // _paused = false;
     }
 }

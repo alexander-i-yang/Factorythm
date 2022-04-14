@@ -1,7 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
     public bool hidden = true;
@@ -11,10 +10,13 @@ public class PauseMenu : MonoBehaviour {
     private Animator _pauseAnimator;
     private PlayerController _player;
     private Vector2 _pausedPosition;
-    private Text _countDown;
+    private TextMeshProUGUI _countDown;
+
+    private bool _showingOptions = false;
 
 
     public static bool isPaused = false;
+    private Vector3 _restPos;
 
     private void Awake()
     {
@@ -28,7 +30,8 @@ public class PauseMenu : MonoBehaviour {
         }
         
         _player = GameObject.FindObjectOfType<PlayerController>();
-        _countDown = transform.GetComponentInChildren<Text>();
+        _countDown = transform.GetComponentInChildren<TextMeshProUGUI>();
+        _restPos = _pauseMenuUI.transform.localPosition;
     }
 
     void Start() { }
@@ -60,11 +63,39 @@ public class PauseMenu : MonoBehaviour {
         
         isPaused = !isPaused;
         hidden = !hidden;
+        gameObject.SetActive(true);
+    }
+
+    public void ShowOptions() {
+        // _pauseAnimator.ResetTrigger("Options");
+        if (!_showingOptions) {
+            _showingOptions = true;
+            StartCoroutine(SlideLeftOrRight(-1));
+        }
+    }
+
+    public void HideOptions() {
+        if (_showingOptions) {
+            _showingOptions = false;
+            StartCoroutine(SlideLeftOrRight(1));
+        }
     }
 
     public void ResumeGame () {
         //Time.timeScale = 1;
+        _showingOptions = false;
         StartCoroutine(ResumeByStages());
+    }
+
+    IEnumerator SlideLeftOrRight(int direction) {
+        var beforePos = _pauseMenuUI.transform.position;
+        double moveBy = 20*direction;
+        float duration = 0.333f;
+        for (float i = 0; i<duration; i+=Time.deltaTime) {
+            _pauseMenuUI.transform.position = new Vector3((float) (beforePos.x + moveBy*i/duration), beforePos.y, beforePos.z);
+            yield return null;
+        }
+        _pauseMenuUI.transform.position = new Vector3((float) (beforePos.x + moveBy), beforePos.y, beforePos.z);
     }
 
     private IEnumerator ResumeByStages()
@@ -78,7 +109,7 @@ public class PauseMenu : MonoBehaviour {
 
         Conductor.Instance.EnableCombo();
         _countDown.text = "3";
-        _player.MySS.Move(_pausedPosition, duration: 2f);
+        _player.MySS.Move(_pausedPosition, duration: 0.5f, curved: false);
 
         yield return new WaitForSeconds(1f);
 
@@ -99,5 +130,7 @@ public class PauseMenu : MonoBehaviour {
         Conductor.Instance.MyUIManager.BeatBar.UnPauseBeatBar();
         _player.EnableActions();
         Conductor.Instance.EnableCameraFollow();
+
+        _pauseMenuUI.transform.localPosition = _restPos;
     }
 }
