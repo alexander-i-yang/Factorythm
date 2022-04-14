@@ -9,11 +9,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
-    public SmoothSprite MySS 
-    {
-        get;
-        private set;
-    }
+    private SmoothSprite _mySS;
     private SmoothRotate _mySRot;
 
     private Room _curRoom;
@@ -27,7 +23,6 @@ public class PlayerController : MonoBehaviour {
 
     public bool CanPlaceHeadMine;
     public bool CanPlaceStemMine;
-    
 
     private MachineSfx _moveSFX;
 
@@ -35,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
         _myCollider = GetComponent<BoxCollider2D>();
-        MySS = GetComponentInChildren<SmoothSprite>();
+        _mySS = GetComponentInChildren<SmoothSprite>();
         _mySRot = GetComponentInChildren<SmoothRotate>();
         _ism = GetComponent<InteractableStateMachine>();
         _pia = new PlayerInputActions();
@@ -116,26 +111,12 @@ public class PlayerController : MonoBehaviour {
     }
 
     public Interactable OnInteractable() {
-        if (PauseMenu.isPaused)
-        {
-            return Helper.OnComponent<PausedButton>(transform.position);
-        }
         return Helper.OnComponent<Interactable>(transform.position);
     }
 
     public Destructable OnDestructable()
     {
         return Helper.OnComponent<Destructable>(transform.position);
-    }
-
-    public void EnableActions()
-    {
-        _pia.Player.Enable();
-    }
-
-    public void DisableActions()
-    {
-        _pia.Player.Disable();
     }
 
     #region Actions
@@ -181,14 +162,14 @@ public class PlayerController : MonoBehaviour {
                 }
                 
                 if (canMove) {
-                    MySS.Move(newPos);
+                    _mySS.Move(newPos);
                     _myRb.MovePosition(newPos);
                     _ism.Move(newPos);
                     // _moveSFX.UnPause();
                 } else {
                     Vector2 delta = newPos - transform.position;
                     newPos = transform.position + (Vector3) delta * 0.2f;
-                    MySS.BounceAnimate(transform.position, newPos);
+                    _mySS.BounceAnimate(transform.position, newPos);
                 }
             }
         }

@@ -52,14 +52,4 @@ public class BeatBar : MonoBehaviour {
     public void Tick() {
         InitBeatClipAtStart();
     }
-
-    public void PauseBeatBar()
-    {
-
-    }
-
-    public void UnPauseBeatBar()
-    {
-
-    }
 }
