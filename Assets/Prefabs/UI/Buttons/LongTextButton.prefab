@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.030000001}
-  m_SizeDelta: {x: 4, y: 1}
+  m_SizeDelta: {x: 3, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1283119058974646803
 Canvas:
@@ -259,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_Size.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_Offset.x
@@ -267,7 +267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7089786287177715230, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8210025157369577773, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_RootOrder
@@ -339,5 +343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnPress:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRelease:
     m_PersistentCalls:
       m_Calls: []

@@ -14,6 +14,8 @@ public class PauseMenu : MonoBehaviour {
     private Vector2 _pausedPosition;
     private TextMeshProUGUI _countDown;
 
+    private bool _showingOptions = false;
+
 
     public static bool isPaused = false;
 
@@ -64,9 +66,36 @@ public class PauseMenu : MonoBehaviour {
         gameObject.SetActive(true);
     }
 
+    public void ShowOptions() {
+        // _pauseAnimator.ResetTrigger("Options");
+        if (!_showingOptions) {
+            _showingOptions = true;
+            StartCoroutine(SlideLeftOrRight(-1));
+        }
+    }
+
+    public void HideOptions() {
+        if (_showingOptions) {
+            _showingOptions = false;
+            StartCoroutine(SlideLeftOrRight(1));
+        }
+    }
+
     public void ResumeGame () {
         //Time.timeScale = 1;
+        _showingOptions = false;
         StartCoroutine(ResumeByStages());
+    }
+
+    IEnumerator SlideLeftOrRight(int direction) {
+        var beforePos = _pauseMenuUI.transform.position;
+        float moveBy = 20*direction;
+        float duration = 0.333f;
+        for (float i = 0; i<duration; i+=Time.deltaTime) {
+            _pauseMenuUI.transform.position = new Vector3(beforePos.x + moveBy*i/duration, beforePos.y, beforePos.z);
+            yield return null;
+        }
+        _pauseMenuUI.transform.position = new Vector3(beforePos.x + moveBy, beforePos.y, beforePos.z);
     }
 
     private IEnumerator ResumeByStages()
