@@ -179,6 +179,9 @@ public class PlayerController : MonoBehaviour {
                         room.PlayBumpSFX();
                     }
                 }
+
+                if (PauseMenu.isPaused) {
+                    canMove = true;}
                 
                 if (canMove) {
                     MySS.Move(newPos);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class PauseMenu : MonoBehaviour {
     private Animator _pauseAnimator;
     private PlayerController _player;
     private Vector2 _pausedPosition;
-    private Text _countDown;
+    private TextMeshProUGUI _countDown;
 
 
     public static bool isPaused = false;
@@ -28,7 +29,7 @@ public class PauseMenu : MonoBehaviour {
         }
         
         _player = GameObject.FindObjectOfType<PlayerController>();
-        _countDown = transform.GetComponentInChildren<Text>();
+        _countDown = transform.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void Start() { }
@@ -60,6 +61,7 @@ public class PauseMenu : MonoBehaviour {
         
         isPaused = !isPaused;
         hidden = !hidden;
+        gameObject.SetActive(true);
     }
 
     public void ResumeGame () {
