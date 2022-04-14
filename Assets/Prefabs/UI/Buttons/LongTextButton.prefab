@@ -58,7 +58,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &5049712524158006637
 MonoBehaviour:
@@ -245,6 +245,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -6419301908698353625, guid: 757f6522c65e9314897ecb631e2ac9cf, type: 3}
+    - target: {fileID: 329282308744731952, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 955322480256453653, guid: a20443d340b9a6243933cd93d69e7e5b, type: 3}
       propertyPath: m_Controller
       value: 

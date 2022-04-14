@@ -19,6 +19,7 @@ public class Conductor : MonoBehaviour {
 
     private PlayerController _player;
 
+    private GameObject _mainCamera;
     private ScreenShake ScreenShake;
     
     private BeatClipSO CurrentBeatClip
@@ -98,6 +99,7 @@ public class Conductor : MonoBehaviour {
 
         MyUIManager = FindObjectOfType<UIManager>();
         _stateMachine = GetComponent<BeatStateMachine>();
+        _mainCamera = FindObjectOfType<CameraFollow>().gameObject;
         ScreenShake = GetComponent<ScreenShake>();
         
         MusicBus = new BusController("Bus:/Music");
@@ -262,6 +264,16 @@ public class Conductor : MonoBehaviour {
 
     public void Sell(Resource r) {
         Cash += r.price;
+    }
+
+    public void EnableCameraFollow()
+    {
+        _mainCamera.GetComponent<CameraFollow>().Target = _player.transform;
+    }
+
+    public void DisableCameraFollow()
+    {
+        _mainCamera.GetComponent<CameraFollow>().Target = null;
     }
 
     public static Pooler GetPooler() {

@@ -11,7 +11,7 @@ public class SmoothSprite : MonoBehaviour
 {
     
     public AnimationCurve movementCurve;
-    public double moveTime = 0.1;
+    public float moveTime = 0.1f;
 
     public SpriteRenderer SpriteRenderer { get; private set; }
 
@@ -21,19 +21,19 @@ public class SmoothSprite : MonoBehaviour
         SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void Move(Vector3 newPos, bool destroyOnComplete = false, bool isLocalPos = false) {
+    public void Move(Vector3 newPos, bool destroyOnComplete = false, bool isLocalPos = false, float duration = 0f) {
         Vector3 beforePosition = isLocalPos ? transform.localPosition : transform.position;
         Vector3 afterPosition = new Vector3(newPos.x, newPos.y, transform.position.z);
-        StartCoroutine(_moveCoroutine(beforePosition, afterPosition, destroyOnComplete, isLocalPos));
+        StartCoroutine(_moveCoroutine(beforePosition, afterPosition, destroyOnComplete, isLocalPos, duration <= 0 ? moveTime : duration));
     }
     
-    IEnumerator _moveCoroutine(Vector3 beforePosition, Vector3 afterPosition, bool destroyOnComplete, bool isLocalPos) {
+    IEnumerator _moveCoroutine(Vector3 beforePosition, Vector3 afterPosition, bool destroyOnComplete, bool isLocalPos, float duration) {
         IsRunning = true;
-        for (float ft = 0; ft <= moveTime; ft += Time.deltaTime) {
+        for (float ft = 0; ft <= duration; ft += Time.deltaTime) {
             Vector3 newPos = Helper.ActualLerp(
                 beforePosition, 
                 afterPosition, 
-                movementCurve.Evaluate((float) (ft/moveTime))
+                movementCurve.Evaluate((float) (ft/duration))
             );
             if (isLocalPos) {
                 transform.localPosition = newPos;
