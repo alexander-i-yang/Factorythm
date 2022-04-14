@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Joiner BluePrint
       objectReference: {fileID: 0}
+    - target: {fileID: 3288924237238521731, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5542724260797800337, guid: ad47300e8f3a1a44f8eab7177abd851c, type: 3}
     - target: {fileID: 5341053927266769297, guid: 7d96a73b595c25d4583751db0646a05a, type: 3}
       propertyPath: MachineCopy
       value: 
