@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Unity.Collections;
 using UnityEngine;
 
@@ -30,7 +31,12 @@ public class BeatLine : MonoBehaviour {
             if (t > 1) {
                 t = 1;
                 fading = true;
-                StartCoroutine(Fade(beatBar.DissolveTime));
+                StartCoroutine(Helper.Fade(
+                    _mySR,
+                    beatBar.DissolveTime,
+                    new Color(1, 1, 1, 0), 
+                    e => Destroy(gameObject)
+                ));
 
                 // StartCoroutine(Fade(0.2f));
                 // Destroy(gameObject);
@@ -46,15 +52,5 @@ public class BeatLine : MonoBehaviour {
             i += PauseMenu.isPaused ? 0 : Time.deltaTime;
             yield return null;
         }
-    }
-
-    IEnumerator Fade(float time) {
-        for (float ft = time; ft > 0; ft -= PauseMenu.isPaused ? 0 : Time.deltaTime) {
-            Color col = _mySR.color;
-            col.a = ft / time;
-            _mySR.color = col;
-            yield return null;
-        }
-        Destroy(gameObject);
     }
 }
