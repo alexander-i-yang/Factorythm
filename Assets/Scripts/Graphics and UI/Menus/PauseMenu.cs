@@ -81,6 +81,14 @@ public class PauseMenu : MonoBehaviour {
         }
     }
 
+    public bool SurpassesPauseMenu(Vector2 pos)
+    {
+        return _pausedPosition.x + 9 < pos.x
+        || _pausedPosition.x - 9 > pos.x
+        || _pausedPosition.y + 5 < pos.y
+        || _pausedPosition.y - 5 > pos.y;
+    }
+
     public void ResumeGame () {
         //Time.timeScale = 1;
         _showingOptions = false;
