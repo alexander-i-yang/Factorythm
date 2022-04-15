@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour {
                 Vector2 offset = new Vector2(offsetX, offsetY);
                 newPos = _myRb.position + offset;
 
-                bool canMove = true;
+                bool canMove =  true;
                 
                 Collider2D roomCollider = CheckRoomOverlap(offset);
                 Room room;
@@ -181,12 +181,14 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 if (PauseMenu.isPaused) {
-                    canMove = true;}
+                    canMove = !Conductor.Instance.MyUIManager.PauseMenu.SurpassesPauseMenu(newPos);
+                }
                 
                 if (canMove) {
                     MySS.Move(newPos);
                     _myRb.MovePosition(newPos);
                     _ism.Move(newPos);
+                    GameObject.FindObjectOfType<TutorialHitDetection>().movedOnBeat();
                     // _moveSFX.UnPause();
                 } else {
                     Vector2 delta = newPos - transform.position;
