@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
 
         this.CheckTileOn();
 
-        if (Input.GetKeyDown(KeyCode.R)) {
+        if (MainMenu.GameStarted && Input.GetKeyDown(KeyCode.R)) {
             RestartGame();
         }
     }
@@ -188,7 +188,9 @@ public class PlayerController : MonoBehaviour {
                     MySS.Move(newPos);
                     _myRb.MovePosition(newPos);
                     _ism.Move(newPos);
-                    GameObject.FindObjectOfType<TutorialHitDetection>().movedOnBeat();
+                    if (MainMenu.GameStarted) {
+                        FindObjectOfType<TutorialHitDetection>().movedOnBeat();
+                    }
                     // _moveSFX.UnPause();
                 } else {
                     Vector2 delta = newPos - transform.position;

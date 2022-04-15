@@ -52,8 +52,7 @@ public class TutorialHitDetection : MonoBehaviour
         //}
     }
 
-    public void movedOnBeat()
-    {
+    public void movedOnBeat() {
         foreach (GameObject appear in appears)
         {
             appear.SetActive(true);

@@ -58,12 +58,11 @@ public class CameraFollow : MonoBehaviour {
             Vector2 smoothedPosition
                 = Vector2.SmoothDamp(transform.position, desiredPosition, ref _velocity, _smoothSpeed * Time.deltaTime);
             transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
-        } else if (focusedPositionTarget != null)
-        {
-            Vector2 desiredPosition = focusedPositionTarget;
+        } else if (focusedPositionTarget != null) {
+            /*Vector2 desiredPosition = focusedPositionTarget;
             Vector2 smoothedPosition
                 = Vector2.SmoothDamp(transform.position, desiredPosition, ref _velocity, _smoothSpeed * Time.deltaTime);
-            transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);
+            transform.position = new Vector3(smoothedPosition.x, smoothedPosition.y, transform.position.z);*/
         }
         
     }
