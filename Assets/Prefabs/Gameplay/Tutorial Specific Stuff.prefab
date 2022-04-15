@@ -223,13 +223,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de04dd260b304f46aa527a96d29a6f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappear: {fileID: 100845952673961506}
-  appear: {fileID: 100845953824560325}
-  appear2: {fileID: 100845953763928763}
-  disappear2: {fileID: 5842271807874083917}
-  disappear3: {fileID: 5842271807874083917}
-  disappear4: {fileID: 100845952640765304}
-  moved: 0
+  disappears:
+  - {fileID: 5842271807874083917}
+  - {fileID: 100845952673961506}
+  appears:
+  - {fileID: 100845953763928763}
+  - {fileID: 6429726100593031278}
+  - {fileID: 100845953763928763}
+  - {fileID: 100845953824560325}
 --- !u!1 &100845952673961506
 GameObject:
   m_ObjectHideFlags: 0

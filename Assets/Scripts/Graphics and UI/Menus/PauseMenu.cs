@@ -17,6 +17,8 @@ public class PauseMenu : MonoBehaviour {
 
     public static bool isPaused = false;
     private Vector3 _restPos;
+    
+    
 
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class PauseMenu : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.P)) {
+        if (MainMenu.GameStarted && Input.GetKeyDown(KeyCode.P)) {
             if (isPaused) {
                 ResumeGame();
             } else {
@@ -48,6 +50,10 @@ public class PauseMenu : MonoBehaviour {
     }
 
     private void PauseGame () {
+        if (!MainMenu.GameStarted) {
+            return; 
+        }
+
         FMODUnity.RuntimeManager.PauseAllEvents(true);
         //Time.timeScale = 0;
         Conductor.Instance.DisableCombo();
