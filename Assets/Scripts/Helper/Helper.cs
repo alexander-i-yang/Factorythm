@@ -53,21 +53,17 @@ class Helper {
     /// <param name="pos">Position</param>
     /// <typeparam name="T">Component</typeparam>
     /// <returns>Component to find</returns>
-    public static T OnComponent<T>(Vector3 pos) where T : MonoBehaviour
-    {
+    public static T OnComponent<T>(Vector3 pos) where T : MonoBehaviour {
         RaycastHit2D[] found = Physics2D.RaycastAll(
-        pos,
-        new Vector3(0, 0, 1),
-        LayerMask.GetMask("Interactable")
+            pos,
+            new Vector3(0, 0, 1),
+            LayerMask.GetMask("Interactable")
         );
         T highestComponent = default(T);
-        foreach (RaycastHit2D curCol in found)
-        {
+        foreach (RaycastHit2D curCol in found) {
             T interact = curCol.transform.GetComponent<T>();
-            if (interact != null)
-            {
-                if (highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z)
-                {
+            if (interact != null) {
+                if (highestComponent == null || interact.transform.position.z < highestComponent.transform.position.z) {
                     highestComponent = interact;
                 }
             }
@@ -76,16 +72,14 @@ class Helper {
         return highestComponent;
     }
 
-    public static List<T> OnComponents<T>(Vector3 pos) where T : MonoBehaviour
-    {
+    public static List<T> OnComponents<T>(Vector3 pos) where T : MonoBehaviour {
         RaycastHit2D[] found = Physics2D.RaycastAll(
-        pos,
-        new Vector3(0, 0, 1),
-        LayerMask.GetMask("Interactable")
+            pos,
+            new Vector3(0, 0, 1),
+            LayerMask.GetMask("Interactable")
         );
         List<T> components = new List<T>();
-        foreach (RaycastHit2D curCol in found)
-        {
+        foreach (RaycastHit2D curCol in found) {
             components.Add(curCol.transform.GetComponent<T>());
         }
 
@@ -94,5 +88,30 @@ class Helper {
 
     public static double Clamp(double low, double high, double a) {
         return Math.Min(Math.Max(a, low), high);
+    }
+
+    public static Color ColorLerp(Color a, Color b, float t) {
+        Color c = Color.Lerp(a, b, t);
+        c.a = ActualLerp(a.a, b.a, t);
+        return c;
+    }
+    
+    public static IEnumerator Fade(SpriteRenderer sr, float time, Color newColor, Action<int> done = null) {
+        Color origColor = sr.color;
+        for (float ft = 0; ft < time; ft += PauseMenu.isPaused ? 0 : Time.deltaTime) {
+            sr.color = ColorLerp(origColor, newColor, ft/time);
+            yield return null;
+        }
+        if (done != null) done(0);
+    }
+
+    public static IEnumerator Shake(Transform t, float duration=0.5f, float speed=100f, float amount=0.05f) {
+        Vector3 origPos = t.localPosition;
+        for (float ft = 0; ft < duration; ft += PauseMenu.isPaused ? 0 : Time.deltaTime) {
+            t.localPosition = origPos + new Vector3(Mathf.Sin(ft/duration * speed) * amount, Mathf.Sin(ft * speed) * amount);
+            yield return null;
+        }
+
+        t.localPosition = origPos;
     }
 }

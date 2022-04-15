@@ -231,7 +231,10 @@ public class Conductor : MonoBehaviour {
     }
 
     public void ResetCombo() {
-        if (CurCombo >= 2) ScreenShake.SmallShake(); // Shake the screen!
+        if (CurCombo >= 2) {
+            ScreenShake.SmallShake();
+            MyUIManager.Gauge.ThrowSmoke();
+        }
         SetCurCombo(0);
         MyUIManager.Gauge.ResetGauge();
     }
