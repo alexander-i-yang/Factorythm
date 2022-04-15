@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{79175a0b-0f65-4216-ba96-0d590f94c281}">
+		<property name="assetPath">
+			<value>sad_horn3 short.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.5794331065759639</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{0ff115da-5d54-4029-8caf-55a4037a83fe}</destination>
+		</relationship>
+	</object>
+</objects>

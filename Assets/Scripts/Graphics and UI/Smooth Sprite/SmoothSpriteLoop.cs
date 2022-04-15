@@ -16,17 +16,23 @@ public class SmoothSpriteLoop : SmoothSprite {
     [NonSerialized] public positionState pos = positionState.START;
 
     void Awake() {
-        StartPos = transform.position;
-        endPos = transform.TransformPoint(endPos);
+        StartPos = transform.localPosition;
+        endPos = transform.localPosition + endPos;
     }
 
     public void Move() {
         if (pos == positionState.START) {
-            base.Move(endPos, destroyOnComplete:false, isLocalPos:false);
+            base.Move(endPos, destroyOnComplete:false, isLocalPos:true);
             pos = positionState.END;
         } else if (pos == positionState.END) {
-            base.Move(StartPos, destroyOnComplete:false, isLocalPos:false);
+            base.Move(StartPos, destroyOnComplete:false, isLocalPos:true);
             pos = positionState.START;
         }
     }
+
+    /*public void Update() {
+        if (!MainMenu.GameStarted) {
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
+        }
+    }*/
 }

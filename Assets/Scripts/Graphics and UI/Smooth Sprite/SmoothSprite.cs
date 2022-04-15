@@ -48,7 +48,8 @@ public class SmoothSprite : MonoBehaviour
             Destroy(transform.parent.gameObject);
         }
 
-        transform.position = afterPosition;
+        if (isLocalPos) transform.localPosition = afterPosition;
+        else transform.position = afterPosition;
         IsRunning = false;
     }
     

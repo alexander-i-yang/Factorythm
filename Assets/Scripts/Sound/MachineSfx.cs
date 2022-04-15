@@ -23,7 +23,7 @@ public class MachineSfx : MonoBehaviour
 
     public IEnumerator InstantiateSong()
     {
-        while (!RuntimeManager.IsInitialized || RuntimeManager.AnySampleDataLoading()) {
+        while (!RuntimeManager.IsInitialized || RuntimeManager.AnySampleDataLoading() || !RuntimeManager.HasBankLoaded("Master") || !RuntimeManager.HasBankLoaded("sfx")) {
             // Debug.Log("Uhhh");
             yield return null;
         }

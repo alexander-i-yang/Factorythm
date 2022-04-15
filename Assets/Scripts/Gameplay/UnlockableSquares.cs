@@ -117,6 +117,7 @@ public class UnlockableSquares : MonoBehaviour
             if (t >= -0.75f && !unlockSFXPlayed) {
                 unlockSFXPlayed = true;
                 _lock.PlayUnlockSFX();
+                _lock.Smoke();
             }
 
             if (t >= 0)

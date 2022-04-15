@@ -16,4 +16,9 @@ public class Lock : MonoBehaviour {
     public void PlayUnlockSFX() {
         _lockSfx.UnPause();
     }
+
+    public void Smoke() {
+        var s = GetComponent<SetSmoke>();
+        if (s) s.ThrowSmoke();
+    }
 }

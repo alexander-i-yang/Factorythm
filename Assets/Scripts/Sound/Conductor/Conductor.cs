@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -101,9 +102,20 @@ public class Conductor : MonoBehaviour {
         _stateMachine = GetComponent<BeatStateMachine>();
         _mainCamera = FindObjectOfType<CameraFollow>().gameObject;
         ScreenShake = GetComponent<ScreenShake>();
-        
-        MusicBus = new BusController("Bus:/Music");
-        SFXBus = new BusController("Bus:/sfx");
+
+        var bcs = GetComponents<BusController>();
+        for (int i = 0; i<bcs.Length; ++i) {
+            var bc = bcs[i];
+            String path = "";
+            if (i == 0) {
+                MusicBus = bc;
+                path = "Bus:/Music";
+            } else {
+                SFXBus = bc;
+                path = "Bus:/sfx";
+            }
+            bc.Init(path);
+        }
     }
 
     FMOD.Studio.EventInstance currentSong;
@@ -113,8 +125,11 @@ public class Conductor : MonoBehaviour {
         StartCurrentClip();
     }
 
-    private void StartClip(BeatClipSO bcs)
+    private IEnumerator StartClip(BeatClipSO bcs)
     {
+        while (!FMODUnity.RuntimeManager.IsInitialized || FMODUnity.RuntimeManager.AnySampleDataLoading() || !FMODUnity.RuntimeManager.HaveAllBanksLoaded) {
+            yield return null;
+        }
         if (currentSong.isValid())
         {
             currentSong.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
@@ -128,7 +143,7 @@ public class Conductor : MonoBehaviour {
         currentSong.start();
     }
 
-    private void StartCurrentClip() { StartClip(CurrentBeatClip); }
+    private void StartCurrentClip() { StartCoroutine(StartClip(CurrentBeatClip)); }
 
     public void SetProgress01(float t)
     {
@@ -234,6 +249,7 @@ public class Conductor : MonoBehaviour {
         if (CurCombo >= 2) {
             ScreenShake.SmallShake();
             MyUIManager.Gauge.ThrowSmoke();
+            _player.PlayComboBreakSFX();
         }
         SetCurCombo(0);
         MyUIManager.Gauge.ResetGauge();
