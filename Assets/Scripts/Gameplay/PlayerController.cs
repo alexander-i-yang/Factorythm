@@ -188,6 +188,7 @@ public class PlayerController : MonoBehaviour {
                     MySS.Move(newPos);
                     _myRb.MovePosition(newPos);
                     _ism.Move(newPos);
+                    GameObject.FindObjectOfType<TutorialHitDetection>().movedOnBeat();
                     // _moveSFX.UnPause();
                 } else {
                     Vector2 delta = newPos - transform.position;
