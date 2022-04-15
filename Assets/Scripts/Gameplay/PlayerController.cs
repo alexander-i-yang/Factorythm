@@ -29,8 +29,7 @@ public class PlayerController : MonoBehaviour {
     public bool CanPlaceStemMine;
     
 
-    private MachineSfx _moveSFX;
-
+    private MachineSfx _comboBreakSFX;
 
     void Start() {
         _myRb = GetComponent<Rigidbody2D>();
@@ -40,7 +39,7 @@ public class PlayerController : MonoBehaviour {
         _ism = GetComponent<InteractableStateMachine>();
         _pia = new PlayerInputActions();
 
-        _moveSFX = GetComponent<MachineSfx>();
+        _comboBreakSFX = FindObjectOfType<CameraFollow>().GetComponent<MachineSfx>();
 
         _pia.Player.Enable();
         _pia.Player.Interact.performed += Interact;
@@ -243,5 +242,9 @@ public class PlayerController : MonoBehaviour {
         }
 
         return hit;
+    }
+
+    public void PlayComboBreakSFX() {
+        _comboBreakSFX.UnPause();
     }
 }

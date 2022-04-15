@@ -7,6 +7,8 @@ public class TutorialHitDetection : MonoBehaviour
     [SerializeField] private GameObject[] disappears;
     [SerializeField] private GameObject[] appears;
     
+    public bool Done = false;
+    
 
     void Update() {
         //moved = true;
@@ -53,13 +55,16 @@ public class TutorialHitDetection : MonoBehaviour
     }
 
     public void movedOnBeat() {
-        foreach (GameObject appear in appears)
-        {
-            appear.SetActive(true);
-        }
-        foreach (GameObject disappear in disappears)
-        {
-            disappear.SetActive(false);
+        if (!Done) {
+            foreach (GameObject appear in appears)
+            {
+                appear.SetActive(true);
+            }
+            foreach (GameObject disappear in disappears)
+            {
+                disappear.SetActive(false);
+            }
+            Done = true;
         }
     }
 }

@@ -44,9 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39de52e115447004a98abd058937604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayList: []
-  RhythmLock: 0
+  PlayList:
+  - {fileID: 11400000, guid: a6a39133363da8f45af96f7e68ffac8c, type: 2}
+  - {fileID: 11400000, guid: 84760e3dfd220a6439f9630dda21e038, type: 2}
+  - {fileID: 11400000, guid: 0c6be454723c98b47ae4f9f919403f61, type: 2}
+  - {fileID: 11400000, guid: e6c1849e5cb35c2499c2e6fb0655aeb2, type: 2}
+  - {fileID: 11400000, guid: ac8a7bd041b882a40bcb7f75bb2354b6, type: 2}
+  RhythmLock: 1
   Cash: 0
+  SpeedMultiplier: 1
 --- !u!114 &2881497489547828656
 MonoBehaviour:
   m_ObjectHideFlags: 0

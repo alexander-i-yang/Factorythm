@@ -1,10 +1,19 @@
-﻿using FMOD.Studio;
+﻿using System.Collections;
+using FMOD.Studio;
+using UnityEngine;
 
-public class BusController {
+public class BusController : MonoBehaviour {
     private Bus _bus;
     private double _vol;
-    
-    public BusController(string path) {
+
+    public void Init(string path) {
+        StartCoroutine(InitRoutine(path));
+    }
+
+    IEnumerator InitRoutine(string path) {
+        while (!FMODUnity.RuntimeManager.HaveAllBanksLoaded) {
+            yield return null;
+        }
         _bus = FMODUnity.RuntimeManager.GetBus(path);
         _bus.stopAllEvents(STOP_MODE.ALLOWFADEOUT);
     }

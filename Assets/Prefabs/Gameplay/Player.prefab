@@ -124,12 +124,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exposed_src:
     Guid:
-      Data1: -1118247196
-      Data2: 1168920023
-      Data3: 1918452125
-      Data4: -1862957648
-    Path: event:/sfx/Mouse_hover1
-  startCondition: 4
+      Data1: -1951256756
+      Data2: 1194215526
+      Data3: -1891191908
+      Data4: -2072148087
+    Path: event:/sfx/sad_horn3 short
+  startCondition: 5
 --- !u!1001 &5096779316606495304
 PrefabInstance:
   m_ObjectHideFlags: 0
