@@ -231,6 +231,7 @@ MonoBehaviour:
   - {fileID: 6429726100593031278}
   - {fileID: 100845953763928763}
   - {fileID: 100845953824560325}
+  Done: 0
 --- !u!1 &100845952673961506
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,10 +530,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press [X] or ['] to delete
+  m_text: 'Press [X] or [''] to delete
+
+    Try it here!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a4d8b2444c771484895665797c6e9185, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -8520606039478277794, guid: a4d8b2444c771484895665797c6e9185, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -595,7 +598,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &100845952992406060

@@ -416,6 +416,10 @@ public class Machine : Draggable {
         // Get the component of delta in the direction of dir
         // Then draw blueprints in that direction
         int n1 = (int) Math.Round(Math.Abs(Vector2.Dot(delta, _dragDirection)));
+        Debug.Log(Vector2.Dot(delta, _dragDirection));
+        Debug.Log(Math.Abs(Vector2.Dot(delta, _dragDirection)));
+        Debug.Log(Math.Round(Math.Abs(Vector2.Dot(delta, _dragDirection))));
+        Debug.Log(n1);
 
         Vector3 startPos2 = transform.position + (Vector3) _dragDirection * n1;
         Vector2 orthoDir = delta - n1 * _dragDirection;
