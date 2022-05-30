@@ -117,6 +117,7 @@ MonoBehaviour:
   BeatBar: {fileID: 0}
   Gauge: {fileID: 0}
   PauseMenu: {fileID: 0}
+  Gears: []
   _visible: 0
 --- !u!114 &1704064240244402472
 MonoBehaviour:
@@ -130,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d811a439b7c479f8b946acf6871f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hidden: 1
+  hidden: 0
   _pauseMenuUI: {fileID: 0}
 --- !u!1 &6030643299628858414
 GameObject:

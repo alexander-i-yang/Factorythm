@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5096779315247917599}
   - component: {fileID: 5096779315247917585}
   - component: {fileID: 5096779315247917597}
-  - component: {fileID: 8697454462196701137}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -72,6 +71,22 @@ MonoBehaviour:
   RhythmLocked: 1
   CanPlaceHeadMine: 0
   CanPlaceStemMine: 0
+  CanPlaceMachine: 0
+  CanPlaceMine: 0
+  CanPlaceEighth: 0
+  CanPlaceQuarter: 0
+  CanPlaceHalf: 0
+  CanPlaceChord: 0
+  CanPlacePhrase: 0
+  CanPlaceJoiner: 0
+  StemMine: {fileID: -7161910520858019637, guid: 6348ba1d18a512a459f4c3aacac0cc35, type: 3}
+  HeadMine: {fileID: -1710357526877583342, guid: a2c16e726412c5744b7b3db424ecf9f0, type: 3}
+  Eighth: {fileID: 1807920114174035262, guid: c59dad6fb5ebfc0409a6015eda699d9f, type: 3}
+  Quarter: {fileID: 1807920114174035262, guid: 6fc6c027013e3fc4aac089cbfcebf9bf, type: 3}
+  Half: {fileID: 1807920114174035262, guid: 193bf77dfa1d7ed4eaa521ab2c3b730b, type: 3}
+  Chord: {fileID: 1807920114174035262, guid: ed38ae413c9123f46ba2e50f183caeb8, type: 3}
+  Phrase: {fileID: 1051217860086142429, guid: 2dac46e7d7278fe4395b62baa9dee5e9, type: 3}
+  Joiner: {fileID: 2227484806823366880, guid: ba0db373f3c7e2d41b62d53bebffc836, type: 3}
 --- !u!61 &5096779315247917585
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -110,26 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ca3c2947d74ef4b557a049503c2d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8697454462196701137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5096779315247917584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da4c929fcc4e74535ae43e837059400e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exposed_src:
-    Guid:
-      Data1: -1951256756
-      Data2: 1194215526
-      Data3: -1891191908
-      Data4: -2072148087
-    Path: event:/sfx/sad_horn3 short
-  startCondition: 5
 --- !u!1001 &5096779316606495304
 PrefabInstance:
   m_ObjectHideFlags: 0

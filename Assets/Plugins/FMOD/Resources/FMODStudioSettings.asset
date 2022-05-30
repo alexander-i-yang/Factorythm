@@ -210,7 +210,7 @@ MonoBehaviour:
   sourceProjectPath: FMODassets/Factorythm/Factorythm.fspro
   sourceBankPath: FMODassets/Factorythm/Build
   SourceBankPathUnformatted: 
-  BankRefreshCooldown: 5
+  BankRefreshCooldown: -2
   ShowBankRefreshWindow: 1
   AutomaticEventLoading: 1
   BankLoadType: 0
