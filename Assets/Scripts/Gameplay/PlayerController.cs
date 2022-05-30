@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
     private Rigidbody2D _myRb;
     private BoxCollider2D _myCollider;
-    public SmoothSprite MySS 
+    public SmoothSprite MySS
     {
         get;
         private set;
@@ -27,7 +27,25 @@ public class PlayerController : MonoBehaviour {
 
     public bool CanPlaceHeadMine;
     public bool CanPlaceStemMine;
-    
+    public bool CanPlaceMachine;
+    public bool CanPlaceMine;
+    public bool CanPlaceEighth;
+    public bool CanPlaceQuarter;
+    public bool CanPlaceHalf;
+    public bool CanPlaceChord;
+    public bool CanPlacePhrase;
+    public bool CanPlaceJoiner;
+
+    public MachineBluePrint StemMine;
+    public MachineBluePrint HeadMine;
+    public MachineBluePrint Eighth;
+    public MachineBluePrint Quarter;
+    public MachineBluePrint Half;
+    public MachineBluePrint Chord;
+    public MachineBluePrint Phrase;
+    public MachineBluePrint Joiner;
+
+    private MachineBluePrint Creating;
 
     private MachineSfx _comboBreakSFX;
 
@@ -57,6 +75,40 @@ public class PlayerController : MonoBehaviour {
 
         if (MainMenu.GameStarted && Input.GetKeyDown(KeyCode.R)) {
             RestartGame();
+        }
+        if ((Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.L)) && CanPlaceMachine && CanPlaceMine) {
+            if (CanPlaceHeadMine) {
+              Creating = Instantiate(HeadMine, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+              Creating.OnDeInteract(this);
+            }
+            else if (CanPlaceStemMine) {
+              Creating = Instantiate(StemMine, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+              Creating.OnDeInteract(this);
+            }
+        }
+        if ((Input.GetKeyDown(KeyCode.G) || Input.GetKeyDown(KeyCode.K)) && CanPlaceMachine && CanPlaceEighth) {
+          Creating = Instantiate(Eighth, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+          Creating.OnDeInteract(this);
+        }
+        if ((Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.J)) && CanPlaceMachine && CanPlaceQuarter) {
+          Creating = Instantiate(Quarter, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+          Creating.OnDeInteract(this);
+        }
+        if ((Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.Slash))&& CanPlaceMachine && CanPlaceHalf) {
+          Creating = Instantiate(Half, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+          Creating.OnDeInteract(this);
+        }
+        if ((Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.Period)) && CanPlaceMachine && CanPlaceChord) {
+          Creating = Instantiate(Chord, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+          Creating.OnDeInteract(this);
+        }
+        if ((Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Comma)) && CanPlaceMachine && CanPlacePhrase) {
+          Creating = Instantiate(Phrase, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+          Creating.OnDeInteract(this);
+        }
+        if ((Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.M)) && CanPlaceMachine && CanPlaceJoiner) {
+          Creating = Instantiate(Joiner, transform.position + new Vector3(0, 0, 5.0f), Quaternion.identity).GetComponent<MachineBluePrint>();
+          Creating.OnDeInteract(this);
         }
     }
 
@@ -109,7 +161,7 @@ public class PlayerController : MonoBehaviour {
     private Collider2D CheckRoomOverlap() {
         return CheckRoomOverlap(new Vector3(0, 0, 0));
     }
-  
+
     public void Tick() {
         // _mySRot.Alternate();
     }
@@ -168,7 +220,7 @@ public class PlayerController : MonoBehaviour {
                 newPos = _myRb.position + offset;
 
                 bool canMove =  true;
-                
+
                 Collider2D roomCollider = CheckRoomOverlap(offset);
                 Room room;
                 if (roomCollider) {
@@ -182,7 +234,7 @@ public class PlayerController : MonoBehaviour {
                 if (PauseMenu.isPaused) {
                     canMove = !Conductor.Instance.MyUIManager.PauseMenu.SurpassesPauseMenu(newPos);
                 }
-                
+
                 if (canMove) {
                     MySS.Move(newPos);
                     _myRb.MovePosition(newPos);
@@ -209,7 +261,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     #endregion
-    
+
     /// <summary>
     /// [March 12th, 2022] Update: Added a return value for this method if extension is needed for more than just
     /// head and stem tile tags.
@@ -222,6 +274,11 @@ public class PlayerController : MonoBehaviour {
             new Vector3(0, 0, 1),
             10.0f,
             LayerMask.GetMask("Default"));
+        RaycastHit2D hit2 = Physics2D.Raycast(
+            transform.position,
+            new Vector3(0, 0, 1),
+            10.0f,
+            LayerMask.GetMask("Interactable"));
         if (hit.transform != null) {
             if (hit.transform.gameObject.CompareTag("StemTiles")) {
                 CanPlaceStemMine = true;
@@ -240,11 +297,46 @@ public class PlayerController : MonoBehaviour {
             CanPlaceStemMine = false;
             CanPlaceHeadMine = false;
         }
+        if (hit2.transform != null) {
+          CanPlaceMachine = false;
+        }
+        else {
+          CanPlaceMachine = true;
+        }
 
         return hit;
     }
 
+
     public void PlayComboBreakSFX() {
         _comboBreakSFX.UnPause();
+    }
+
+    public void PlaceMine(bool canPlace) {
+        CanPlaceMine = canPlace;
+    }
+
+    public void PlaceEighth(bool canPlace) {
+        CanPlaceEighth = canPlace;
+    }
+
+    public void PlaceQuarter(bool canPlace) {
+        CanPlaceQuarter = canPlace;
+    }
+
+    public void PlaceHalf(bool canPlace) {
+        CanPlaceHalf = canPlace;
+    }
+
+    public void PlaceChord(bool canPlace) {
+        CanPlaceChord = canPlace;
+    }
+
+    public void PlacePhrase(bool canPlace) {
+        CanPlacePhrase = canPlace;
+    }
+
+    public void PlaceJoiner(bool canPlace) {
+        CanPlaceJoiner = canPlace;
     }
 }
